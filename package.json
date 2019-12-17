@@ -1,0 +1,61 @@
+{
+  "name": "draying-backend",
+  "version": "1.0.0",
+  "description": "Middle-end graphql server",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon src/index.js",
+    "start:ci": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cross-team/draying-backend.git"
+  },
+  "author": "cross-team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cross-team/draying-backend/issues"
+  },
+  "homepage": "https://github.com/cross-team/draying-backend#readme",
+  "dependencies": {
+    "apollo-datasource": "^0.6.3",
+    "apollo-datasource-rest": "^0.6.9",
+    "apollo-server-testing": "^2.9.13",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.2.0",
+    "graphql": "^14.5.8",
+    "isemail": "^3.2.0",
+    "node-html-parser": "^1.1.16",
+    "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "apollo": "^2.21.2",
+    "apollo-link": "^1.2.13",
+    "apollo-link-http": "^1.5.16",
+    "apollo-server-express": "^2.9.13",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "express": "^4.17.1",
+    "jest": "^24.9.0",
+    "nock": "^11.7.0",
+    "node-fetch": "^2.6.0",
+    "now": "^16.6.3",
+    "prettier": "^1.19.1"
+  }
+}
