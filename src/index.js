@@ -1,10 +1,10 @@
-const express = require('express')
-const { ApolloServer } = require('apollo-server-express')
-const typeDefs = require('./schema')
-const resolvers = require('./resolvers')
-const DrayingApi = require('./datasources/draying')
-const LoginApi = require('./datasources/login')
-const cookieParser = require('cookie-parser')
+import express from 'express'
+import { ApolloServer } from 'apollo-server-express'
+import typeDefs from './schema'
+import resolvers from './resolvers'
+import DrayingApi from './datasources/draying'
+import LoginApi from './datasources/login'
+import cookieParser from 'cookie-parser'
 
 const dataSources = () => ({
     drayingApi: new DrayingApi(),
@@ -38,12 +38,3 @@ if (process.env.NODE_ENV !== 'test')
     app.listen({ port: PORT }, () =>
         console.log(`🚀 app running at http://localhost:${PORT}${server.graphqlPath}`),
     )
-
-module.exports = {
-    dataSources,
-    context,
-    typeDefs,
-    resolvers,
-    ApolloServer,
-    server,
-}

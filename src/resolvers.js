@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     Query: {
         drayings: async (_, __, { dataSources }) => {
             const allDrayings = await dataSources.drayingApi.getAllDrayings()

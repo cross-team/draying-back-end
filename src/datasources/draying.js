@@ -1,4 +1,4 @@
-const { RESTDataSource } = require('apollo-datasource-rest')
+import { RESTDataSource } from 'apollo-datasource-rest'
 
 class DrayingAPI extends RESTDataSource {
     constructor() {
@@ -15,4 +15,4 @@ class DrayingAPI extends RESTDataSource {
         return Array.isArray(data.drayings) ? data.drayings : []
     }
 }
-module.exports = DrayingAPI
+export default DrayingAPI

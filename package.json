@@ -4,9 +4,11 @@
   "description": "Middle-end graphql server",
   "main": "src/index.js",
   "scripts": {
+    "build": "babel src --out-dir dist",
     "test": "jest",
-    "start": "nodemon src/index.js",
-    "start:ci": "node src/index.js"
+    "dev": "nodemon --exec yarn restart",
+    "restart": "rimraf dist && yarn build && yarn start",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -56,6 +58,7 @@
     "nock": "^11.7.0",
     "node-fetch": "^2.6.0",
     "now": "^16.6.3",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.0"
   }
 }

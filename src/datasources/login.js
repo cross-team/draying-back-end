@@ -1,7 +1,7 @@
-const { RESTDataSource } = require('apollo-datasource-rest')
-const fetch = require('node-fetch')
-const { parse } = require('node-html-parser')
-const { URLSearchParams } = require('url')
+import { RESTDataSource } from 'apollo-datasource-rest'
+import fetch from 'node-fetch'
+import { parse } from 'node-html-parser'
+import { URLSearchParams } from 'url'
 
 class LoginAPI extends RESTDataSource {
     constructor() {
@@ -60,4 +60,4 @@ class LoginAPI extends RESTDataSource {
         return { success }
     }
 }
-module.exports = LoginAPI
+export default LoginAPI

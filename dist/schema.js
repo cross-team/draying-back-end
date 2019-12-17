@@ -1,6 +1,13 @@
-import { gql } from 'apollo-server-express'
+"use strict";
 
-const typeDefs = gql`
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _apolloServerExpress = require("apollo-server-express");
+
+const typeDefs = _apolloServerExpress.gql`
     type Query {
         drayings: [Draying]!
     }
@@ -26,5 +33,6 @@ const typeDefs = gql`
     type Order {
         id: ID!
     }
-`
-export default typeDefs
+`;
+var _default = typeDefs;
+exports.default = _default;
