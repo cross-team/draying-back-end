@@ -4,7 +4,7 @@
   "description": "Middle-end graphql server",
   "main": "src/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "babel src -d dist --source-maps",
     "test": "jest",
     "dev": "nodemon --exec yarn restart",
     "restart": "rimraf dist && yarn build && yarn start",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
+    "@babel/node": "^7.7.4",
     "@babel/preset-env": "^7.7.6",
     "apollo": "^2.21.2",
     "apollo-link": "^1.2.13",
