@@ -1,30 +1,38 @@
+import { paginateResults } from './utils'
+
 export default {
-    Query: {
-        drayings: async (_, __, { dataSources }) => {
-            const allDrayings = await dataSources.drayingApi.getAllDrayings()
-            // console.log(allDrayings);
-            const mappedDrayings = allDrayings.map(draying => ({
-                id: draying.DeliveryOrderDrayingId,
-                order: draying.DeliveryOrderId,
-            }))
-            return mappedDrayings
-        },
+  Query: {
+    drayings: async (_, { after, pageSize }, { dataSources }) => {
+      const allDrayings = await dataSources.drayingApi.getAllDrayings()
+      const drayings = paginateResults({
+        after,
+        pageSize,
+        results: allDrayings,
+      })
+      return {
+        drayings,
+        cursor: drayings.length ? drayings[drayings.length - 1].id : null,
+        hasMore: drayings.length
+          ? drayings[drayings.length - 1].id !==
+            allDrayings[allDrayings.length - 1].id
+          : false,
+      }
     },
-    Mutation: {
-        login: async (_, { user: { email, password } }, { dataSources }) => {
-            console.log('Resolving...')
-            const loginResponse = await dataSources.loginApi.login({
-                email,
-                password,
-            })
-            return loginResponse
-        },
+  },
+  Mutation: {
+    login: async (_, { user: { email, password } }, { dataSources }) => {
+      const loginResponse = await dataSources.loginApi.login({
+        email,
+        password,
+      })
+      return loginResponse
     },
-    Draying: {
-        order: draying => {
-            return {
-                id: draying.order,
-            }
-        },
+  },
+  Draying: {
+    order: draying => {
+      return {
+        id: draying.order,
+      }
     },
+  },
 }

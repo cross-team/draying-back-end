@@ -42,20 +42,24 @@ class LoginAPI extends RESTDataSource {
         return {
           success: true,
           cookies: parseCookies(response),
+          message: 'Success!',
         }
       }
       return {
         success: false,
+        message: 'Oops something went wrong',
       }
     }
 
-    const { success, cookies } = await authenticate()
+    const { success, cookies, message } = await authenticate()
+
     if (success) {
       this.context.res.set('Set-Cookie', cookies[2])
     }
 
     return {
       success,
+      message,
     }
   }
 }

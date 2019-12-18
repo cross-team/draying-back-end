@@ -13,7 +13,7 @@ const dataSources = () => ({
 
 const PORT = 4000
 const context = ({ req, res }) => {
-  const { cookies = '' } = req
+  const { cookies } = req
   return {
     cookies,
     res,
