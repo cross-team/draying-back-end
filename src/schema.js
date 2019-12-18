@@ -14,20 +14,6 @@ const typeDefs = gql`
     ): DrayingConnection!
   }
 
-  type Mutation {
-    login(user: LoginInput!): LoginResponse!
-  }
-
-  input LoginInput {
-    email: String!
-    password: String!
-  }
-
-  type LoginResponse {
-    success: Boolean!
-    message: String!
-  }
-
   type DrayingConnection {
     cursor: String!
     hasMore: Boolean!
@@ -41,6 +27,20 @@ const typeDefs = gql`
 
   type Order {
     id: ID!
+  }
+
+  type Mutation {
+    login(user: LoginInput!): LoginResponse!
+  }
+
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
+  type LoginResponse {
+    success: Boolean!
+    message: String!
   }
 `
 export default typeDefs
