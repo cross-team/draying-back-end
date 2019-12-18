@@ -19,26 +19,23 @@ class LoginAPI extends RESTDataSource {
       ).querySelector('#loginForm')
       return loginForm.firstChild.attributes.value
     }
-    const parseCookies = response => {
-      const raw = response.headers.raw()['set-cookie']
-      return raw.map(entry => {
-        const parts = entry.split(';')
-        const cookiePart = parts[0]
-        return cookiePart
-      })
-    }
     const authenticate = async () => {
       const params = new URLSearchParams()
       params.append('__RequestVerificationToken', getRequestToken())
       params.append('Email', email)
       params.append('Password', password)
 
-      const response = await fetch(this.baseURL + 'Login', {
+      const parseCookies = response => {
+        const raw = response.headers.raw()['set-cookie']
+        return raw.map(entry => {
+          const parts = entry.split(';')
+          const cookiePart = parts[0]
+          return cookiePart
+        })
+      }
+      const response = await fetch(this.baseURL + 'login', {
         method: 'post',
         body: params,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
         redirect: 'manual',
       })
       if (response.status === 302) {

@@ -17,7 +17,6 @@ module.exports = {
                 semi: false,
             },
         ],
-        'object-curly-newline': ['errror', "never"]
     },
 
 }
