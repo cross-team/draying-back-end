@@ -30,7 +30,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    login(user: LoginInput!): LoginResponse!
+    login(user: LoginInput): LoginResponse!
   }
 
   input LoginInput {
