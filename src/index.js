@@ -41,9 +41,9 @@ server.applyMiddleware({
 })
 
 if (process.env.NODE_ENV !== 'test') {
-  // app.get('/', function(req, res) {
-  //   res.send(JSON.stringify({ Hello: 'World' }))
-  // })
+  app.get('/', function(req, res) {
+    res.send(JSON.stringify({ Hello: 'World' }))
+  })
 
   app.listen({ port }, () =>
     console.log(
