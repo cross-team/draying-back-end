@@ -36,14 +36,14 @@ const corsOptions = {
 app.use('*', cookieParser())
 server.applyMiddleware({
   app,
-  path: '/graphql',
+  path: '/',
   cors: corsOptions,
 })
 
 if (process.env.NODE_ENV !== 'test') {
-  app.get('/', function(req, res) {
-    res.send(JSON.stringify({ Hello: 'World' }))
-  })
+  // app.get('/', function(req, res) {
+  //   res.send(JSON.stringify({ Hello: 'World' }))
+  // })
 
   app.listen({ port }, () =>
     console.log(
