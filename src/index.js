@@ -41,6 +41,10 @@ server.applyMiddleware({
 })
 
 if (process.env.NODE_ENV !== 'test') {
+  app.get('/', function(req, res) {
+    res.send(JSON.stringify({ Hello: 'World' }))
+  })
+
   app.listen({ port: PORT }, () =>
     console.log(
       `🚀 app running at http://localhost:${PORT}${server.graphqlPath}`,
