@@ -36,7 +36,7 @@ const corsOptions = {
 app.use('*', cookieParser())
 server.applyMiddleware({
   app,
-  path: '/',
+  path: '/graphql',
   cors: corsOptions,
 })
 
