@@ -13,7 +13,7 @@ const dataSources = () => ({
   loginApi: new LoginApi(),
 })
 
-const PORT = 4000
+const port = process.env.PORT || 4000
 const context = ({ req, res }) => {
   const { cookies } = req
   return {
@@ -45,7 +45,7 @@ if (process.env.NODE_ENV !== 'test') {
     res.send(JSON.stringify({ Hello: 'World' }))
   })
 
-  app.listen({ port: PORT }, () =>
+  app.listen({ port }, () =>
     console.log(
       `🚀 app running at http://localhost:${PORT}${server.graphqlPath}`,
     ),
