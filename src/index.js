@@ -47,7 +47,7 @@ if (process.env.NODE_ENV !== 'test') {
 
   app.listen({ port }, () =>
     console.log(
-      `🚀 app running at http://localhost:${PORT}${server.graphqlPath}`,
+      `🚀 app running at http://localhost:${port}${server.graphqlPath}`,
     ),
   )
 }
