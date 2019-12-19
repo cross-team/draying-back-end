@@ -6,6 +6,8 @@ import DrayingApi from './datasources/draying'
 import LoginApi from './datasources/login'
 import cookieParser from 'cookie-parser'
 
+require('dotenv').config()
+
 const dataSources = () => ({
   drayingApi: new DrayingApi(),
   loginApi: new LoginApi(),
@@ -27,11 +29,15 @@ const server = new ApolloServer({
   resolvers,
 })
 const app = express()
+const corsOptions = {
+  origin: process.env.FRONT_END_URL,
+  credentials: true, // <-- REQUIRED backend setting
+}
 app.use('*', cookieParser())
-
 server.applyMiddleware({
   app,
   path: '/',
+  cors: corsOptions,
 })
 
 if (process.env.NODE_ENV !== 'test') {
@@ -40,4 +46,14 @@ if (process.env.NODE_ENV !== 'test') {
       `🚀 app running at http://localhost:${PORT}${server.graphqlPath}`,
     ),
   )
+}
+export {
+  dataSources,
+  context,
+  typeDefs,
+  resolvers,
+  ApolloServer,
+  server,
+  DrayingApi,
+  LoginApi,
 }

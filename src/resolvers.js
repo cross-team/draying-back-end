@@ -1,4 +1,5 @@
 import { paginateResults } from './utils'
+import jwt from 'jsonwebtoken'
 
 export default {
   Query: {
@@ -20,12 +21,24 @@ export default {
     },
   },
   Mutation: {
-    login: async (_, { user: { email, password } }, { dataSources }) => {
+    login: async (_, { user: { email = '', password } }, { dataSources }) => {
       const loginResponse = await dataSources.loginApi.login({
         email,
         password,
       })
-      return loginResponse
+      let token = ''
+      if (loginResponse.success) {
+        token = jwt.sign(
+          {
+            username: email,
+          },
+          process.env.JWT_KEY,
+          {
+            expiresIn: '30d', // token will expire in 30days
+          },
+        )
+      }
+      return { ...loginResponse, token, email }
     },
   },
   Draying: {

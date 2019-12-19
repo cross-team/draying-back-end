@@ -41,6 +41,8 @@ const typeDefs = gql`
   type LoginResponse {
     success: Boolean!
     message: String!
+    token: String!
+    email: String!
   }
 `
 export default typeDefs
