@@ -30,7 +30,7 @@ const server = new ApolloServer({
 })
 const app = express()
 const corsOptions = {
-  origin: process.env.FRONT_END_URL,
+  origin: process.env.FRONT_END_URL || 'https://draying.netlify.com/',
   credentials: true, // <-- REQUIRED backend setting
 }
 app.use('*', cookieParser())
