@@ -1,4 +1,4 @@
-ame: Linux_Node_Workflow_ScmCred
+name: Linux_Node_Workflow_ScmCred
 
 on:
   push:
