@@ -23,4 +23,3 @@ jobs:
       with:
         app-name: dev-draying-apollo
         publish-profile: ${{ secrets.SCM_CREDENTIALS }}
-© 2020 GitHub, Inc.
