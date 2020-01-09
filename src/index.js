@@ -29,8 +29,15 @@ const server = new ApolloServer({
   resolvers,
 })
 const app = express()
+var whitelist = process.env.WHITE_LIST || ['http://localhost:8000']
 const corsOptions = {
-  origin: process.env.FRONT_END_URL,
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   credentials: true, // <-- REQUIRED backend setting
 }
 app.use('*', cookieParser())
