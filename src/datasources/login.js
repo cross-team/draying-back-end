@@ -9,7 +9,7 @@ class LoginAPI extends RESTDataSource {
     this.baseURL = 'https://dev-mercuriotransport.azurewebsites.net/'
   }
 
-  async login({ email, password }) {
+  async login({ email, password, host }) {
     const getRequestToken = async () => {
       const fetchResponse = await fetch(this.baseURL + 'login')
       const loginForm = parse(
@@ -24,6 +24,7 @@ class LoginAPI extends RESTDataSource {
       params.append('__RequestVerificationToken', getRequestToken())
       params.append('Email', email)
       params.append('Password', password)
+      params.append('Host', host)
 
       const parseCookies = response => {
         const raw = response.headers.raw()['set-cookie']

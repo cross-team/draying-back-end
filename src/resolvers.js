@@ -21,10 +21,15 @@ export default {
     },
   },
   Mutation: {
-    login: async (_, { user: { email = '', password } }, { dataSources }) => {
+    login: async (
+      _,
+      { user: { email = '', password, host } },
+      { dataSources },
+    ) => {
       const loginResponse = await dataSources.loginApi.login({
         email,
         password,
+        host,
       })
       let token = ''
       if (loginResponse.success) {
