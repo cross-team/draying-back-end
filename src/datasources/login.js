@@ -1,31 +1,26 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
 import fetch from 'node-fetch'
-import { parse } from 'node-html-parser'
 import { URLSearchParams } from 'url'
 
 class LoginAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = 'https://dev-mercuriotransport.azurewebsites.net/'
+    this.baseURL = process.env.DRAYING_API_URL
   }
 
   async login({ email, password, host }) {
     const getRequestToken = async () => {
-      const fetchResponse = await fetch(this.baseURL + 'login')
-      const loginForm = parse(
-        await fetchResponse.text({
-          type: 'text/html',
-        }),
-      ).querySelector('#loginForm')
-      return loginForm.firstChild.attributes.value
+      const fetchResponse = await fetch(
+        this.baseURL + 'login/api/v1/account/AntiForgeryToken',
+      )
+      return (await fetchResponse.text()).replace(`"`, '')
     }
     const authenticate = async () => {
-      const params = new URLSearchParams()
-      params.append('__RequestVerificationToken', getRequestToken())
-      params.append('Email', email)
-      params.append('Password', password)
-      params.append('Host', host)
-
+      const body = {
+        Email: email,
+        Password: password,
+        Host: host,
+      }
       const parseCookies = response => {
         const raw = response.headers.raw()['set-cookie']
         return raw.map(entry => {
@@ -34,11 +29,22 @@ class LoginAPI extends RESTDataSource {
           return cookiePart
         })
       }
-      const response = await fetch(this.baseURL + 'login', {
-        method: 'post',
-        body: params,
-        redirect: 'manual',
-      })
+      const headers = {
+        'X-XSRF-Token': await getRequestToken(),
+        'Content-Type': 'application/json',
+      }
+      const response = await fetch(
+        this.baseURL + 'login/api/v1/account/login',
+        {
+          method: 'post',
+          body: JSON.stringify(body),
+          headers,
+        },
+      )
+      console.log(headers['X-XSRF-Token'])
+
+      console.log(await response.json())
+
       if (response.status === 302) {
         return {
           success: true,

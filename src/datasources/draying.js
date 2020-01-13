@@ -3,7 +3,7 @@ import { RESTDataSource } from 'apollo-datasource-rest'
 class DrayingAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = 'https://dev-mercuriotransport.azurewebsites.net/api/v1/'
+    this.baseURL = `${process.env.DRAYING_API_URL}api/v1/`
   }
 
   willSendRequest(request) {
