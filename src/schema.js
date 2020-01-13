@@ -6,26 +6,52 @@ const typeDefs = gql`
       """
       The number of results to show. Must be >= 1. Default = 20
       """
-      pageSize: Int
+      first: Int
+      last: Int
       """
       If you add a cursor here, it will only return results _after_ this cursor
       """
+      before: String
       after: String
     ): DrayingConnection!
   }
 
   type DrayingConnection {
-    cursor: String!
-    hasMore: Boolean!
-    drayings: [Draying]!
+    pageInfo: PageInfo!
+    edges: [DrayingEdge]
+    nodes: [Draying]!
+    totalCount: Int!
   }
 
-  type Draying {
+  type PageInfo {
+    endCursor: String
+
+    hasNextPage: Boolean!
+
+    hasPreviousPage: Boolean!
+
+    startCursor: String
+  }
+
+  type DrayingEdge {
+    node: Node!
+    cursor: String!
+  }
+
+  type Draying implements Node {
     id: ID!
     order: Order!
   }
 
-  type Order {
+  type Order implements Node {
+    id: ID!
+  }
+
+  interface Node {
+    id: ID!
+  }
+
+  type Route {
     id: ID!
   }
 
