@@ -1,4 +1,4 @@
-import { paginateResults, fromCursorHash, pageInfoReducer } from './utils'
+import { paginateResults, pageInfoReducer } from './utils'
 import jwt from 'jsonwebtoken'
 
 export default {
@@ -13,6 +13,21 @@ export default {
         results: allDrayings,
       })
       return pageInfoReducer(drayings, allDrayings)
+    },
+    driversCapacity: async (
+      _,
+      { before, after, first, last },
+      { dataSources },
+    ) => {
+      const allDrivers = await dataSources.drayingApi.getDriversCapacity()
+      const drivers = paginateResults({
+        before,
+        after,
+        first,
+        last,
+        results: allDrivers,
+      })
+      return pageInfoReducer(drivers, allDrivers)
     },
   },
   Mutation: {
