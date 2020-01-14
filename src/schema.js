@@ -128,12 +128,12 @@ const typeDefs = gql`
   }
 
   type DrayingEdge {
-    node: Node!
+    node: Draying!
     cursor: String!
   }
 
   type DriversCapacityEdge {
-    node: Node!
+    node: Driver!
     cursor: String!
   }
 
