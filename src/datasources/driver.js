@@ -124,7 +124,7 @@ class DriverAPI extends RESTDataSource {
   }
 
   async getDriversCapacity({
-    date = '1/13/2020',
+    date,
     orderBy = 'name',
     sortAsc = true,
     driverName,
