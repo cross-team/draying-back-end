@@ -16,10 +16,15 @@ export default {
     },
     driversCapacity: async (
       _,
-      { before, after, first, last },
+      { date, orderBy, sortAsc, driverName, before, after, first, last },
       { dataSources },
     ) => {
-      const allDrivers = await dataSources.drayingApi.getDriversCapacity()
+      const allDrivers = await dataSources.driverApi.getDriversCapacity({
+        date,
+        orderBy,
+        sortAsc,
+        driverName,
+      })
       const drivers = paginateResults({
         before,
         after,
