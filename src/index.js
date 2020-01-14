@@ -3,6 +3,7 @@ import { ApolloServer } from 'apollo-server-express'
 import typeDefs from './schema'
 import resolvers from './resolvers'
 import DrayingApi from './datasources/draying'
+import DriverApi from './datasources/driver'
 import LoginApi from './datasources/login'
 import cookieParser from 'cookie-parser'
 
@@ -11,6 +12,7 @@ require('dotenv').config()
 const dataSources = () => ({
   drayingApi: new DrayingApi(),
   loginApi: new LoginApi(),
+  driverApi: new DriverApi(),
 })
 
 const port = process.env.PORT || 4000
