@@ -371,6 +371,9 @@ const typeDefs = gql`
 
   type Mutation {
     login(user: LoginInput): LoginResponse!
+    sendResetPasswordEmail(user: SendResetPasswordEmailInput): LoginResponse!
+    resetPassword(user: ResetPasswordInput): LoginResponse!
+    changePassword(user: ChangePasswordInput): LoginResponse!
   }
 
   input LoginInput {
@@ -382,8 +385,28 @@ const typeDefs = gql`
   type LoginResponse {
     success: Boolean!
     message: String!
-    token: String!
+    token: String
+    email: String
+  }
+
+  input SendResetPasswordEmailInput {
+    host: String!
     email: String!
+  }
+
+  input ResetPasswordInput {
+    host: String!
+    email: String!
+    password: String!
+    confirmPassword: String!
+    userId: String!
+    code: String!
+  }
+  input ChangePasswordInput {
+    host: String!
+    oldPassword: String!
+    newPassword: String!
+    confirmPassword: String!
   }
 `
 export default typeDefs

@@ -60,6 +60,13 @@ export default {
       }
       return { ...loginResponse, token, email }
     },
+    sendResetPasswordEmail: async (_, { host, email }, { dataSources }) => {
+      const response = await dataSources.loginApi.sendResetPasswordEmail({
+        host,
+        email,
+      })
+      return { ...response }
+    },
   },
   Draying: {
     order: draying => {

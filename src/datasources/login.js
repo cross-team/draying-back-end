@@ -71,5 +71,34 @@ class LoginAPI extends RESTDataSource {
       message,
     }
   }
+
+  async sendResetPasswordEmail({ host, email }) {
+    const body = {
+      Host: host,
+      Email: email,
+    }
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    const response = await fetch(
+      this.baseURL + 'login/api/v1/account/forgotpassword',
+      {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers,
+      },
+    )
+    const data = await response.json()
+    if (response.ok) {
+      return {
+        success: true,
+        message: 'Success!',
+      }
+    }
+    return {
+      success: false,
+      message: 'Oops, something went wrong.',
+    }
+  }
 }
 export default LoginAPI
