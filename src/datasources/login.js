@@ -1,6 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
 import fetch from 'node-fetch'
-import { URLSearchParams } from 'url'
 
 class LoginAPI extends RESTDataSource {
   constructor() {
@@ -9,11 +8,20 @@ class LoginAPI extends RESTDataSource {
   }
 
   async login({ email, password, host }) {
+    const parseCookies = response => {
+      const raw = response.headers.raw()['set-cookie']
+      return raw.map(entry => {
+        const parts = entry.split(';')
+        const cookiePart = parts[0]
+        return cookiePart
+      })
+    }
     const getRequestToken = async () => {
       const fetchResponse = await fetch(
         this.baseURL + 'login/api/v1/account/AntiForgeryToken',
       )
-      return (await fetchResponse.text()).replace(`"`, '')
+      const requestCookie = parseCookies(fetchResponse)
+      return [(await fetchResponse.text()).replace(/"/g, ''), requestCookie[0]]
     }
     const authenticate = async () => {
       const body = {
@@ -21,18 +29,14 @@ class LoginAPI extends RESTDataSource {
         Password: password,
         Host: host,
       }
-      const parseCookies = response => {
-        const raw = response.headers.raw()['set-cookie']
-        return raw.map(entry => {
-          const parts = entry.split(';')
-          const cookiePart = parts[0]
-          return cookiePart
-        })
-      }
+
+      const [requestToken, requestCookie] = await getRequestToken()
       const headers = {
-        'X-XSRF-Token': await getRequestToken(),
+        'X-XSRF-Token': requestToken,
         'Content-Type': 'application/json',
+        Cookie: requestCookie,
       }
+
       const response = await fetch(
         this.baseURL + 'login/api/v1/account/login',
         {
@@ -41,20 +45,18 @@ class LoginAPI extends RESTDataSource {
           headers,
         },
       )
-      console.log(headers['X-XSRF-Token'])
 
-      console.log(await response.json())
-
-      if (response.status === 302) {
+      const { status, message } = await response.json()
+      if (response.ok) {
         return {
-          success: true,
+          success: status,
           cookies: parseCookies(response),
           message: 'Success!',
         }
       }
       return {
-        success: false,
-        message: 'Oops something went wrong',
+        success: status,
+        message,
       }
     }
 
