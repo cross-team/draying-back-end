@@ -478,4 +478,6 @@ export const tripStatusReducer = status => ({
   active: status.Active,
 })
 
-export const vehicleReducer = vehicle => ({})
+export const vehicleReducer = vehicle => ({
+  id: vehicle.VehicleId,
+})
