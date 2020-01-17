@@ -5,6 +5,7 @@ import resolvers from './resolvers'
 import DrayingApi from './datasources/draying'
 import DriverApi from './datasources/driver'
 import LoginApi from './datasources/login'
+import RouteApi from './datasources/route'
 import cookieParser from 'cookie-parser'
 
 require('dotenv').config()
@@ -13,6 +14,7 @@ const dataSources = () => ({
   drayingApi: new DrayingApi(),
   loginApi: new LoginApi(),
   driverApi: new DriverApi(),
+  routeApi: new RouteApi(),
 })
 
 const port = process.env.PORT || 4000

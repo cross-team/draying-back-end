@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-
+import { tripLocationReducer } from './reducers'
 class DriverAPI extends RESTDataSource {
   constructor() {
     super()
@@ -14,74 +14,10 @@ class DriverAPI extends RESTDataSource {
   }
 
   driversCapacityReducer(driver) {
-    const locationReducer = location => ({
-      id: location.DrayingTripLocationId,
-      action: {
-        id: location.DrayingActionId,
-        name: location.DrayingAction,
-      },
-      driver: {
-        id: location.DriverId,
-      },
-      nickName: location.LocationNickName
-        ? {
-            id: location.LocationNickName.LocationNickNameId,
-            name: location.LocationNickName.NickName,
-            partial: location.LocationNickName.Partial,
-            modifiedBy: location.LocationNickName.ModifiedBy,
-            locationId: location.LocationNickName.LocationId,
-            locStreet: location.LocationNickName.LocStreet,
-            locSuite: location.LocationNickName.LocSuite,
-            locCity: location.LocationNickName.LocCity,
-            locZip: location.LocationNickName.LocZip,
-            locState: location.LocationNickName.LocState,
-            locCountry: location.LocationNickName.LocCountry,
-            googleAddress: location.LocationNickName.GoogleAddress,
-            latitude: location.LocationNickName.Latitude,
-            longitude: location.LocationNickName.Longitude,
-          }
-        : null,
-      vehicle: {
-        id: location.VehicleId,
-        name: location.Vehicle,
-      },
-      trip: {
-        id: location.DrayingTripId,
-      },
-      order: {
-        id: location.Order,
-      },
-      state: {
-        id: location.LocationStateID,
-      },
-      enRouteAt: location.EnRouteAt,
-      arrivedAt: location.ArrivedAt,
-      completedAt: location.CompletedAt,
-      skippedAt: location.SkippedAt,
-      scheduledArrivalAt: location.ScheduledArrivalAt,
-      scheduledCompletedAt: location.ScheduledCompletedAt,
-      estimatedScheduledArrivalAt: location.EstimatedScheduledArrivalAt,
-      estimatedScheduledCompletedAt: location.EstimatedScheduledCompletedAt,
-      estimatedWaitingTime: location.EstimatedWaitingTime,
-      locationType: {
-        id: location.LocationTypeId,
-      },
-      travelMiles: location.TravelMiles,
-      travelTime: location.TravelTime,
-      estimatedTravelMiles: location.EstimatedTravelMiles,
-      estimatedTravelTime: location.EstimatedTravelTime,
-      notes: location.Notes,
-      modifiedBy: location.ModifiedBy,
-      modifiedOn: location.ModifiedOn,
-      createdBy: location.CreatedBy,
-      createdOn: location.CreatedOn,
-    })
     const locationsReducer = locations => {
-      return locations
-        ? locations.map(location => locationReducer(location))
-        : null
+      return locations ? locations.map(tripLocationReducer) : null
     }
-    const tripReducer = trip =>
+    const tripCapacityReducer = trip =>
       trip
         ? {
             id:
@@ -102,10 +38,10 @@ class DriverAPI extends RESTDataSource {
             endTrip: trip.endTrip,
             progress: trip.Progress,
             currentDestination: trip.CurrentDestination
-              ? locationReducer(trip.CurrentDestination)
+              ? tripLocationReducer(trip.CurrentDestination)
               : null,
             lastDestination: trip.LastDestination
-              ? locationReducer(trip.LastDestination)
+              ? tripLocationReducer(trip.LastDestination)
               : null,
           }
         : null
@@ -119,7 +55,7 @@ class DriverAPI extends RESTDataSource {
       endDateTime: driver.EndDateTime,
       capacity: driver.Capacity,
       pendingTripsCount: driver.PendingDrayingTripsCount,
-      trip: tripReducer(driver.DrayingTrip),
+      trip: tripCapacityReducer(driver.DrayingTrip),
     }
   }
 
