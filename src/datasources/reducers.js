@@ -425,7 +425,7 @@ export const tripActionLocationReducer = actionLocation => ({
   id: actionLocation.TripActionLocationId,
 })
 
-const tripLocationReducer = location => ({
+export const tripLocationReducer = location => ({
   id: location.DrayingTripLocationId,
   action: location.DrayingAction
     ? drayingActionReducer(location.DrayingAction)
