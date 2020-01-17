@@ -14,8 +14,39 @@ class RouteApi extends RESTDataSource {
     )
   }
 
-  async getRoute() {
-    const { data } = await this.get('Route')
+  async getDriverRoute({ driverId, fromDate, toDate, pending, orderBy }) {
+    let queryParams = {
+      DriverId: driverId,
+    }
+
+    if (fromDate) {
+      queryParams = {
+        ...queryParams,
+        FromDate: fromDate,
+      }
+    }
+
+    if (toDate) {
+      queryParams = {
+        ...queryParams,
+        ToDate: toDate,
+      }
+    }
+
+    if (pending) {
+      queryParams = {
+        ...queryParams,
+        ShowPending: pending,
+      }
+    }
+
+    if (orderBy) {
+      queryParams = {
+        ...queryParams,
+        OrderBy: orderBy,
+      }
+    }
+    const { data } = await this.get('Route', queryParams)
     let routes = []
     if (data) {
       routes = data

@@ -65,7 +65,7 @@ const typeDefs = gql`
     If today is provided or no date is provided, then it returns all pending trips
     past, present, or future
     """
-    route(
+    driverRoute(
       """
       Id of the driver to retrieve the route for (required)
       """
@@ -74,8 +74,14 @@ const typeDefs = gql`
       If today is provided or no date is provided, then it returns all pending trips
       past, present, or future
       """
-      date: String
-    ): Route!
+      fromDate: String
+      """
+
+      """
+      toDate: String
+      pending: Boolean
+      orderBy: OrderBy
+    ): [Route]!
   }
 
   enum OrderBy {
@@ -83,77 +89,15 @@ const typeDefs = gql`
     CAPACITY
   }
 
-  type DrayingConnection {
-    """
-    Information to aid in pagination.
-    """
-    pageInfo: PageInfo!
-    """
-    A list of Edges
-    """
-    edges: [DrayingEdge]
-    """
-    A list of Nodes
-    """
-    nodes: [Draying]!
-    """
-    Identifies the total count of items in the connection.
-    """
-    totalCount: Int!
-  }
-
-  type DriversCapacityConnection {
-    """
-    Information to aid in pagination.
-    """
-    pageInfo: PageInfo!
-    """
-    A list of Edges
-    """
-    edges: [DriversCapacityEdge]
-    """
-    A list of Nodes
-    """
-    nodes: [Driver]!
-    """
-    Identifies the total count of items in the connection.
-    """
-    totalCount: Int!
-  }
-
-  """
-  Information about pagination in a connection.
-  """
-  type PageInfo {
-    """
-    When paginating forwards, the cursor to continue.
-    """
-    endCursor: String
-    """
-    When paginating forwards, are there more items?
-    """
-    hasNextPage: Boolean!
-    """
-    When paginating backwards, are there more items?
-    """
-    hasPreviousPage: Boolean!
-    """
-    When paginating backwards, the cursor to continue.
-    """
-    startCursor: String
-  }
-
-  type DrayingEdge {
-    node: Draying!
-    cursor: String!
-  }
-
-  type DriversCapacityEdge {
-    node: Driver!
-    cursor: String!
+  type DrayingAppointment implements Node {
+    id: ID!
   }
 
   type Booking implements Node {
+    id: ID!
+  }
+
+  type Carrier implements Node {
     id: ID!
   }
 
@@ -185,32 +129,58 @@ const typeDefs = gql`
     clientOrderTemplateId: Int
     deliveryOrder: [Int]
     quotes: [Int]
-    clientContacts: Contact
-    # "ModifiedBy": null,
-    # "ModifiedOn": null,
-    # "LegalName": null,
-    # "EIN": null,
-    # "LocationAddressId": null,
-    # "BillingAddressId": null,
-    # "TermId": null,
-    # "ClientPriorityId": null,
-    # "InvoiceEmails": null,
-    # "NotificationEmails": null,
-    # "CompanyId": null,
-    # "CompanyRelatedId": null,
-    # "ClientOrderTemplateId": 0,
-    # "LocationAddress": null,
-    # "BillingAddress": null,
-    # "Term": null,
-    # "ClientPriotity": null,
-    # "ClientOrderTemplate": null,
-    # "ClientType": null,
-    # "DeliveryOrders": [],
-    # "Quotes": [],
-    # "ClientContacts": []
+    clientContacts: [Contact]
   }
   type Contact implements Node {
     id: ID!
+  }
+
+  type ContainerSize implements Node {
+    id: ID!
+    name: String
+    size: Int
+  }
+
+  type ContainerType implements Node {
+    id: ID!
+    name: String
+    shortName: String
+    order: Int
+    active: Boolean
+  }
+
+  type ContainerStage implements Node {
+    id: ID!
+  }
+
+  type Cost implements Node {
+    id: ID!
+    type: String
+    reason: String
+  }
+
+  type DeliveryLocation implements Node {
+    id: ID!
+    location: Location
+    isDefault: Boolean
+    active: Boolean
+    locationType: LocationType
+    receivingHoursOpen: String
+    receivingHoursClose: String
+    nickName: LocationNickName
+    partial: Boolean
+    deliveryContacts: [Contact]
+    deliveryOrders: [String]
+    drayings: [Draying]
+    locStreet: String
+    locSuite: String
+    locCity: String
+    locZip: String
+    locState: String
+    locCountry: String
+    googleAddress: String
+    latitude: Float
+    longitude: Float
   }
 
   """
@@ -229,8 +199,8 @@ const typeDefs = gql`
     Contianer name
     """
     container: String
-    containerSize: ContainerSize
-    containerType: ContainerType
+    containerSize: String
+    containerType: String
     """
     Estimated date and time container is availble
     """
@@ -293,7 +263,7 @@ const typeDefs = gql`
     """
     container stages (review, completed, )
     """
-    stage: String
+    stage: ContainerStage
     """
     Carrier code (Standard carrier code)
     """
@@ -395,7 +365,7 @@ const typeDefs = gql`
     """
     Container status (hold, avialble, returned...)
     """
-    containerPortStatus: String
+    portStatus: PortStatus
     """
     The container can not be dispatched
     """
@@ -403,7 +373,7 @@ const typeDefs = gql`
     """
     Import/export from lookup table
     """
-    loadTypeId: Int
+    loadType: LoadType
     """
     Shiping company
     """
@@ -419,7 +389,7 @@ const typeDefs = gql`
     """
     Number between > 0 which represents the priority, the greater the number, the higher the priority
     """
-    priority: Int
+    priority: Float
     """
     Last day possible to retrieve container
     """
@@ -439,7 +409,7 @@ const typeDefs = gql`
     """
     location types (Depot, yard, Yard)
     """
-    currentLocation: LocationType
+    currentLocationType: LocationType
     """
     Last possible day to deliver to client
     """
@@ -570,64 +540,236 @@ const typeDefs = gql`
     """
     carrier: Carrier
   }
-  type Carrier implements Node {
+
+  type DrayingAlert implements Node {
     id: ID!
+  }
+
+  type DrayingConnection {
+    """
+    Information to aid in pagination.
+    """
+    pageInfo: PageInfo!
+    """
+    A list of Edges
+    """
+    edges: [DrayingEdge]
+    """
+    A list of Nodes
+    """
+    nodes: [Draying]!
+    """
+    Identifies the total count of items in the connection.
+    """
+    totalCount: Int!
+  }
+
+  type DriversCapacityConnection {
+    """
+    Information to aid in pagination.
+    """
+    pageInfo: PageInfo!
+    """
+    A list of Edges
+    """
+    edges: [DriversCapacityEdge]
+    """
+    A list of Nodes
+    """
+    nodes: [Driver]!
+    """
+    Identifies the total count of items in the connection.
+    """
+    totalCount: Int!
+  }
+  type DriversCapacityEdge {
+    node: Driver!
+    cursor: String!
   }
 
   type DrayingRoundTrips implements Node {
     id: ID!
   }
 
-  """
-  Location object with information specific to a  terminal
-  """
-  type TerminalLocation implements Node {
-    id: ID!
-    location: Location
-    # "TerminalLocationId": 0,
-    # "ShortName": "SFCT",
-    # "IsDefault": false,
-    # "Active": false,
-    # "LocationTypeId": 0,
-    # "Radius": null,
-    # "ModifiedBy": 0,
-    # "ModifiedOn": "0001-01-01T00:00:00",
-    # "AutoLoad": false,
-    # "LocationNickNameId": null,
-    # "IsTerminal": false,
-    # "IsDepot": false,
-    # "DrayingTimeActionTerminals": null,
-    # "TerminalLocationHours": null,
-    # "NickName": "South Florida Container Terminal",
-    # "LocationId": 0,
-    # "LocStreet": null,
-    # "LocSuite": null,
-    # "LocCity": null,
-    # "LocZip": null,
-    # "LocState": null,
-    # "LocCountry": null,
-    # "GoogleAddress": null,
-    # "Latitude": null,
-    # "Longitude": null
+  type DrayingEdge {
+    node: Draying!
+    cursor: String!
   }
 
-  type Appointment implements Node {
+  type Driver implements Node {
     id: ID!
+    firstName: String!
+    lastName: String!
+    """
+    Is driver active and can be assinged trips
+    """
+    active: Boolean!
+    """
+    Hours worked daily by a driver, used to calucate how many hours available
+    """
+    dailyWorkHours: Float!
+    """
+    Date and time the driver starts the route for the day queried (default: today)
+    """
+    startDateTime: String
+    """
+    Date and time the driver ends the route for the day queried (default: today)
+    """
+    endDateTime: String
+    """
+    Percentage of capacity occupied
+    """
+    capacity: Float!
+    """
+    Current active trip not yet completed
+    """
+    trip: TripCapacity
+    """
+    Remaining trips for the date queried
+    """
+    pendingTripsCount: Int
+
+    phone: String
+    defaultStartingHoS: String
+    userName: String
+    licenseNumber: String
+    licenseState: String
+    eldExempt: String
+    eldExemptReason: String
+    eldBigDayExemptionEnabled: Boolean
+    eldAdverseWeatherExemptionEnabled: Boolean
+    eldPcEnabled: Boolean
+    eldYmEnabled: Boolean
+    eldDayStartHour: String
+    vehicle: Vehicle
+    isDeactivated: Boolean
+    driverUserId: Int
+    saturdayShift: Boolean
+    weeklyWorkHours: Float
+    workRadius: Int
+    baseWeeklySalary: Float
+    salaryPerMile: Float
+    salaryPerTripDelivered: Float
+    defaultYard: LocationNickName
+    homeAddress: LocationNickName
+    defaultVehicle: Vehicle
+    ownerOperator: Boolean
+    modifiedBy: Int
+    modifiedOn: String
+    createdBy: Int
+    createdOn: String
+    carrier: Carrier
+    eLDTokenCarrierId: Int
+    isSmartTrucking: Boolean
+    companyId: Int
   }
 
-  type ShippingLine implements Node {
+  ## extra delivery locations, links between different locations
+  type ExtraStops implements Node {
+    id: ID!
+    draying: Draying
+    """
+    Address information about a company
+    """
+    deliveryLocation: DeliveryLocation
+    order: Order
+    status: TripStatus
+    createdOn: String
+    createdBy: String
+    modifiedOn: String
+    modifiedBy: String
+  }
+
+  type LoadType implements Node {
     id: ID!
     name: String
     shortName: String
+  }
+
+  type Location implements Node {
+    id: ID!
+    nickName: LocationNickName
+    preferred: Boolean
+    partial: Boolean
+    contactName: String
+    contactPhone: String
+    modifiedBy: Int
+    locStreet: String
+    locSuite: String
+    locCity: String
+    locZip: String
+    locState: String
+    locCountry: String
+    googleAddress: String
+    latitude: Float
+    longitude: Float
+  }
+
+  type LocationState implements Node {
+    id: ID!
+    name: String
+    shortName: String
+    active: Boolean
+  }
+  type LocationType implements Node {
+    id: ID!
+    name: String
+  }
+  type LocationNickName implements Node {
+    id: ID!
+    name: String
+    partial: Boolean
+    modifiedBy: String
+    locationId: Int
+    locStreet: String
+    locSuite: String
+    locCity: String
+    locZip: Int
+    locState: String
+    locCountry: String
+    googleAddress: String
+    latitude: Float
+    longitude: Float
+  }
+
+  interface Node {
+    id: ID!
   }
 
   type Order implements Node {
     id: ID!
   }
 
-  interface Node {
-    id: ID!
+  """
+  Information about pagination in a connection.
+  """
+  type PageInfo {
+    """
+    When paginating forwards, the cursor to continue.
+    """
+    endCursor: String
+    """
+    When paginating forwards, are there more items?
+    """
+    hasNextPage: Boolean!
+    """
+    When paginating backwards, are there more items?
+    """
+    hasPreviousPage: Boolean!
+    """
+    When paginating backwards, the cursor to continue.
+    """
+    startCursor: String
   }
+
+  type PortStatus implements Node {
+    id: ID!
+    name: String
+    shortName: String
+    order: Int
+    active: Boolean
+  }
+
   """
   Returns information about trips for a certain driver on a certain date
   """
@@ -751,11 +893,7 @@ const typeDefs = gql`
     """
     Container
     """
-    deliveryOrderDraying: Draying
-    """
-    Trip status
-    """
-    status: TripStatus
+    draying: Draying
     """
     extras stops for the trip
     """
@@ -774,6 +912,44 @@ const typeDefs = gql`
     locations: [TripLocation]
   }
 
+  type ShippingLine implements Node {
+    id: ID!
+    name: String
+    shortName: String
+    url: String
+    active: Boolean
+  }
+
+  """
+  Location object with information specific to a  terminal
+  """
+  type TerminalLocation implements Node {
+    id: ID!
+    location: Location
+    shortName: String
+    isDefault: Boolean
+    active: Boolean
+    locationType: LocationType
+    radius: String
+    modifiedBy: Int
+    modifiedOn: String
+    autoLoad: Boolean
+    nickName: String
+    isTerminal: Boolean
+    isDeport: Boolean
+    drayingTimeActionTerminals: String
+    terminalLocationHours: String
+    locStreet: String
+    locSuite: String
+    locCity: String
+    locZip: String
+    locState: String
+    locCountry: String
+    googleAddress: String
+    latitude: Float
+    longitude: Float
+  }
+
   type TripActionLocation implements Node {
     id: ID!
   }
@@ -787,119 +963,6 @@ const typeDefs = gql`
     name: String
     order: Order
     status: Boolean
-  }
-
-  type Cost implements Node {
-    id: ID!
-    type: String
-    reason: String
-  }
-  ## extra delivery locations, links between different locations
-  type ExtraStops implements Node {
-    id: ID!
-    draying: Draying
-    """
-    Address information about a company
-    """
-    deliveryLocation: DeliveryLocation
-    order: Order
-    status: TripStatus
-    createdOn: String
-    createdBy: String
-    modifiedOn: String
-    modifiedBy: String
-  }
-
-  type DeliveryLocation implements Node {
-    id: ID!
-    location: Location
-    # "IsDefault": false,
-    # "Active": false,
-    # "LocationTypeId": 0,
-    # "LocationTypeName": null,
-    # "ReceivingHoursOpen": null,
-    # "ReceivingHoursClose": null,
-    # "LocationNickNameId": null,
-    # "Partial": false,
-    # "DeliveryContacts": [],
-    # "DeliveryPlace": null,
-    # "DeliveryOrders": [],
-    # "DeliveryOrderDrayings": [],
-    # "NickName": "Test Address",
-    # "LocationId": 0,
-    # "LocStreet": null,
-    # "LocSuite": null,
-    # "LocCity": null,
-    # "LocZip": null,
-    # "LocState": null,
-    # "LocCountry": null,
-    # "GoogleAddress": null,
-    # "Latitude": null,
-    # "Longitude": null
-  }
-
-  type DeliveryOrderDraying implements Node {
-    id: ID!
-    locationNickName: LocationNickName
-  }
-
-  type TerminalLocation implements Node {
-    id: ID!
-  }
-
-  type Location implements Node {
-    id: ID!
-    #   "LocationNickNameId": 0,
-    #   "Preferred": true,
-    #   "Partial": false,
-    #   "ContactName": null,
-    #   "ContactPhone": null,
-    #   "ModifiedBy": null,
-    #   "NickName": null,
-    #   "LocationId": 0,
-    #   "LocStreet": null,
-    #   "LocSuite": null,
-    #   "LocCity": null,
-    #   "LocZip": null,
-    #   "LocState": null,
-    #   "LocCountry": null,
-    #   "GoogleAddress": null,
-    #   "Latitude": null,
-    #   "Longitude": null
-  }
-
-  type Driver implements Node {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    """
-    Is driver active and can be assinged trips
-    """
-    active: Boolean!
-    """
-    Hours worked daily by a driver, used to calucate how many hours available
-    """
-    dailyWorkHours: Float!
-    """
-    Date and time the driver starts the route for the day queried (default: today)
-    """
-    startDateTime: String
-    """
-    Date and time the driver ends the route for the day queried (default: today)
-    """
-    endDateTime: String
-    """
-    Percentage of capacity occupied
-    """
-    capacity: Float!
-    """
-    Current active trip not yet completed
-    """
-    trip: TripCapacity
-    """
-    Remaining trips for the date queried
-    """
-    pendingTripsCount: Int
   }
 
   type TripAction implements Node {
@@ -1051,42 +1114,7 @@ const typeDefs = gql`
     createdOn: String
   }
 
-  type LocationState implements Node {
-    id: ID!
-    name: String
-    shortName: String
-    active: Boolean
-  }
-  type LocationType implements Node {
-    id: ID!
-    name: String
-  }
-  type LocationNickName implements Node {
-    id: ID!
-    name: String
-    partial: Boolean
-    modifiedBy: String
-    locationId: Int
-    locStreet: String
-    locSuite: String
-    locCity: String
-    locZip: Int
-    locState: String
-    locCountry: String
-    googleAddress: String
-    latitude: Float
-    longitude: Float
-  }
-
-  type Booking implements Node {
-    id: ID!
-  }
-
   type Vehicle implements Node {
-    id: ID!
-  }
-
-  type DispatchJob implements Node {
     id: ID!
   }
 

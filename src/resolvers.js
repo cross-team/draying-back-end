@@ -34,6 +34,20 @@ export default {
       })
       return pageInfoReducer(drivers, allDrivers)
     },
+    driverRoute: async (
+      _,
+      { driverId, fromDate, toDate, pending, orderBy },
+      { dataSources },
+    ) => {
+      const route = await dataSources.routeApi.getDriverRoute({
+        driverId,
+        fromDate,
+        toDate,
+        pending,
+        orderBy,
+      })
+      return route
+    },
   },
   Mutation: {
     login: async (
