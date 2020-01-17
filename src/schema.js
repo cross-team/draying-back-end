@@ -28,7 +28,7 @@ const typeDefs = gql`
     """
     driversCapacity(
       """
-      date to retrive capacity for
+      date to retrive capacity for example -"1/13/2020"
       """
       date: String
       """
@@ -60,6 +60,22 @@ const typeDefs = gql`
       """
       after: String
     ): DriversCapacityConnection!
+    """
+    Returns trips for a certain driver for a certain day, today if no day is provided.
+    If today is provided or no date is provided, then it returns all pending trips
+    past, present, or future
+    """
+    route(
+      """
+      Id of the driver to retrieve the route for (required)
+      """
+      driverId: String
+      """
+      If today is provided or no date is provided, then it returns all pending trips
+      past, present, or future
+      """
+      date: String
+    ): Route!
   }
 
   enum OrderBy {
@@ -137,9 +153,472 @@ const typeDefs = gql`
     cursor: String!
   }
 
+  type Booking implements Node {
+    id: ID!
+  }
+
+  type Client implements Node {
+    id: ID!
+    companyName: String
+    note: String
+    isActive: Boolean
+    clientTypeId: Int
+    clientCode: String
+    """
+    "0001-01-01T00:00:00",
+    """
+    createdOn: String
+    createdBy: Int
+    active: Boolean
+    modifiedBy: Int
+    modifiedOn: String
+    legalName: String
+    EIN: String
+    locationAddressId: Int
+    billingAddressId: Int
+    termId: Int
+    clientPriorityId: Int
+    invoiceEmails: String
+    notificationEmails: String
+    companyId: Int
+    companyRelatedId: Int
+    clientOrderTemplateId: Int
+    deliveryOrder: [Int]
+    quotes: [Int]
+    clientContacts: Contact
+    # "ModifiedBy": null,
+    # "ModifiedOn": null,
+    # "LegalName": null,
+    # "EIN": null,
+    # "LocationAddressId": null,
+    # "BillingAddressId": null,
+    # "TermId": null,
+    # "ClientPriorityId": null,
+    # "InvoiceEmails": null,
+    # "NotificationEmails": null,
+    # "CompanyId": null,
+    # "CompanyRelatedId": null,
+    # "ClientOrderTemplateId": 0,
+    # "LocationAddress": null,
+    # "BillingAddress": null,
+    # "Term": null,
+    # "ClientPriotity": null,
+    # "ClientOrderTemplate": null,
+    # "ClientType": null,
+    # "DeliveryOrders": [],
+    # "Quotes": [],
+    # "ClientContacts": []
+  }
+  type Contact implements Node {
+    id: ID!
+  }
+
+  """
+  A container
+  """
   type Draying implements Node {
     id: ID!
-    order: Order!
+    order: Order
+    client: Client
+    DeliveryLocation: DeliveryLocation
+    """
+    Booking ID
+    """
+    booking: String
+    """
+    Contianer name
+    """
+    container: String
+    containerSize: ContainerSize
+    containerType: ContainerType
+    """
+    Estimated date and time container is availble
+    """
+    estimateAvailableOn: String
+    """
+    Last possible day the container is free of charge while at port
+    """
+    lastFreeDay: String
+    """
+    Days after adquieried cotainers to return of the pull date
+    """
+    daysToReturn: String
+    """
+    Last possible day to return
+    """
+    lastDayToReturn: String
+    """
+    Does the container have a hold
+    """
+    holds: Boolean
+    """
+    Estimated date and time container is availble
+    """
+    line: String
+
+    feesDues: Float
+    feesPaid: Float
+    preGate: String
+    yardLocation: String
+    yardStatus: String
+    loadEmpty: Boolean
+    """
+    The container's weight
+    """
+    weight: Float
+    """
+    Information about dimensions
+    """
+    overDimension: String
+    """
+    Hazmat description
+    """
+    hazmat: String
+    """
+    Information about the vessel
+    """
+    voyageCode: String
+    """
+    Information about the vessel
+    """
+    lloydsNo: String
+    """
+    Information about the vessel
+    """
+    vesselName: String
+    """
+    Date and time estimated discharge
+    """
+    estimateDischarge: String
+    """
+    container stages (review, completed, )
+    """
+    stage: String
+    """
+    Carrier code (Standard carrier code)
+    """
+    SCAC: String
+    """
+    Earliest date the container can be returned
+    """
+    earlyReturnDate: String
+    createdOn: String
+    createdBy: Int
+    modifiedOn: String
+    modifiedBy: Int
+    """
+    Main price depending on live or drop (set by dispatcher)
+    """
+    price: Float
+    """
+    Price suggested for live or drop (calculated by the API)
+    """
+    priceSuggested: Float
+    """
+    Day requested by client the container be stored
+    """
+    daysStorage: Int
+    """
+    Is the container planned as live or drop
+    """
+    isLive: Boolean
+    """
+    Has the client request the container to be pre-pulled
+    """
+    prePull: Boolean
+    """
+    Before returning to port, does the container need to be returned to the
+    yard (planificaiton stage)
+    """
+    yardStop: Boolean
+    """
+    When sharing chassis between trucking companies
+    """
+    chassisSplit: Boolean
+    """
+    Is the container urgent? Marked by dispatcher
+    """
+    urgent: Boolean
+    """
+    Container needs an appointment or not
+    """
+    appointmentNeeded: Boolean
+    """
+    Date the appointment set for
+    """
+    appointmentDate: String
+    """
+    Estimate time available for pickup
+    """
+    estimateDeliverTimeFrom: String
+    """
+    Estimate time available for delivery
+    """
+    estimateDeliverTimeTo: String
+    """
+    Container is not available, at the time, but it will be pickup anyway is
+    this is set to true
+    """
+    notReleasedPull: Boolean
+    """
+    Estimate time available for pickup
+    """
+    terminalLocation: TerminalLocation
+    """
+    Is the container overweight or not
+    """
+    overweight: Boolean
+    """
+    Is the container over dimension or not
+    """
+    isOverDimension: Boolean
+    """
+    Available at the port
+    """
+    available: Boolean
+    """
+    Is the container over hazmat or not
+    """
+    isHazmat: Boolean
+    """
+    Estimate Date available for delivery
+    """
+    estimatedDeliveryDateFrom: String
+    """
+    Estimate date available for delivery
+    """
+    estimatedDeliveryDateTo: String
+    """
+    For exports, last possible date to deliver to port
+    """
+    cutOffDate: String
+    """
+    Container status (hold, avialble, returned...)
+    """
+    containerPortStatus: String
+    """
+    The container can not be dispatched
+    """
+    dontDispatch: Boolean
+    """
+    Import/export from lookup table
+    """
+    loadTypeId: Int
+    """
+    Shiping company
+    """
+    shippingLine: ShippingLine
+    """
+    Total estimated miles the container will travel
+    """
+    estimateTotalMilesRoundTrip: Int
+    """
+    Time in minutes for the the round trip
+    """
+    estimateTotalTimeRoundTrip: Int
+    """
+    Number between > 0 which represents the priority, the greater the number, the higher the priority
+    """
+    priority: Int
+    """
+    Last day possible to retrieve container
+    """
+    lastDayToPull: String
+    """
+    Date on which the container was retrieved
+    """
+    pullDay: String
+    """
+    Estimations for priorities and appointments
+    """
+    specificAppoinmentPickUpFromClient: Boolean
+    pickUpClientDateFrom: String
+    pickUpClientDateTo: String
+    pickUpClientTimeFrom: String
+    pickUpClientTimeTo: String
+    """
+    location types (Depot, yard, Yard)
+    """
+    currentLocation: LocationType
+    """
+    Last possible day to deliver to client
+    """
+    lastDayToDeliverToClient: String
+    """
+    Prority between 0-5
+    """
+    dispatchingPriority: Float
+    """
+    Has the terminal been marked as manual (does not have web page)
+    """
+    manualTerminal: Boolean
+    """
+    Has the information been loaded, by scapping, from automatically for the container
+    """
+    autoLoad: Boolean
+    """
+    Time the appointment
+    """
+    appointmentTime: String
+
+    deliveryOrder: Order
+    appointments: [DrayingAppointment]
+    trips: [Trip]
+    drayingAlerts: [DrayingAlert]
+    """
+    Round trips for this container
+    """
+    drayingRoundTrips: [DrayingRoundTrips]
+    """
+    Information from port
+    """
+    seal: String
+    """
+    Information from port
+    """
+    customsStatus: String
+    """
+    Information from port
+    """
+    lineStatus: String
+    """
+    Information from port
+    """
+    lastGateMoveStatus: String
+    """
+    Information from port
+    """
+    lastGateDateTime: String
+    """
+    Information from port
+    """
+    isLoaded: Boolean
+    """
+    Indicates if a street turn (for imports) and extra movement
+    """
+    streetTurn: Boolean
+    """
+    Location type id where the street turn start (client or yard)
+    """
+    startLocationStreetTurnId: Int
+    """
+    Container (for export) has recieved a street turned container
+    """
+    originStreetTurnDrayingId: Int
+    """
+    Location specific where the container is started
+    """
+    originStreetTurnLocationNickName: LocationNickName
+    """
+    Return terminal
+    """
+    returnTerminal: TerminalLocation
+    """
+    Date returned
+    """
+    returnDate: String
+    """
+    Date completed
+    """
+    completedDate: String
+    """
+    Estimated last date and time to be delivered live
+    """
+    lastDateTimeToDeliverLive: String
+    """
+    Estimated last date and time to be delivered for drop
+    """
+    lastDateTimeToDeliverDrop: String
+    """
+    Last date the container can be delivered live
+    """
+    latestDeliveryDateTimeLive: String
+    """
+    Last date the container can be delivered for drop
+    """
+    latestDeliveryDateTimeDrop: String
+    """
+    Last date the container can be picked up
+    """
+    latestPickDateTime: String
+    """
+    Last time the container can be pulled
+    """
+    latestPullDateTime: String
+    """
+    The first day the container was available
+    """
+    availableDay: String
+    """
+    Was the street turn ignored
+    """
+    streetTurnMuted: Boolean
+    """
+    Was reviewed by accounting
+    """
+    reviewed: Boolean
+    """
+    Was there an invoice created
+    """
+    invoiced: Boolean
+    """
+    Has a special license (customs)
+    """
+    bonded: Boolean
+    """
+    Last date the container can be delivered
+    """
+    carrier: Carrier
+  }
+  type Carrier implements Node {
+    id: ID!
+  }
+
+  type DrayingRoundTrips implements Node {
+    id: ID!
+  }
+
+  """
+  Location object with information specific to a  terminal
+  """
+  type TerminalLocation implements Node {
+    id: ID!
+    location: Location
+    # "TerminalLocationId": 0,
+    # "ShortName": "SFCT",
+    # "IsDefault": false,
+    # "Active": false,
+    # "LocationTypeId": 0,
+    # "Radius": null,
+    # "ModifiedBy": 0,
+    # "ModifiedOn": "0001-01-01T00:00:00",
+    # "AutoLoad": false,
+    # "LocationNickNameId": null,
+    # "IsTerminal": false,
+    # "IsDepot": false,
+    # "DrayingTimeActionTerminals": null,
+    # "TerminalLocationHours": null,
+    # "NickName": "South Florida Container Terminal",
+    # "LocationId": 0,
+    # "LocStreet": null,
+    # "LocSuite": null,
+    # "LocCity": null,
+    # "LocZip": null,
+    # "LocState": null,
+    # "LocCountry": null,
+    # "GoogleAddress": null,
+    # "Latitude": null,
+    # "Longitude": null
+  }
+
+  type Appointment implements Node {
+    id: ID!
+  }
+
+  type ShippingLine implements Node {
+    id: ID!
+    name: String
+    shortName: String
   }
 
   type Order implements Node {
@@ -149,9 +628,244 @@ const typeDefs = gql`
   interface Node {
     id: ID!
   }
-
-  type Route {
+  """
+  Returns information about trips for a certain driver on a certain date
+  """
+  type Route implements Node {
     id: ID!
+    driver: Driver
+    vehicle: Vehicle
+    """
+    Reference to external route on GPS
+    """
+    externalRouteId: String
+    """
+    Reference to external group on GPS
+    """
+    extarnalGroupId: String
+    """
+    Route name (date by default)
+    """
+    name: String
+    """
+    Date and time route is scheduled to start on that day
+    """
+    scheduledStartDateTime: String
+    """
+    Reference to external route on GPS
+    """
+    scheduledEndDateTime: String
+    startLocationNickName: LocationNickName
+    timeZone: String
+    timeZoneDstOffset: Int
+    timeZoneRawOffset: Int
+    """
+    Start Date and time set by GPS
+    """
+    startDateTime: String
+    """
+    End Date and time set by GPS
+    """
+    endDateTime: String
+    """
+    Is route editable
+    """
+    isEditable: Boolean
+    modifiedBy: Int
+    modifiedOn: String
+    createdBy: Int
+    createdOn: String
+    trips: [Trip]
+  }
+
+  type Trip {
+    id: ID!
+    """
+    Action being made at current location (load, unload, swap, pre-pull...)
+    """
+    action: TripAction
+    """
+    The trip's current status (In movement, dispatched, completed...)
+    """
+    status: TripStatus
+    """
+
+    """
+    order: Order
+    """
+
+    """
+    modifiedBy: String
+    """
+
+    """
+    modifiedOn: String
+    """
+
+    """
+    createdBy: Int
+    """
+
+    """
+    createdOn: String
+    """
+    Trip's order
+    """
+    orderRoute: Order
+    """
+    Driver
+    """
+    driver: Driver
+    """
+
+    """
+    actionLocation: TripActionLocation
+    """
+    Trip needs to be paid by client?
+    """
+    paidByClient: Boolean
+    """
+    (yard, cliente, etc...)
+    """
+    startLocationType: LocationType
+    """
+    (yard, cliente, etc...)
+    """
+    endLocationTypeId: LocationType
+    """
+    When trip starts, is the container loaded or not
+    """
+    containerLoadedStart: Boolean
+    """
+    When trip ends, is the container loaded or not
+    """
+    containerLoadedEnd: Boolean
+    """
+    Route to which trip is assigned
+    """
+    route: Route
+    """
+
+    """
+    externalRouteId: String
+    """
+    Container
+    """
+    deliveryOrderDraying: Draying
+    """
+    Trip status
+    """
+    status: TripStatus
+    """
+    extras stops for the trip
+    """
+    extraStops: [ExtraStops]
+    """
+    additinal costs add to trip, return when queries container by id
+    """
+    costs: [Cost]
+    """
+    Message send to drivers (sms)
+    """
+    messages: [TripMessage]
+    """
+    Location on the trip
+    """
+    locations: [TripLocation]
+  }
+
+  type TripActionLocation implements Node {
+    id: ID!
+  }
+
+  type TripMessage implements Node {
+    id: ID!
+  }
+
+  type TripStatus implements Node {
+    id: ID!
+    name: String
+    order: Order
+    status: Boolean
+  }
+
+  type Cost implements Node {
+    id: ID!
+    type: String
+    reason: String
+  }
+  ## extra delivery locations, links between different locations
+  type ExtraStops implements Node {
+    id: ID!
+    draying: Draying
+    """
+    Address information about a company
+    """
+    deliveryLocation: DeliveryLocation
+    order: Order
+    status: TripStatus
+    createdOn: String
+    createdBy: String
+    modifiedOn: String
+    modifiedBy: String
+  }
+
+  type DeliveryLocation implements Node {
+    id: ID!
+    location: Location
+    # "IsDefault": false,
+    # "Active": false,
+    # "LocationTypeId": 0,
+    # "LocationTypeName": null,
+    # "ReceivingHoursOpen": null,
+    # "ReceivingHoursClose": null,
+    # "LocationNickNameId": null,
+    # "Partial": false,
+    # "DeliveryContacts": [],
+    # "DeliveryPlace": null,
+    # "DeliveryOrders": [],
+    # "DeliveryOrderDrayings": [],
+    # "NickName": "Test Address",
+    # "LocationId": 0,
+    # "LocStreet": null,
+    # "LocSuite": null,
+    # "LocCity": null,
+    # "LocZip": null,
+    # "LocState": null,
+    # "LocCountry": null,
+    # "GoogleAddress": null,
+    # "Latitude": null,
+    # "Longitude": null
+  }
+
+  type DeliveryOrderDraying implements Node {
+    id: ID!
+    locationNickName: LocationNickName
+  }
+
+  type TerminalLocation implements Node {
+    id: ID!
+  }
+
+  type Location implements Node {
+    id: ID!
+    #   "LocationNickNameId": 0,
+    #   "Preferred": true,
+    #   "Partial": false,
+    #   "ContactName": null,
+    #   "ContactPhone": null,
+    #   "ModifiedBy": null,
+    #   "NickName": null,
+    #   "LocationId": 0,
+    #   "LocStreet": null,
+    #   "LocSuite": null,
+    #   "LocCity": null,
+    #   "LocZip": null,
+    #   "LocState": null,
+    #   "LocCountry": null,
+    #   "GoogleAddress": null,
+    #   "Latitude": null,
+    #   "Longitude": null
   }
 
   type Driver implements Node {
@@ -188,10 +902,15 @@ const typeDefs = gql`
     pendingTripsCount: Int
   }
 
-  type Trip implements Node {
+  type TripAction implements Node {
     id: ID!
+    name: String
+    shortName: String
+    active: Boolean
   }
-
+  """
+  Information about the trip and it's capacity
+  """
   type TripCapacity implements Node { ### TripCapacity for current trip
     id: ID!
     companyName: String!
@@ -208,7 +927,7 @@ const typeDefs = gql`
     """
     Points on a trip
     """
-    locations: [Location]
+    locations: [TripLocation]
     """
     The route's timezone
     """
@@ -231,14 +950,17 @@ const typeDefs = gql`
     """
     Current active location
     """
-    currentDestination: Location
+    currentDestination: TripLocation
     """
 
     """
-    lastDestination: Location
+    lastDestination: TripLocation
   }
 
-  type Location implements Node {
+  """
+  Location information specific for the a trip's capacity calculations
+  """
+  type TripLocation implements Node {
     id: ID!
     """
     The state of each location
@@ -285,7 +1007,7 @@ const typeDefs = gql`
     """
     Action being made at current location (load, unload, swap...)
     """
-    action: Action
+    action: TripAction
     order: Order
     driver: Driver
     vehicle: Vehicle
@@ -331,9 +1053,13 @@ const typeDefs = gql`
 
   type LocationState implements Node {
     id: ID!
+    name: String
+    shortName: String
+    active: Boolean
   }
   type LocationType implements Node {
     id: ID!
+    name: String
   }
   type LocationNickName implements Node {
     id: ID!
@@ -354,11 +1080,6 @@ const typeDefs = gql`
 
   type Booking implements Node {
     id: ID!
-  }
-
-  type Action implements Node {
-    id: ID!
-    name: String
   }
 
   type Vehicle implements Node {
