@@ -9,7 +9,10 @@ export const carrierReducer = carrier => ({
   id: carrier.CarrierId,
 })
 
-export const clientReducer = client => ({})
+export const clientReducer = client => ({
+  id: client.ClientId,
+  companyName: client.CompanyName,
+})
 
 export const costReducer = cost => ({
   id: cost.CostId,
@@ -73,7 +76,9 @@ export const drayingReducer = draying => ({
   order: draying.DeliveryOrder
     ? orderReducer(draying.DeliveryOrder)
     : idReducer(draying.DeliveryOrderId),
-  client: draying.Client ? clientReducer(draying.Client) : draying.ClientId,
+  client: draying.Client
+    ? clientReducer(draying.Client)
+    : idReducer(draying.ClientId),
   deliveryLocation: draying.DeliveryLocation
     ? deliveryLocationReducer(draying.DeliveryLocation)
     : idReducer(draying.DeliveryLocationId),
