@@ -210,8 +210,8 @@ const typeDefs = gql`
     Container name
     """
     container: String
-    containerSize: String
-    containerType: String
+    containerSize: ContainerSize
+    containerType: ContainerType
     """
     Estimated date and time container is availble
     """
