@@ -128,7 +128,7 @@ const typeDefs = gql`
     companyRelatedId: Int
     clientOrderTemplateId: Int
     deliveryOrder: [Int]
-    quotes: [Int]
+    quotes: [Quote]
     clientContacts: [Contact]
   }
   type Contact implements Node {
@@ -153,54 +153,65 @@ const typeDefs = gql`
     id: ID!
   }
 
-  type Cost implements Node {
+  type CostReason implements Node {
     id: ID!
-    type: String
+    type: CostType
     reason: String
+  }
+
+  type CostType implements Node {
+    id: ID!
+    name: String
   }
 
   type DeliveryLocation implements Node {
     id: ID!
+    """
+    Use this one instead of partial, locStree...
+    """
     location: Location
     isDefault: Boolean
     active: Boolean
     locationType: LocationType
     receivingHoursOpen: String
     receivingHoursClose: String
-    nickName: LocationNickName
-    partial: Boolean
+    nickName: String
+    partial: Boolean @deprecated(reason: "Use location instead.")
     deliveryContacts: [Contact]
-    deliveryOrders: [String]
+    deliveryOrders: [Order]
     drayings: [Draying]
-    locStreet: String
-    locSuite: String
-    locCity: String
-    locZip: String
-    locState: String
-    locCountry: String
-    googleAddress: String
-    latitude: Float
-    longitude: Float
+    locationNickName: LocationNickName
+    locStreet: String @deprecated(reason: "Use location instead.")
+    locSuite: String @deprecated(reason: "Use location instead.")
+    locCity: String @deprecated(reason: "Use location instead.")
+    locZip: String @deprecated(reason: "Use location instead.")
+    locState: String @deprecated(reason: "Use location instead.")
+    locCountry: String @deprecated(reason: "Use location instead.")
+    googleAddress: String @deprecated(reason: "Use location instead.")
+    latitude: Float @deprecated(reason: "Use location instead.")
+    longitude: Float @deprecated(reason: "Use location instead.")
   }
 
   """
   A container
   """
   type Draying implements Node {
+    # delivery order Order, order para orden  Int
     id: ID!
     order: Order
+    sortOrder: Int
     client: Client
-    DeliveryLocation: DeliveryLocation
+    deliveryLocation: DeliveryLocation
     """
     Booking ID
     """
     booking: String
     """
-    Contianer name
+    Container name
     """
     container: String
-    containerSize: String
-    containerType: String
+    containerSize: ContainerSize
+    containerType: ContainerType
     """
     Estimated date and time container is availble
     """
@@ -438,7 +449,7 @@ const typeDefs = gql`
     """
     Round trips for this container
     """
-    drayingRoundTrips: [DrayingRoundTrips]
+    drayingRoundTrips: [DrayingRoundTrip]
     """
     Information from port
     """
@@ -539,8 +550,17 @@ const typeDefs = gql`
     Last date the container can be delivered
     """
     carrier: Carrier
+    """
+    extras stops for the trip
+    """
+    extraStops: [ExtraStop]
   }
 
+  type DrayingCost implements Node {
+    id: ID!
+    draying: Draying!
+    trip: Trip
+  }
   type DrayingAlert implements Node {
     id: ID!
   }
@@ -562,6 +582,93 @@ const typeDefs = gql`
     Identifies the total count of items in the connection.
     """
     totalCount: Int!
+  }
+
+  type DrayingRoundTrip implements Node {
+    id: ID!
+  }
+
+  type DrayingEdge {
+    node: Draying!
+    cursor: String!
+  }
+
+  type Driver implements Node {
+    id: ID!
+    firstName: String
+    lastName: String
+    """
+    Is driver active and can be assinged trips
+    """
+    active: Boolean
+    """
+    Hours worked daily by a driver, used to calucate how many hours available
+    """
+    dailyWorkHours: Float
+
+    phone: String
+    defaultStartingHoS: String
+    userName: String
+    licenseNumber: String
+    licenseState: String
+    eldExempt: String
+    eldExemptReason: String
+    eldBigDayExemptionEnabled: Boolean
+    eldAdverseWeatherExemptionEnabled: Boolean
+    eldPcEnabled: Boolean
+    eldYmEnabled: Boolean
+    eldDayStartHour: String
+
+    ##vehicle: Vehicle remove
+    isDeactivated: Boolean
+    driverUserId: Int
+    saturdayShift: Boolean
+    weeklyWorkHours: Float
+    workRadius: Int
+    baseWeeklySalary: Float
+    salaryPerMile: Float
+    salaryPerTripDelivered: Float
+    defaultYard: LocationNickName
+    homeAddress: LocationNickName
+    defaultVehicle: Vehicle
+    ownerOperator: Boolean
+    modifiedBy: Int
+    modifiedOn: String
+    createdBy: Int
+    createdOn: String
+    carrier: Carrier
+    eLDTokenCarrierId: Int
+    isSmartTrucking: Boolean
+    companyId: Int
+    """
+    Only availble on the driver's capacity query
+    Has information about the driver's capacity
+    and the current active trip's capacity
+    """
+    capacityInfo: DriverCapacity
+  }
+  #
+  type DriverCapacity {
+    """
+    Date and time the driver starts the route for the day queried (default: today)
+    """
+    startDateTime: String
+    """
+    Date and time the driver ends the route for the day queried (default: today)
+    """
+    endDateTime: String
+    """
+    Percentage of capacity occupied
+    """
+    capacity: Float
+    """
+    Current active trip not yet completed
+    """
+    activeTripCapacity: TripCapacity
+    """
+    Remaining trips for the date queried
+    """
+    pendingTripsCount: Int
   }
 
   type DriversCapacityConnection {
@@ -587,85 +694,8 @@ const typeDefs = gql`
     cursor: String!
   }
 
-  type DrayingRoundTrips implements Node {
-    id: ID!
-  }
-
-  type DrayingEdge {
-    node: Draying!
-    cursor: String!
-  }
-
-  type Driver implements Node {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    """
-    Is driver active and can be assinged trips
-    """
-    active: Boolean!
-    """
-    Hours worked daily by a driver, used to calucate how many hours available
-    """
-    dailyWorkHours: Float!
-    """
-    Date and time the driver starts the route for the day queried (default: today)
-    """
-    startDateTime: String
-    """
-    Date and time the driver ends the route for the day queried (default: today)
-    """
-    endDateTime: String
-    """
-    Percentage of capacity occupied
-    """
-    capacity: Float!
-    """
-    Current active trip not yet completed
-    """
-    trip: TripCapacity
-    """
-    Remaining trips for the date queried
-    """
-    pendingTripsCount: Int
-
-    phone: String
-    defaultStartingHoS: String
-    userName: String
-    licenseNumber: String
-    licenseState: String
-    eldExempt: String
-    eldExemptReason: String
-    eldBigDayExemptionEnabled: Boolean
-    eldAdverseWeatherExemptionEnabled: Boolean
-    eldPcEnabled: Boolean
-    eldYmEnabled: Boolean
-    eldDayStartHour: String
-    vehicle: Vehicle
-    isDeactivated: Boolean
-    driverUserId: Int
-    saturdayShift: Boolean
-    weeklyWorkHours: Float
-    workRadius: Int
-    baseWeeklySalary: Float
-    salaryPerMile: Float
-    salaryPerTripDelivered: Float
-    defaultYard: LocationNickName
-    homeAddress: LocationNickName
-    defaultVehicle: Vehicle
-    ownerOperator: Boolean
-    modifiedBy: Int
-    modifiedOn: String
-    createdBy: Int
-    createdOn: String
-    carrier: Carrier
-    eLDTokenCarrierId: Int
-    isSmartTrucking: Boolean
-    companyId: Int
-  }
-
   ## extra delivery locations, links between different locations
-  type ExtraStops implements Node {
+  type ExtraStop implements Node {
     id: ID!
     draying: Draying
     """
@@ -688,7 +718,6 @@ const typeDefs = gql`
 
   type Location implements Node {
     id: ID!
-    nickName: LocationNickName
     preferred: Boolean
     partial: Boolean
     contactName: String
@@ -717,19 +746,19 @@ const typeDefs = gql`
   }
   type LocationNickName implements Node {
     id: ID!
+    location: Location
     name: String
-    partial: Boolean
+    partial: Boolean @deprecated(reason: "Use location instead.")
     modifiedBy: String
-    locationId: Int
-    locStreet: String
-    locSuite: String
-    locCity: String
-    locZip: Int
-    locState: String
-    locCountry: String
-    googleAddress: String
-    latitude: Float
-    longitude: Float
+    locStreet: String @deprecated(reason: "Use location instead.")
+    locSuite: String @deprecated(reason: "Use location instead.")
+    locCity: String @deprecated(reason: "Use location instead.")
+    locZip: Int @deprecated(reason: "Use location instead.")
+    locState: String @deprecated(reason: "Use location instead.")
+    locCountry: String @deprecated(reason: "Use location instead.")
+    googleAddress: String @deprecated(reason: "Use location instead.")
+    latitude: Float @deprecated(reason: "Use location instead.")
+    longitude: Float @deprecated(reason: "Use location instead.")
   }
 
   interface Node {
@@ -833,10 +862,6 @@ const typeDefs = gql`
     """
 
     """
-    order: Order
-    """
-
-    """
     modifiedBy: String
     """
 
@@ -851,17 +876,18 @@ const typeDefs = gql`
     """
     createdOn: String
     """
-    Trip's order
+    Trip's order on Route
     """
-    orderRoute: Order
+    orderRoute: Int
     """
     Driver
     """
     driver: Driver
     """
-
+    Information about the trip which relation to the
+    action at that location
     """
-    actionLocation: TripActionLocation
+    tripActionLocation: TripActionLocation
     """
     Trip needs to be paid by client?
     """
@@ -897,11 +923,11 @@ const typeDefs = gql`
     """
     extras stops for the trip
     """
-    extraStops: [ExtraStops]
+    extraStops: [ExtraStop]
     """
     additinal costs add to trip, return when queries container by id
     """
-    costs: [Cost]
+    costs: [DrayingCost]
     """
     Message send to drivers (sms)
     """
@@ -926,6 +952,7 @@ const typeDefs = gql`
   type TerminalLocation implements Node {
     id: ID!
     location: Location
+    nickName: String
     shortName: String
     isDefault: Boolean
     active: Boolean
@@ -934,22 +961,27 @@ const typeDefs = gql`
     modifiedBy: Int
     modifiedOn: String
     autoLoad: Boolean
-    nickName: String
+    locationNickname: LocationNickName
     isTerminal: Boolean
     isDeport: Boolean
-    drayingTimeActionTerminals: String
-    terminalLocationHours: String
-    locStreet: String
-    locSuite: String
-    locCity: String
-    locZip: String
-    locState: String
-    locCountry: String
-    googleAddress: String
-    latitude: Float
-    longitude: Float
+    ## each terminal has action has can done at it for time estimate actions with time
+    ## how long does it in POMTOC to emtpy (30minutes)
+    ### drayingTimeActionTerminals: String
+
+    ## terminalLocationHours: String OBJECT with hours
+    locStreet: String @deprecated(reason: "Use location instead.")
+    locSuite: String @deprecated(reason: "Use location instead.")
+    locCity: String @deprecated(reason: "Use location instead.")
+    locZip: String @deprecated(reason: "Use location instead.")
+    locState: String @deprecated(reason: "Use location instead.")
+    locCountry: String @deprecated(reason: "Use location instead.")
+    googleAddress: String @deprecated(reason: "Use location instead.")
+    latitude: Float @deprecated(reason: "Use location instead.")
+    longitude: Float @deprecated(reason: "Use location instead.")
   }
 
+  ## what the truck is doing with it starts and ends and what action at the location
+  # where does it start and end
   type TripActionLocation implements Node {
     id: ID!
   }
@@ -972,21 +1004,27 @@ const typeDefs = gql`
     active: Boolean
   }
   """
+  Actions that can be done at a locaiton
+  """
+  type LocationAction implements Node {
+    id: ID!
+  }
+  """
   Information about the trip and it's capacity
   """
   type TripCapacity implements Node { ### TripCapacity for current trip
     id: ID!
-    companyName: String!
+    companyName: String
     """
     The trip's status (lost, dispatched, complete...)
     """
-    status: String!
-    containerSize: String!
-    containerType: String!
+    status: String
+    containerSize: String
+    containerType: String
     """
     Ocean shipping company
     """
-    shippingLine: String!
+    shippingLine: String
     """
     Points on a trip
     """
@@ -1015,7 +1053,7 @@ const typeDefs = gql`
     """
     currentDestination: TripLocation
     """
-
+    Last Destination on the trip
     """
     lastDestination: TripLocation
   }
@@ -1068,10 +1106,11 @@ const typeDefs = gql`
     """
     estimatedScheduledCompletedAt: String
     """
-    Action being made at current location (load, unload, swap...)
+    Action being made at current location (load, unload, swap...) LocationAction
     """
-    action: TripAction
-    order: Order
+    tripActionLocation: TripActionLocation
+    ## order on the trip
+    order: Int
     driver: Driver
     vehicle: Vehicle
     trip: Trip
@@ -1112,6 +1151,10 @@ const typeDefs = gql`
     modifiedOn: String
     createdBy: String
     createdOn: String
+  }
+
+  type Quote implements Node {
+    id: ID!
   }
 
   type Vehicle implements Node {

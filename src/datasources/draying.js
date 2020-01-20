@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-
+import { drayingReducer } from './reducers'
 class DrayingAPI extends RESTDataSource {
   constructor() {
     super()
@@ -13,13 +13,6 @@ class DrayingAPI extends RESTDataSource {
     )
   }
 
-  drayingReducer(draying) {
-    return {
-      id: draying.DeliveryOrderDrayingId,
-      order: draying.DeliveryOrderId,
-    }
-  }
-
   async getAllDrayings() {
     const { data } = await this.get('Draying/Dispatching')
     let drayings = []
@@ -27,7 +20,7 @@ class DrayingAPI extends RESTDataSource {
       drayings = data.drayings
     }
     return Array.isArray(drayings)
-      ? drayings.map(draying => this.drayingReducer(draying))
+      ? drayings.map(draying => drayingReducer(draying))
       : []
   }
 }

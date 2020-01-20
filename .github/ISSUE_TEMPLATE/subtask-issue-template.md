@@ -1,6 +1,7 @@
 ---
-name: Subtask issue template
-about: Create a subtask
+
+about: Create a subtask.
+
 title: ''
 labels: Subtask
 assignees: ''

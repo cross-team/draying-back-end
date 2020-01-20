@@ -27,7 +27,7 @@ class DriverAPI extends RESTDataSource {
             companyName: trip.CompanyName,
             status: trip.TripStatusId,
             containerSize: trip.ContainerSize,
-            contianerType: trip.ContainerType,
+            containerType: trip.ContainerType,
             shippingLine: trip.ShippingLine,
             locations: locationsReducer(trip.DrayingTripLocations),
             timeZone: trip.TimeZone,
@@ -49,13 +49,16 @@ class DriverAPI extends RESTDataSource {
       id: driver.DriverId,
       firstName: driver.FirstName,
       lastName: driver.LastName,
+      phone: driver.Phone,
       active: driver.Active,
       dailyWorkHours: driver.DailyWorkHours,
-      startDateTime: driver.StartDateTime,
-      endDateTime: driver.EndDateTime,
-      capacity: driver.Capacity,
-      pendingTripsCount: driver.PendingDrayingTripsCount,
-      trip: tripCapacityReducer(driver.DrayingTrip),
+      capacityInfo: {
+        startDateTime: driver.StartDateTime,
+        endDateTime: driver.EndDateTime,
+        capacity: driver.Capacity,
+        pendingTripsCount: driver.PendingDrayingTripsCount,
+        activeTripCapacity: tripCapacityReducer(driver.DrayingTrip),
+      },
     }
   }
 
