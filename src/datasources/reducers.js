@@ -82,8 +82,8 @@ export const drayingReducer = draying => ({
   containerSize: draying.ContainerSize
     ? containerSizeReducer(draying.ContainerSize)
     : idReducer(draying.ContainerSizeId),
-  containerType: draying.ContianerType
-    ? containerTypeReducer(draying.containerType)
+  containerType: draying.ContainerType
+    ? containerTypeReducer(draying.ContainerType)
     : idReducer(draying.ContainerTypeId),
   estimateAvailableOn: draying.EstimateAvailableOn,
   lastFreeDay: draying.LastFreeDay,
