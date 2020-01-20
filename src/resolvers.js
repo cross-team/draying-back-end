@@ -91,4 +91,16 @@ export default {
       return 'Route'
     },
   },
+  // TripLocation: {
+  //   driver: node => {
+  //     return {
+  //       id: node.driver,
+  //     }
+  //   },
+  // },
+  Driver: node => {
+    return {
+      id: node.driver,
+    }
+  },
 }
