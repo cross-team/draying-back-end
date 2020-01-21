@@ -233,7 +233,8 @@
           "ScheduledCompletedAt": "2020-01-13T07:30:00",
           "LocationStateId": null
         }
-      }
+      },
+      "PendingDrayingTripsCount": 2
     },
     {
       "DriverId": 49,

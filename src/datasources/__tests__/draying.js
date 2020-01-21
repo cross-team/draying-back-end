@@ -19,11 +19,11 @@ describe('DrayingAPI.drayingReducer', () => {
   })
 })
 
-// describe('DrayingAPI.getAllDrayings]', () => {
-//   it('looks up drayings from api', async () => {
-//     mocks.get.mockReturnValueOnce({ data: { drayings: [mockDrayingResponse] } })
-//     const res = await ds.getAllDrayings()
-//     expect(res).toEqual([mockDrayingResponse])
-//     expect(mocks.get).toBeCalledWith('Draying/Dispatching')
-//   })
-// })
+describe('DrayingAPI.getAllDrayings]', () => {
+  it('looks up drayings from api', async () => {
+    mocks.get.mockReturnValueOnce({ data: { drayings: [mockDrayingResponse] } })
+    const res = await ds.getAllDrayings()
+    expect(res).toEqual([MockDrayings.data[0]])
+    expect(mocks.get).toBeCalledWith('Draying/Dispatching')
+  })
+})
