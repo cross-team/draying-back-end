@@ -1010,10 +1010,13 @@ const typeDefs = gql`
   type LocationAction implements Node {
     id: ID!
     name: String
-    active: action.Active,
-    time: action.Time,
-    modifiedOn: action.ModifiedOn,
-    modifiedBy: action.modifiedBy,
+    active: Boolean
+    """
+    time in minutes
+    """
+    time: Int
+    modifiedOn: String
+    modifiedBy: Int
   }
   """
   Information about the trip and it's capacity
