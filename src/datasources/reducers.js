@@ -3,7 +3,7 @@ const idReducer = id =>
     ? {
         id,
       }
-    : null
+    : undefined
 
 export const carrierReducer = carrier => ({
   id: carrier.CarrierId,
@@ -117,9 +117,9 @@ export const drayingReducer = draying => ({
   lloydsNo: draying.LloydsNo,
   vesselName: draying.VesselName,
   estimateDischarge: draying.EstimateDischarge,
-  stage: draying.ContainerStage
+  containerStage: draying.ContainerStage
     ? containerStageReducer(draying.ContainerStage)
-    : idReducer(draying.StageId),
+    : undefined,
   SCAC: draying.SCAC,
   earlyReturnDate: draying.EarlyReturnDate,
   createdOn: draying.CreatedOn,
@@ -432,6 +432,9 @@ export const terminalLocationReducer = terminal => ({
   shortName: terminal.ShortName,
   isDefault: terminal.IsDefault,
   active: terminal.Active,
+  location: terminal.Location
+    ? terminalLocationReducer(terminal.Location)
+    : idReducer(terminal.LocationId),
   locationType: terminal.LocationType
     ? locationTypeReducer(terminal.LocationType)
     : idReducer(terminal.LocationTypeId),

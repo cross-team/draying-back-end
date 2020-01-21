@@ -274,7 +274,7 @@ const typeDefs = gql`
     """
     container stages (review, completed, )
     """
-    stage: ContainerStage
+    containerStage: ContainerStage
     """
     Carrier code (Standard carrier code)
     """
