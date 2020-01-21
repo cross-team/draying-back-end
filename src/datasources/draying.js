@@ -13,15 +13,19 @@ class DrayingAPI extends RESTDataSource {
     )
   }
 
+  drayingsReducer(drayings) {
+    return Array.isArray(drayings)
+      ? drayings.map(draying => drayingReducer(draying))
+      : []
+  }
+
   async getAllDrayings() {
     const { data } = await this.get('Draying/Dispatching')
     let drayings = []
     if (data && data.drayings) {
       drayings = data.drayings
     }
-    return Array.isArray(drayings)
-      ? drayings.map(draying => drayingReducer(draying))
-      : []
+    return this.drayingsReducer(drayings)
   }
 }
 export default DrayingAPI
