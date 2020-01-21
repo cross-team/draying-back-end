@@ -75,13 +75,6 @@ export default {
       return { ...loginResponse, token, email }
     },
   },
-  Draying: {
-    order: draying => {
-      return {
-        id: draying.order,
-      }
-    },
-  },
   Node: {
     __resolveType(node) {
       if (node.order) {
@@ -90,17 +83,5 @@ export default {
 
       return 'Route'
     },
-  },
-  // TripLocation: {
-  //   driver: node => {
-  //     return {
-  //       id: node.driver,
-  //     }
-  //   },
-  // },
-  Driver: node => {
-    return {
-      id: node.driver,
-    }
   },
 }

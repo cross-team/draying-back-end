@@ -1,8 +1,8 @@
-import DrayingAPI from '../draying'
-import MockDrayings from '../../mock-data/drayings.json'
+import DriverAPI from '../draying'
+import MockDrivers from '../../mock-data/capacity.json'
 
-const mockDrayingResponse = MockDrayings.data.drayings[0]
-const mockDraying = {
+const mockDriverResponse = MockDrivers.data.drayings[0]
+const mockDriver = {
   id: 22,
   order: 18,
 }
@@ -10,20 +10,20 @@ const mocks = {
   get: jest.fn(),
 }
 
-const ds = new DrayingAPI()
+const ds = new DriverAPI()
 ds.get = mocks.get
 
 describe('DriverAPI.driverCapacityReducer', () => {
   it('Properly transforms draying', () => {
-    expect(ds.drayingReducer(mockDrayingResponse)).toEqual(mockDraying)
+    expect(ds.drayingReducer(mockDriverResponse)).toEqual(mockDriver)
   })
 })
 
 describe('DriverAPI.getDriversCapaciry]', () => {
   it('looks up drayings from api', async () => {
-    mocks.get.mockReturnValueOnce({ data: { drayings: [mockDrayingResponse] } })
-    const res = await ds.getAllDrayings()
-    expect(res).toEqual([mockDraying])
-    expect(mocks.get).toBeCalledWith('Draying/Dispatching')
+    mocks.get.mockReturnValueOnce({ data: { drayings: [mockDriverResponse] } })
+    const res = await ds.getAllDrivers()
+    expect(res).toEqual([mockDriver])
+    expect(mocks.get).toBeCalledWith('Driver/Dispatching')
   })
 })

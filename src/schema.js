@@ -170,6 +170,7 @@ const typeDefs = gql`
     Use this one instead of partial, locStree...
     """
     location: Location
+    companyId: Int
     isDefault: Boolean
     active: Boolean
     locationType: LocationType
@@ -198,7 +199,6 @@ const typeDefs = gql`
   type Draying implements Node {
     # delivery order Order, order para orden  Int
     id: ID!
-    order: Order
     sortOrder: Int
     client: Client
     deliveryLocation: DeliveryLocation
@@ -702,7 +702,8 @@ const typeDefs = gql`
     Address information about a company
     """
     deliveryLocation: DeliveryLocation
-    order: Order
+    ## verify
+    order: Int
     status: TripStatus
     createdOn: String
     createdBy: String
@@ -1074,6 +1075,13 @@ const typeDefs = gql`
     """
     state: LocationState
     """
+    Action being made at current location (Pick Empty, Pick
+    Loaded, Drop Empty, Drop Loaded, Load, Unload, Chassis
+    Swap, End of Day and Start Day) In a trip, only 2 location
+    have action location id value between 1-6 (main actions)
+    """
+    locationAction: LocationAction
+    """
     Date and time route started
     """
     enRouteAt: String
@@ -1105,11 +1113,7 @@ const typeDefs = gql`
     Date and time scheduled to be completed calculated by the API
     """
     estimatedScheduledCompletedAt: String
-    """
-    Action being made at current location (load, unload, swap...) LocationAction
-    """
-    tripActionLocation: TripActionLocation
-    ## order on the trip
+    ## sort order on the trip
     order: Int
     driver: Driver
     vehicle: Vehicle
