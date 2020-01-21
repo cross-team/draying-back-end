@@ -1,5 +1,5 @@
-const idReducer = id =>
-  id !== undefined
+export const idReducer = id =>
+  id !== undefined && id !== null
     ? {
         id,
       }
@@ -36,13 +36,14 @@ export const containerTypeReducer = containerType => ({
 
 export const containerStageReducer = containerStage => ({
   id: containerStage.ContainerStageId,
+  name: containerStage.Name,
 })
 
 export const deliveryLocationReducer = deliveryLocation => ({
   id: deliveryLocation.DeliveryLocationId,
   companyId: deliveryLocation.CompanyId,
   location: deliveryLocation.Location
-    ? locationReducer(deliveryLocation.Location)
+    ? locationNicknameReducer(deliveryLocation.Location)
     : idReducer(deliveryLocation.LocationId),
   isDefault: deliveryLocation.IsDefault,
   active: deliveryLocation.Active,
@@ -247,8 +248,6 @@ export const driverReducer = driver => ({
   dailyWorkHours: driver.DailyWorkHours,
   startDateTime: driver.StartDateTime,
   endDateTime: driver.EndDateTime,
-  capacity: driver.Capacity,
-  pendingTripsCount: driver.PendingDrayingTripsCount,
   phone: driver.Phone,
   defaultStartingHoS: driver.DefaultStartingHoS,
   userName: driver.UserName,
@@ -343,7 +342,9 @@ export const locationNicknameReducer = nickName => ({
   name: nickName.NickName,
   partial: nickName.Partial,
   modifiedBy: nickName.ModifiedBy,
-  locationId: nickName.LocationId,
+  location: nickName.Location
+    ? locationReducer(nickName.Location)
+    : idReducer(nickName.LocationId),
   locStreet: nickName.LocStreet,
   locSuite: nickName.LocSuite,
   locCity: nickName.LocCity,
@@ -364,6 +365,7 @@ export const locationStateReducer = state => ({
 
 export const locationTypeReducer = locationType => ({
   id: locationType.LocationTypeId,
+  name: locationType.Name,
 })
 
 export const orderReducer = order => {
@@ -433,7 +435,7 @@ export const terminalLocationReducer = terminal => ({
   isDefault: terminal.IsDefault,
   active: terminal.Active,
   location: terminal.Location
-    ? terminalLocationReducer(terminal.Location)
+    ? locationNicknameReducer(terminal.Location)
     : idReducer(terminal.LocationId),
   locationType: terminal.LocationType
     ? locationTypeReducer(terminal.LocationType)
@@ -493,13 +495,13 @@ export const tripReducer = trip => {
     extraStops: trip.DrayingTripExtraStops
       ? trip.DrayingTripExtraStops.map(extraStopReducer)
       : null,
-    costs: trip.DrayingCosts ? trip.DrayingCosts.map(costReducer) : null,
+    ...(trip.DrayingCosts && { costs: trip.DrayingCosts.map(costReducer) }), // available on route
     messages: trip.DrayingTripMessages
       ? trip.DrayingTripMessages.map(tripMessageReducer)
       : null,
-    locations: trip.DrayingTripLocations
-      ? trip.DrayingTripLocations.map(tripLocationReducer)
-      : null,
+    ...(trip.DrayingTripLocations && {
+      locations: trip.DrayingTripLocations.map(tripLocationReducer),
+    }),
   }
 }
 
@@ -516,7 +518,7 @@ export const tripActionLocationReducer = actionLocation => ({
 
 export const tripLocationReducer = location => ({
   id: location.DrayingTripLocationId,
-  locationAction: location.DrayingAction
+  action: location.DrayingAction
     ? drayingActionReducer(location.DrayingAction)
     : idReducer(location.DrayingActionId),
   driver: location.Driver
@@ -531,7 +533,7 @@ export const tripLocationReducer = location => ({
   trip: location.DrayingTrip
     ? tripReducer(location.DrayingTrip)
     : idReducer(location.DrayingTripId),
-  order: location.Order,
+  ...(location.Order && { order: location.Order }),
   state: location.DrayingTripLocationState
     ? locationStateReducer(location.DrayingTripLocationState)
     : idReducer(location.DrayingTripLocationStateId),

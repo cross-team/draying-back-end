@@ -53,7 +53,6 @@
     "lastDayToReturn": "2019-12-09",
     "holds": null,
     "line": "MSC",
-    "terminal": null,
     "feesDues": null,
     "feesPaid": null,
     "preGate": null,
@@ -67,7 +66,7 @@
     "lloydsNo": null,
     "vesselName": "ALLEGRO",
     "estimateDischarge": null,
-    "stage": {
+    "containerStage": {
       "id": 6,
       "name": "Dispatched"
     },
@@ -177,7 +176,6 @@
     "manualTerminal": false,
     "autoLoad": true,
     "appointmentTime": null,
-    "originStreetTurnLocationNickName": null,
     "returnDate": "2019-12-06T09:41:00",
     "completedDate": null,
     "lastDateTimeToDeliverLive": "2019-12-09T13:55:00",
@@ -198,310 +196,289 @@
     "trips": [
       {
         "id": 794,
-        "TripActionId": 5,
-        "TripStatusId": 1,
-        "Order": null,
-        "DriverId": 48,
-        "OrderRoute": 1,
-        "TripActionLocationId": 4,
-        "PaidByClient": false,
-        "StartLocationTypeId": 5,
-        "EndLocationTypeId": 2,
-        "ContainerLoadedStart": true,
-        "ContainerLoadedEnd": false,
-        "CreatedOn": "2019-12-05T15:07:24.363",
-        "ModifiedOn": "2019-12-05T15:07:39.157",
-        "RouteId": null,
-        "TripStatus": {
-          "TripStatusId": 1,
-          "Name": "Cancel"
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
         },
-        "TripAction": {
-          "TripActionId": 5,
-          "Name": "Live Unload",
-          "ShortName": "Live U"
+        "draying": {
+          "id": 22
         },
-        "StartLocationType": {
-          "LocationTypeId": 5,
-          "Name": "Port"
+        "status": {
+          "id": 1,
+          "name": "Cancel"
         },
-        "EndLocationType": {
-          "LocationTypeId": 2,
-          "Name": "Client"
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
         },
-        "Driver": {
-          "DriverId": 48,
-          "FirstName": "RICHARD",
-          "LastName": "NOVOA",
-          "ExternalDriverId": null,
-          "IsSmartTrucking": false
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
         },
-        "DrayingTripExtraStops": [],
-        "DrayingTripMessages": []
+        "paidByClient": false,
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:07:24.363",
+        "modifiedOn": "2019-12-05T15:07:39.157",
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "extraStops": [],
+        "messages": []
       },
       {
-        "DrayingTripId": 795,
-        "DeliveryOrderDrayingId": 22,
-        "TripActionId": 5,
-        "TripStatusId": 1,
-        "Order": null,
-        "DriverId": 48,
-        "OrderRoute": 1,
-        "TripActionLocationId": 4,
-        "PaidByClient": false,
-        "StartLocationTypeId": 5,
-        "EndLocationTypeId": 2,
-        "ContainerLoadedStart": true,
-        "ContainerLoadedEnd": false,
-        "CreatedOn": "2019-12-05T15:08:27.073",
-        "ModifiedOn": "2019-12-05T15:11:02.897",
-        "RouteId": null,
-        "TripStatus": {
-          "TripStatusId": 1,
-          "Name": "Cancel"
+        "id": 795,
+        "draying": {
+          "id": 22
         },
-        "TripAction": {
-          "TripActionId": 5,
-          "Name": "Live Unload",
-          "ShortName": "Live U"
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
         },
-        "StartLocationType": {
-          "LocationTypeId": 5,
-          "Name": "Port"
+        "status": {
+          "id": 1,
+          "name": "Cancel"
         },
-        "EndLocationType": {
-          "LocationTypeId": 2,
-          "Name": "Client"
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
         },
-        "Driver": {
-          "DriverId": 48,
-          "FirstName": "RICHARD",
-          "LastName": "NOVOA",
-          "ExternalDriverId": null,
-          "IsSmartTrucking": false
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
         },
-        "DrayingTripExtraStops": [],
-        "DrayingTripMessages": []
+        "paidByClient": false,
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:08:27.073",
+        "modifiedOn": "2019-12-05T15:11:02.897",
+        "extraStops": [],
+        "messages": []
       },
       {
-        "DrayingTripId": 796,
-        "DeliveryOrderDrayingId": 22,
-        "TripActionId": 5,
-        "TripStatusId": 1,
-        "Order": null,
-        "DriverId": 48,
-        "OrderRoute": 1,
-        "TripActionLocationId": 4,
-        "PaidByClient": false,
-        "StartLocationTypeId": 5,
-        "EndLocationTypeId": 2,
-        "ContainerLoadedStart": true,
-        "ContainerLoadedEnd": false,
-        "CreatedOn": "2019-12-05T15:11:49.117",
-        "ModifiedOn": "2019-12-05T15:11:55.3",
-        "RouteId": null,
-        "TripStatus": {
-          "TripStatusId": 1,
-          "Name": "Cancel"
+        "id": 796,
+        "draying": {
+          "id": 22
         },
-        "TripAction": {
-          "TripActionId": 5,
-          "Name": "Live Unload",
-          "ShortName": "Live U"
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
         },
-        "StartLocationType": {
-          "LocationTypeId": 5,
-          "Name": "Port"
+        "status": {
+          "id": 1,
+          "name": "Cancel"
         },
-        "EndLocationType": {
-          "LocationTypeId": 2,
-          "Name": "Client"
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
         },
-        "Driver": {
-          "DriverId": 48,
-          "FirstName": "RICHARD",
-          "LastName": "NOVOA",
-          "ExternalDriverId": null,
-          "IsSmartTrucking": false
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
         },
-        "DrayingTripExtraStops": [],
-        "DrayingTripMessages": []
+        "paidByClient": false,
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:11:49.117",
+        "modifiedOn": "2019-12-05T15:11:55.3",
+        "extraStops": [],
+        "messages": []
       },
       {
-        "DrayingTripId": 797,
-        "DeliveryOrderDrayingId": 22,
-        "TripActionId": 5,
-        "TripStatusId": 1,
-        "Order": null,
-        "DriverId": 48,
-        "OrderRoute": 1,
-        "TripActionLocationId": 4,
-        "PaidByClient": false,
-        "StartLocationTypeId": 5,
-        "EndLocationTypeId": 2,
-        "ContainerLoadedStart": true,
-        "ContainerLoadedEnd": false,
-        "CreatedOn": "2019-12-05T15:12:11.523",
-        "ModifiedOn": "2019-12-05T15:12:24.677",
-        "RouteId": null,
-        "TripStatus": {
-          "TripStatusId": 1,
-          "Name": "Cancel"
+        "id": 797,
+        "draying": {
+          "id": 22
         },
-        "TripAction": {
-          "TripActionId": 5,
-          "Name": "Live Unload",
-          "ShortName": "Live U"
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
         },
-        "StartLocationType": {
-          "LocationTypeId": 5,
-          "Name": "Port"
+        "status": {
+          "id": 1,
+          "name": "Cancel"
         },
-        "EndLocationType": {
-          "LocationTypeId": 2,
-          "Name": "Client"
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
         },
-        "Driver": {
-          "DriverId": 48,
-          "FirstName": "RICHARD",
-          "LastName": "NOVOA",
-          "ExternalDriverId": null,
-          "IsSmartTrucking": false
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
         },
-        "DrayingTripExtraStops": [],
-        "DrayingTripMessages": []
+        "paidByClient": false,
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:12:11.523",
+        "modifiedOn": "2019-12-05T15:12:24.677",
+        "extraStops": [],
+        "messages": []
       },
       {
-        "DrayingTripId": 798,
-        "DeliveryOrderDrayingId": 22,
-        "TripActionId": 5,
-        "TripStatusId": 1,
-        "Order": null,
-        "DriverId": 48,
-        "OrderRoute": 1,
-        "TripActionLocationId": 4,
-        "PaidByClient": false,
-        "StartLocationTypeId": 5,
-        "EndLocationTypeId": 2,
-        "ContainerLoadedStart": true,
-        "ContainerLoadedEnd": false,
-        "CreatedOn": "2019-12-05T15:12:39.457",
-        "ModifiedOn": "2019-12-05T15:12:44.957",
-        "RouteId": null,
-        "TripStatus": {
-          "TripStatusId": 1,
-          "Name": "Cancel"
+        "id": 798,
+        "draying": {
+          "id": 22
         },
-        "TripAction": {
-          "TripActionId": 5,
-          "Name": "Live Unload",
-          "ShortName": "Live U"
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
         },
-        "StartLocationType": {
-          "LocationTypeId": 5,
-          "Name": "Port"
+        "status": {
+          "id": 1,
+          "name": "Cancel"
         },
-        "EndLocationType": {
-          "LocationTypeId": 2,
-          "Name": "Client"
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
         },
-        "Driver": {
-          "DriverId": 48,
-          "FirstName": "RICHARD",
-          "LastName": "NOVOA",
-          "ExternalDriverId": null,
-          "IsSmartTrucking": false
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
         },
-        "DrayingTripExtraStops": [],
-        "DrayingTripMessages": []
+        "paidByClient": false,
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:12:39.457",
+        "modifiedOn": "2019-12-05T15:12:44.957",
+        "extraStops": [],
+        "messages": []
       },
       {
-        "DrayingTripId": 799,
-        "DeliveryOrderDrayingId": 22,
-        "TripActionId": 5,
-        "TripStatusId": 6,
-        "Order": null,
-        "DriverId": 48,
-        "OrderRoute": 1,
-        "TripActionLocationId": 4,
-        "PaidByClient": true,
-        "StartLocationTypeId": 5,
-        "EndLocationTypeId": 2,
-        "ContainerLoadedStart": true,
-        "ContainerLoadedEnd": false,
-        "CreatedOn": "2019-12-05T15:13:01.91",
-        "ModifiedOn": "2019-12-06T01:39:13.713",
-        "RouteId": 107,
-        "TripStatus": {
-          "TripStatusId": 6,
-          "Name": "Completed"
+        "id": 799,
+        "draying": {
+          "id": 22
         },
-        "TripAction": {
-          "TripActionId": 5,
-          "Name": "Live Unload",
-          "ShortName": "Live U"
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
         },
-        "StartLocationType": {
-          "LocationTypeId": 5,
-          "Name": "Port"
+        "status": {
+          "id": 6,
+          "name": "Completed"
         },
-        "EndLocationType": {
-          "LocationTypeId": 2,
-          "Name": "Client"
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
         },
-        "Driver": {
-          "DriverId": 48,
-          "FirstName": "RICHARD",
-          "LastName": "NOVOA",
-          "ExternalDriverId": null,
-          "IsSmartTrucking": false
+        "orderRoute": 1,
+        "tripActionLocation":{
+          "id": 4
         },
-        "DrayingTripExtraStops": [],
-        "DrayingTripMessages": []
+        "paidByClient": true,
+        "route": {
+          "id": 107
+        },
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:13:01.91",
+        "modifiedOn": "2019-12-06T01:39:13.713",
+        "extraStops": [],
+        "messages": []
       },
       {
-        "DrayingTripId": 803,
-        "DeliveryOrderDrayingId": 22,
-        "TripActionId": 7,
-        "TripStatusId": 6,
-        "Order": null,
-        "DriverId": 48,
-        "OrderRoute": 2,
-        "TripActionLocationId": 54,
-        "PaidByClient": true,
-        "StartLocationTypeId": 2,
-        "EndLocationTypeId": 6,
-        "ContainerLoadedStart": false,
-        "ContainerLoadedEnd": false,
-        "CreatedOn": "2019-12-06T01:39:13.933",
-        "ModifiedOn": "2019-12-13T17:17:41.427",
-        "RouteId": 107,
-        "TripStatus": {
-          "TripStatusId": 6,
-          "Name": "Completed"
+        "id": 803,
+        "draying": {
+          "id": 22
         },
-        "TripAction": {
-          "TripActionId": 7,
-          "Name": "Yard Stop",
-          "ShortName": "YS"
+        "action": {
+          "id": 7,
+          "name": "Yard Stop",
+          "shortName": "YS"
         },
-        "StartLocationType": {
-          "LocationTypeId": 2,
-          "Name": "Client"
+        "status": {
+          "id": 6,
+          "name": "Completed"
         },
-        "EndLocationType": {
-          "LocationTypeId": 6,
-          "Name": "Yard"
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
         },
-        "Driver": {
-          "DriverId": 48,
-          "FirstName": "RICHARD",
-          "LastName": "NOVOA",
-          "ExternalDriverId": null,
-          "IsSmartTrucking": false
+        "orderRoute": 2,
+        "tripActionLocation": {
+          "id": 54
         },
-        "DrayingTripExtraStops": [],
-        "DrayingTripMessages": []
+        "paidByClient": true,
+        "route": {
+            "id": 107
+        },
+        "startLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "endLocationType": {
+          "id": 6,
+          "name": "Yard"
+        },
+        "containerLoadedStart": false,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-06T01:39:13.933",
+        "modifiedOn": "2019-12-13T17:17:41.427",
+        "extraStops": [],
+        "messages": []
       }
     ],
     "extraStops": [

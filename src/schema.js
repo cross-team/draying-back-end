@@ -169,7 +169,7 @@ const typeDefs = gql`
     """
     Use this one instead of partial, locStree...
     """
-    location: Location
+    location: LocationNickName
     companyId: Int
     isDefault: Boolean
     active: Boolean
@@ -952,7 +952,7 @@ const typeDefs = gql`
   """
   type TerminalLocation implements Node {
     id: ID!
-    location: Location
+    location: LocationNickName
     nickName: String
     shortName: String
     isDefault: Boolean
@@ -1088,7 +1088,7 @@ const typeDefs = gql`
     Swap, End of Day and Start Day) In a trip, only 2 location
     have action location id value between 1-6 (main actions)
     """
-    locationAction: LocationAction
+    action: LocationAction
     """
     Date and time route started
     """

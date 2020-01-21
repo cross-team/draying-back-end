@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import { tripLocationReducer } from './reducers'
+import { tripLocationReducer, idReducer, tripStatusReducer } from './reducers'
 class DriverAPI extends RESTDataSource {
   constructor() {
     super()
@@ -25,7 +25,9 @@ class DriverAPI extends RESTDataSource {
                 ? trip.DrayingTripLocations[0].DrayingTripId
                 : 'No ID',
             companyName: trip.CompanyName,
-            status: trip.TripStatusId,
+            status: trip.TripStatus
+              ? tripStatusReducer(trip.TripStatus)
+              : idReducer(trip.TripStatusId),
             containerSize: trip.ContainerSize,
             containerType: trip.ContainerType,
             shippingLine: trip.ShippingLine,
@@ -33,9 +35,9 @@ class DriverAPI extends RESTDataSource {
             timeZone: trip.TimeZone,
             timeZoneDstOffset: trip.TimeZoneDstOffset,
             timeZoneRawOffset: trip.TimeZoneRawOffset,
-            currentRouteTime: trip.currentRouteTime,
-            startTrip: trip.startTrip,
-            endTrip: trip.endTrip,
+            currentRouteTime: trip.CurrentRouteTime,
+            startTrip: trip.StartTrip,
+            endTrip: trip.EndTrip,
             progress: trip.Progress,
             currentDestination: trip.CurrentDestination
               ? tripLocationReducer(trip.CurrentDestination)

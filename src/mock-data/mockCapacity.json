@@ -1,0 +1,208 @@
+{
+  "status": true,
+  "data": [
+    {
+      "id": 48,
+      "firstName": "RICHARD",
+      "lastName": "NOVOA",
+      "active": true,
+      "dailyWorkHours": 8.0,
+      "capacityInfo": {
+        "startDateTime": "2020-01-13T07:30:00",
+        "endDateTime": "2020-01-13T09:37:00",
+        "capacity": 26.4583333333333,
+        "activeTripCapacity": {
+          "id": 841,
+          "companyName": "test",
+          "status": {
+            "id": 5
+          },
+          "containerSize": "20'",
+          "containerType": "ST",
+          "shippingLine": "MSC",
+          "locations": [
+            {
+              "id": 3363,
+              "driver": {
+                "id": 48
+              },
+              "vehicle": {
+                "id": 52
+              },
+              "action": {
+                "id": 9
+              },
+              "trip": {
+                "id": 841
+              },
+              "order": 1,
+              "enRouteAt": null,
+              "arrivedAt": null,
+              "completedAt": null,
+              "skippedAt": null,
+              "scheduledArrivalAt": "2020-01-13T07:30:00",
+              "scheduledCompletedAt": "2020-01-13T07:30:00",
+              "estimatedScheduledArrivalAt": "2020-01-13T07:30:00",
+              "estimatedScheduledCompletedAt": "2020-01-13T07:30:00",
+              "estimatedWaitingTime": 0,
+              "nickName": {
+                "id": 15
+              },
+              "travelMiles": null,
+              "travelTime": null,
+              "estimatedTravelMiles": 0.0,
+              "estimatedTravelTime": 0,
+              "notes": null,
+              "modifiedBy": "system",
+              "modifiedOn": "2020-01-13T15:07:45.01",
+              "createdBy": "system",
+              "createdOn": "2020-01-13T15:07:45.01"
+            },
+            {
+              "id": 3364,
+              "driver": {
+                "id": 48
+              },
+              "vehicle": {
+                "id": 52
+              },
+              "action": {
+                "id": 2
+              },
+              "trip": {
+                "id": 841
+              },
+              "order": 2,
+              "enRouteAt": null,
+              "arrivedAt": null,
+              "completedAt": null,
+              "skippedAt": null,
+              "scheduledArrivalAt": "2020-01-13T08:01:00",
+              "scheduledCompletedAt": "2020-01-13T09:01:00",
+              "estimatedScheduledArrivalAt": "2020-01-13T08:01:00",
+              "estimatedScheduledCompletedAt": "2020-01-13T09:01:00",
+              "estimatedWaitingTime": 60,
+              "nickName": {
+                "id": 114
+              },
+              "travelMiles": null,
+              "travelTime": null,
+              "estimatedTravelMiles": 7.81,
+              "estimatedTravelTime": 31,
+              "notes": null,
+              "modifiedBy": "system",
+              "modifiedOn": "2020-01-13T15:07:45.22",
+              "createdBy": "system",
+              "createdOn": "2020-01-13T15:07:45.22"
+            },
+            {
+              "id": 3365,
+              "driver": {
+                "id": 48
+              },
+              "vehicle": {
+                "id": 52
+              },
+              "action": {
+                "id": 4
+              },
+              "trip": {
+                "id": 841
+              },
+              "order": 3,
+              "enRouteAt": null,
+              "arrivedAt": null,
+              "completedAt": null,
+              "skippedAt": null,
+              "scheduledArrivalAt": "2020-01-13T09:17:00",
+              "scheduledCompletedAt": "2020-01-13T09:37:00",
+              "estimatedScheduledArrivalAt": "2020-01-13T09:17:00",
+              "estimatedScheduledCompletedAt": "2020-01-13T09:37:00",
+              "estimatedWaitingTime": 20,
+              "nickName": {
+                "id": 15
+              },
+              "travelMiles": null,
+              "travelTime": null,
+              "estimatedTravelMiles": 8.11,
+              "estimatedTravelTime": 16,
+              "notes": null,
+              "modifiedBy": "system",
+              "modifiedOn": "2020-01-13T15:07:45.513",
+              "createdBy": "system",
+              "createdOn": "2020-01-13T15:07:45.513"
+            }
+          ],
+          "timeZone": "Eastern Standard Time",
+          "timeZoneDstOffset": 0,
+          "timeZoneRawOffset": -18000,
+          "currentRouteTime": "2020-01-13 14:15:56.0056434",
+          "startTrip": "2020-01-13T07:30:00",
+          "endTrip": "2020-01-13T09:37:00",
+          "progress": 0,
+          "currentDestination": {
+            "estimatedTravelTime": 0,
+            "travelTime": null,
+            "estimatedTravelMiles": 0.0,
+            "travelMiles": null,
+            "nickName": {
+              "id": 0,
+              "partial": false,
+              "modifiedBy": null,
+              "name": "2500 NW 46th St, Miami, FL 33142, USA",
+              "location": {
+                "id": 0
+              },
+              "locStreet": null,
+              "locSuite": null,
+              "locCity": "Miami",
+              "locZip": "33142",
+              "locState": "FL",
+              "locCountry": "US",
+              "googleAddress": "2500 NW 46th St, Miami, FL 33142, USA",
+              "latitude": null,
+              "longitude": null
+            },
+            "arrivedAt": null,
+            "estimatedScheduledArrivalAt": "2020-01-13T07:30:00",
+            "scheduledArrivalAt": "2020-01-13T07:30:00",
+            "completedAt": null,
+            "estimatedScheduledCompletedAt": "2020-01-13T07:30:00",
+            "scheduledCompletedAt": "2020-01-13T07:30:00"
+          },
+          "lastDestination": {
+            "estimatedTravelTime": 0,
+            "travelTime": null,
+            "estimatedTravelMiles": 0.0,
+            "travelMiles": null,
+            "nickName": {
+              "id": 0,
+              "partial": false,
+              "modifiedBy": null,
+              "name": "2500 NW 46th St, Miami, FL 33142, USA",
+              "location": {
+                "id": 0
+              },
+              "locStreet": null,
+              "locSuite": null,
+              "locCity": "Miami",
+              "locZip": "33142",
+              "locState": "FL",
+              "locCountry": "US",
+              "googleAddress": "2500 NW 46th St, Miami, FL 33142, USA",
+              "latitude": null,
+              "longitude": null
+            },
+            "arrivedAt": null,
+            "estimatedScheduledArrivalAt": "2020-01-13T07:30:00",
+            "scheduledArrivalAt": "2020-01-13T07:30:00",
+            "completedAt": null,
+            "estimatedScheduledCompletedAt": "2020-01-13T07:30:00",
+            "scheduledCompletedAt": "2020-01-13T07:30:00"
+          }
+        },
+      "pendingTripsCount": 2
+      }
+    }
+  ]
+}
