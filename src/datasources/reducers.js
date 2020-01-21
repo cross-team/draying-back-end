@@ -1,0 +1,576 @@
+export const idReducer = id =>
+  id !== undefined && id !== null
+    ? {
+        id,
+      }
+    : undefined
+
+export const carrierReducer = carrier => ({
+  id: carrier.CarrierId,
+})
+
+export const clientReducer = client => ({
+  id: client.ClientId,
+  companyName: client.CompanyName,
+})
+
+export const costReducer = cost => ({
+  id: cost.CostId,
+  type: cost.Type,
+  reason: cost.Reason,
+})
+
+export const containerSizeReducer = containerSize => ({
+  id: containerSize.ContainerSizeId,
+  name: containerSize.Name,
+  size: containerSize.Size,
+})
+
+export const containerTypeReducer = containerType => ({
+  id: containerType.ContainerTypeId,
+  name: containerType.Name,
+  shortName: containerType.ShortName,
+  order: containerType.Order,
+  active: containerType.Active,
+})
+
+export const containerStageReducer = containerStage => ({
+  id: containerStage.ContainerStageId,
+  name: containerStage.Name,
+})
+
+export const deliveryLocationReducer = deliveryLocation => ({
+  id: deliveryLocation.DeliveryLocationId,
+  companyId: deliveryLocation.CompanyId,
+  location: deliveryLocation.Location
+    ? locationNicknameReducer(deliveryLocation.Location)
+    : idReducer(deliveryLocation.LocationId),
+  isDefault: deliveryLocation.IsDefault,
+  active: deliveryLocation.Active,
+  nickName: deliveryLocation.NickName,
+  locationType: deliveryLocation.LocationType
+    ? locationTypeReducer(deliveryLocation.LocationType)
+    : idReducer(deliveryLocation.LocationTypeId),
+  receivingHoursOpen: deliveryLocation.ReceivingHoursOpen,
+  receivingHoursClose: deliveryLocation.ReceivingHoursClose,
+  locationNickName: deliveryLocation.LocationNickName
+    ? locationNicknameReducer(deliveryLocation.LocationNickName)
+    : idReducer(deliveryLocation.LocationNickNameId),
+  createdBy: deliveryLocation.CreatedBy,
+  createdOn: deliveryLocation.CreatedOn,
+  ...(deliveryLocation.Partial && { partial: deliveryLocation.Partial }),
+  ...(deliveryLocation.DeliveryContacts && {
+    deliveryContacts: deliveryLocation.DeliveryContacts,
+  }),
+  ...(deliveryLocation.DeliveryOrders && {
+    deliveryOrders: deliveryLocation.DeliveryOrders.map(orderReducer),
+  }),
+  ...(deliveryLocation.DeliveryOrderDrayings && {
+    drayings: deliveryLocation.DeliveryOrderDrayings.map(drayingReducer),
+  }),
+  locStreet: deliveryLocation.LocStreet,
+  locSuite: deliveryLocation.LocSuite,
+  locCity: deliveryLocation.LocCity,
+  locZip: deliveryLocation.LocZip,
+  locState: deliveryLocation.LocState,
+  locCountry: deliveryLocation.LocCountry,
+  googleAddress: deliveryLocation.GoogleAddress,
+  latitude: deliveryLocation.Latitude,
+  longitude: deliveryLocation.Longitude,
+})
+
+export const drayingReducer = draying => ({
+  id: draying.DeliveryOrderDrayingId,
+  order: draying.Order,
+  deliveryOrder: draying.DeliveryOrder
+    ? orderReducer(draying.DeliveryOrder)
+    : idReducer(draying.DeliveryOrderId),
+  client: draying.Client
+    ? clientReducer(draying.Client)
+    : idReducer(draying.ClientId),
+  deliveryLocation: draying.DeliveryLocation
+    ? deliveryLocationReducer(draying.DeliveryLocation)
+    : idReducer(draying.DeliveryLocationId),
+  booking: draying.Booking,
+  container: draying.Container,
+  containerSize: draying.ContainerSize
+    ? containerSizeReducer(draying.ContainerSize)
+    : idReducer(draying.ContainerSizeId),
+  containerType: draying.ContainerType
+    ? containerTypeReducer(draying.ContainerType)
+    : idReducer(draying.ContainerTypeId),
+  estimateAvailableOn: draying.EstimateAvailableOn,
+  lastFreeDay: draying.LastFreeDay,
+  daysToReturn: draying.DaysToReturn,
+  lastDayToReturn: draying.LastDayToReturn,
+  holds: draying.Holds,
+  line: draying.Line,
+  feesDues: draying.FeesDues,
+  feesPaid: draying.FeesPaid,
+  preGate: draying.PreGate,
+  yardLocation: draying.YardLocation,
+  yardStatus: draying.YardStatus,
+  loadEmpty: draying.LoadEmpty,
+  weight: draying.Weight,
+  overDimension: draying.OverDimension,
+  hazmat: draying.Hazmat,
+  voyageCode: draying.VoyageCode,
+  lloydsNo: draying.LloydsNo,
+  vesselName: draying.VesselName,
+  estimateDischarge: draying.EstimateDischarge,
+  containerStage: draying.ContainerStage
+    ? containerStageReducer(draying.ContainerStage)
+    : undefined,
+  SCAC: draying.SCAC,
+  earlyReturnDate: draying.EarlyReturnDate,
+  createdOn: draying.CreatedOn,
+  createdBy: draying.CreatedBy,
+  modifiedOn: draying.ModifiedOn,
+  modifiedBy: draying.ModifiedBy,
+  price: draying.Price,
+  priceSuggested: draying.PriceSuggested,
+  daysStorage: draying.DaysStorage,
+  isLive: draying.IsLive,
+  prePull: draying.PrePull,
+  yardStop: draying.YardStop,
+  chassisSplit: draying.ChassisSplit,
+  urgent: draying.Urgent,
+  appointmentNeeded: draying.AppointmentNeeded,
+  appointmentDate: draying.AppointmentDate,
+  estimateDeliverTimeFrom: draying.EstimateDeliverTimeFrom,
+  estimateDeliverTimeTo: draying.EstimateDeliverTimeTo,
+  notReleasedPull: draying.NotReleasedPull,
+  terminalLocation: draying.TerminalLocation
+    ? terminalLocationReducer(draying.TerminalLocation)
+    : idReducer(draying.TerminalLocationId),
+  overweight: draying.Overweight,
+  isOverDimension: draying.IsOverDimension,
+  available: draying.Available,
+  isHazmat: draying.IsHazmat,
+  estimatedDeliveryDateFrom: draying.EstimatedDeliveryDateFrom,
+  estimatedDeliveryDateTo: draying.EstimatedDeliveryDateTo,
+  cutOffDate: draying.CutOffDate,
+  portStatus: draying.ContainerPortStatus
+    ? portStatusReducer(draying.ContainerPortStatus)
+    : idReducer(draying.ContainerPortStatusId),
+  dontDispatch: draying.DontDispatch,
+  loadType: draying.LoadType
+    ? loadTypeReducer(draying.LoadType)
+    : idReducer(draying.LoadTypeId),
+  shippingLine: draying.ShippingLine
+    ? shippingLineReducer(draying.ShippingLine)
+    : idReducer(draying.ShippingLineId),
+  estimateTotalMilesRoundTrip: draying.EstimateTotalMilesRoundTrip,
+  estimateTotalTimeRoundTrip: draying.EstimateTotalTimeRoundTrip,
+  priority: draying.Priority,
+  lastDayToPull: draying.LastDayToPull,
+  pullDay: draying.PullDay,
+  specificAppoinmentPickUpFromClient:
+    draying.SpecificAppoinmentPickUpFromClient,
+  pickUpClientDateFrom: draying.PickUpClientDateFrom,
+  pickUpClientDateTo: draying.PickUpClientDateTo,
+  pickUpClientTimeFrom: draying.PickUpClientTimeFrom,
+  pickUpClientTimeTo: draying.PickUpClientTimeTo,
+  currentLocationType: draying.CurrentLocation
+    ? locationTypeReducer(draying.CurrentLocation)
+    : idReducer(draying.CurrentLocationId),
+  lastDayToDeliverToClient: draying.LastDayToDeliverToClient,
+  dispatchingPriority: draying.DispatchingPriority,
+  manualTerminal: draying.ManualTerminal,
+  autoLoad: draying.AutoLoad,
+  appointmentTime: draying.AppointmentTime,
+  returnTerminal: draying.ReturnTerminal
+    ? terminalLocationReducer(draying.ReturnTerminal)
+    : idReducer(draying.ReturnTerminalId),
+  trips: draying.DrayingTrips ? draying.DrayingTrips.map(tripReducer) : null,
+  drayingAlerts: draying.DrayingAlerts
+    ? draying.DrayingAlerts.map(drayingAlertReducer)
+    : null,
+  ...(draying.DeliveryOrderDrayingRoundTrips && {
+    drayingRoundTrips: draying.DeliveryOrderDrayingRoundTrips.map(
+      drayingRoundTripReducer,
+    ),
+  }),
+  seal: draying.Seal,
+  customsStatus: draying.CustomsStatus,
+  lineStatus: draying.LineStatus,
+  lastGateMoveStatus: draying.LastGateMoveStatus,
+  lastGateDateTime: draying.LastGateDateTime,
+  isLoaded: draying.IsLoaded,
+  streetTurn: draying.StreetTurn,
+  startLocationStreetTurnId: draying.StartLocationStreetTurnId,
+  originStreetTurnDrayingId: draying.OriginStreetTurnDrayingId,
+  originStreetTurnLocationNickName: draying.OriginStreetTurnLocationNickName
+    ? locationNicknameReducer(draying.OriginStreetTurnLocationNickName)
+    : idReducer(draying.originStreetTurnLocationNickNameId),
+  returnDate: draying.ReturnDate,
+  completedDate: draying.CompletedDate,
+  lastDateTimeToDeliverLive: draying.LastDateTimeToDeliverLive,
+  lastDateTimeToDeliverDrop: draying.LastDateTimeToDeliverDrop,
+  latestDeliveryDateTimeLive: draying.LatestDeliveryDateTimeLive,
+  latestDeliveryDateTimeDrop: draying.LatestDeliveryDateTimeDrop,
+  latestPickDateTime: draying.LatestPickDateTime,
+  latestPullDateTime: draying.LatestPullDateTime,
+  availableDay: draying.AvailableDay,
+  streetTurnMuted: draying.StreetTurnMuted,
+  reviewed: draying.Reviewed,
+  invoiced: draying.Invoiced,
+  bonded: draying.Bonded,
+  carrier: draying.Carrier
+    ? carrierReducer(draying.Carrier)
+    : idReducer(draying.CarrierId),
+  extraStops: draying.DeliveryOrderDrayingExtraStops
+    ? draying.DeliveryOrderDrayingExtraStops.map(extraStopReducer)
+    : null,
+})
+
+export const drayingActionReducer = action => ({
+  id: action.DrayingActionId,
+  name: action.Name,
+  active: action.Active,
+  time: action.Time,
+  modifiedOn: action.ModifiedOn,
+  modifiedBy: action.modifiedBy,
+})
+
+export const drayingAlertReducer = drayingAlert => ({
+  id: drayingAlert.DrayingAlertId,
+})
+
+export const drayingRoundTripReducer = drayingRoungTrip => ({
+  id: drayingRoungTrip.DeliveryOrderDrayingRoundTripId,
+})
+export const driverReducer = driver => ({
+  id: driver.DriverId,
+  firstName: driver.FirstName,
+  lastName: driver.LastName,
+  active: driver.Active,
+  dailyWorkHours: driver.DailyWorkHours,
+  startDateTime: driver.StartDateTime,
+  endDateTime: driver.EndDateTime,
+  phone: driver.Phone,
+  defaultStartingHoS: driver.DefaultStartingHoS,
+  userName: driver.UserName,
+  licenseNumber: driver.LicenseNumber,
+  licenseState: driver.LicenseState,
+  eldExempt: driver.EldExempt,
+  eldExemptReason: driver.EldExemptReason,
+  eldBigDayExemptionEnabled: driver.EldBigDayExemptionEnabled,
+  eldAdverseWeatherExemptionEnabled: driver.EldAdverseWeatherExemptionEnabled,
+  eldPcEnabled: driver.EldPcEnabled,
+  eldYmEnabled: driver.EldYmEnabled,
+  eldDayStartHour: driver.EldDayStartHour,
+  vehicle: driver.Vehicle
+    ? vehicleReducer(driver.Vehicle)
+    : idReducer(driver.VehicleId),
+  isDeactivated: driver.IsDeactivated,
+  driverUserId: driver.DriverUserId,
+  saturdayShift: driver.SaturdayShift,
+  weeklyWorkHours: driver.WeeklyWorkHours,
+  workRadius: driver.WorkRadius,
+  baseWeeklySalary: driver.BaseWeeklySalary,
+  salaryPerMile: driver.SalaryPerMile,
+  salaryPerTripDelivered: driver.SalaryPerTripDelivered,
+  defaultYard: driver.DefaultYard
+    ? locationNicknameReducer(driver.DefaultYard)
+    : idReducer(driver.DefaultYardId),
+  homeAddress: driver.HomeAddress
+    ? locationNicknameReducer(driver.HomeAddress)
+    : idReducer(driver.HomeAddressId),
+  defaultVehicle: driver.Vehicle
+    ? vehicleReducer(driver.Vehicle)
+    : idReducer(driver.VehicleId),
+  ownerOperator: driver.OwnerOperator,
+  modifiedBy: driver.ModifiedBy,
+  modifiedOn: driver.ModifiedOn,
+  createdBy: driver.CreatedBy,
+  createdOn: driver.CreatedOn,
+  carrier: driver.Carrier
+    ? carrierReducer(driver.Carrier)
+    : idReducer(driver.CarrierId),
+  eLDTokenCarrierId: driver.ELDTokenCarrierId,
+  isSmartTrucking: driver.IsSmartTrucking,
+  companyId: driver.CompanyId,
+})
+
+export const extraStopReducer = extraStop => ({
+  id: extraStop.DeliveryOrderDrayingExtraStopId,
+  draying: extraStop.DeliveryOrderDraying
+    ? drayingReducer(extraStop.DeliveryOrderDraying)
+    : idReducer(extraStop.DeliveryOrderDrayingId),
+  deliveryLocation: extraStop.DeliveryLocation
+    ? deliveryLocationReducer(extraStop.DeliveryLocation)
+    : idReducer(extraStop.DeliveryLocationId),
+  order: extraStop.Order,
+  status: extraStop.Status
+    ? tripStatusReducer(extraStop.Status)
+    : idReducer(extraStop.StatusId),
+  ...(extraStop.CreatedOn && { createdOn: extraStop.CreatedOn }),
+  ...(extraStop.CreatedBy && { createdBy: extraStop.CreatedBy }),
+  ...(extraStop.ModifiedOn && { modifiedOn: extraStop.ModifiedOn }),
+  ...(extraStop.ModifiedBy && { modifiedBy: extraStop.ModifiedBy }),
+})
+
+export const loadTypeReducer = loadType => ({
+  id: loadType.LoadTypeId,
+  name: loadType.Name,
+  shortName: loadType.ShortName,
+})
+
+export const locationReducer = location => ({
+  id: location.LocationId,
+  nickName: location.NickName
+    ? locationNicknameReducer(location.NickName)
+    : idReducer(location.LocationNickNameId),
+  preferred: location.Preferred,
+  partial: location.Partial,
+  contactName: location.ContactName,
+  contactPhone: location.ContactPhone,
+  modifiedBy: location.ModifiedBy,
+  locStreet: location.LocStreet,
+  locSuite: location.LocSuite,
+  locCity: location.LocCity,
+  locZip: location.LocZip,
+  locState: location.LocState,
+  locCountry: location.LocCountry,
+  googleAddress: location.GoogleAddress,
+  latitude: location.Latitude,
+  longitude: location.Longitude,
+})
+export const locationNicknameReducer = nickName => ({
+  id: nickName.LocationNickNameId,
+  name: nickName.NickName,
+  partial: nickName.Partial,
+  modifiedBy: nickName.ModifiedBy,
+  location: nickName.Location
+    ? locationReducer(nickName.Location)
+    : idReducer(nickName.LocationId),
+  locStreet: nickName.LocStreet,
+  locSuite: nickName.LocSuite,
+  locCity: nickName.LocCity,
+  locZip: nickName.LocZip,
+  locState: nickName.LocState,
+  locCountry: nickName.LocCountry,
+  googleAddress: nickName.GoogleAddress,
+  latitude: nickName.Latitude,
+  longitude: nickName.Longitude,
+})
+
+export const locationStateReducer = state => ({
+  id: state.DrayingTripLocationStateId,
+  name: state.Name,
+  shortName: state.ShortName,
+  active: state.Active,
+})
+
+export const locationTypeReducer = locationType => ({
+  id: locationType.LocationTypeId,
+  name: locationType.Name,
+})
+
+export const orderReducer = order => {
+  if (order.OrderId) {
+    return {
+      id: order.OrderId,
+    }
+  }
+  return {
+    id: order,
+  }
+}
+
+export const portStatusReducer = portStatus => ({
+  id: portStatus.ContainerPortStatusId,
+  name: portStatus.Name,
+  shortName: portStatus.ShortName,
+  order: portStatus.Order,
+  active: portStatus.Active,
+})
+
+export const routeReducer = route => {
+  const tripsReducer = trips => {
+    return trips.map(tripReducer)
+  }
+  return {
+    id: route.RouteId,
+    name: route.Name,
+    scheduledStartDateTime: route.ScheduledStartDateTime,
+    scheduledEndDateTime: route.ScheduledEndDateTime,
+    externalRouteId: route.ExternalRouteId,
+    extarnalGroupId: route.ExtarnalGroupId,
+    timeZone: route.TimeZone,
+    timeZoneDstOffset: route.TimeZoneDstOffset,
+    timeZoneRawOffset: route.TimeZoneRawOffset,
+    startDateTime: route.StartDateTime,
+    endDateTime: route.EndDateTime,
+    isEditable: route.IsEditable,
+    modifiedBy: route.ModifiedBy,
+    modifiedOn: route.ModifiedOn,
+    createdBy: route.CreatedBy,
+    createdOn: route.CreatedOn,
+    startLocationNickName: route.StartLocationNickName
+      ? locationNicknameReducer(route.StartLocationNickName)
+      : idReducer(route.StartLocationNickNameId),
+    trips: route.DrayingTrips ? tripsReducer(route.DrayingTrips) : null,
+    driver: route.Driver
+      ? driverReducer(route.Driver)
+      : idReducer(route.DriverId),
+    vehicle: route.Vehicle
+      ? vehicleReducer(route.Vehicle)
+      : idReducer(route.VehicleId),
+  }
+}
+
+export const shippingLineReducer = shippingLine => ({
+  id: shippingLine.ShippingLineId,
+  name: shippingLine.Name,
+  shortName: shippingLine.ShortName,
+  url: shippingLine.Url,
+  active: shippingLine.Active,
+})
+
+export const terminalLocationReducer = terminal => ({
+  id: terminal.TerminalLocationId,
+  shortName: terminal.ShortName,
+  isDefault: terminal.IsDefault,
+  active: terminal.Active,
+  location: terminal.Location
+    ? locationNicknameReducer(terminal.Location)
+    : idReducer(terminal.LocationId),
+  locationType: terminal.LocationType
+    ? locationTypeReducer(terminal.LocationType)
+    : idReducer(terminal.LocationTypeId),
+  radius: terminal.Radius,
+  modifiedBy: terminal.ModifiedBy,
+  modifiedOn: terminal.ModifiedOn,
+  autoLoad: terminal.AutoLoad,
+  nickName: terminal.NickName,
+  isTerminal: terminal.IsTerminal,
+  isDeport: terminal.IsDepot,
+  drayingTimeActionTerminals: terminal.DrayingTimeActionTerminals,
+  terminalLocationHours: terminal.TerminalLocationHours,
+  locStreet: terminal.LocStreet,
+  locSuite: terminal.LocSuite,
+  locCity: terminal.LocCity,
+  locZip: terminal.LocZip,
+  locState: terminal.LocState,
+  locCountry: terminal.LocCountry,
+  googleAddress: terminal.GoogleAddress,
+  latitude: terminal.Latitude,
+  longitude: terminal.Longitude,
+})
+
+export const tripReducer = trip => {
+  return {
+    id: trip.DrayingTripId,
+    modifiedBy: trip.ModifiedBy,
+    modifiedOn: trip.ModifiedOn,
+    createdBy: trip.CreatedBy,
+    createdOn: trip.CreatedOn,
+    orderRoute: trip.OrderRoute,
+    paidByClient: trip.PaidByClient,
+    containerLoadedStart: trip.ContainerLoadedStart,
+    containerLoadedEnd: trip.ContainerLoadedEnd,
+    externalRouteId: trip.externalRouteId,
+    startLocationType: trip.StartLocationType
+      ? locationTypeReducer(trip.StartLocationType)
+      : idReducer(trip.StartLocationTypeId),
+    endLocationType: trip.EndLocationType
+      ? locationTypeReducer(trip.EndLocationType)
+      : idReducer(trip.EndLocationTypeId),
+    draying: trip.DeliveryOrderDraying
+      ? drayingReducer(trip.DeliveryOrderDraying)
+      : idReducer(trip.DeliveryOrderDrayingId),
+    action: trip.TripAction
+      ? tripActionReducer(trip.TripAction)
+      : idReducer(trip.TripActionId),
+    status: trip.TripStatus
+      ? tripStatusReducer(trip.TripStatus)
+      : idReducer(trip.TripStatusId),
+    driver: trip.Driver ? driverReducer(trip.Driver) : idReducer(trip.DriverId),
+    tripActionLocation: trip.TripActionLocation
+      ? tripActionLocationReducer(trip.TripActionLocation)
+      : idReducer(trip.TripActionLocationId),
+    route: trip.Route ? routeReducer(trip.Route) : idReducer(trip.RouteId),
+    extraStops: trip.DrayingTripExtraStops
+      ? trip.DrayingTripExtraStops.map(extraStopReducer)
+      : null,
+    ...(trip.DrayingCosts && { costs: trip.DrayingCosts.map(costReducer) }), // available on route
+    messages: trip.DrayingTripMessages
+      ? trip.DrayingTripMessages.map(tripMessageReducer)
+      : null,
+    ...(trip.DrayingTripLocations && {
+      locations: trip.DrayingTripLocations.map(tripLocationReducer),
+    }),
+  }
+}
+
+export const tripActionReducer = action => ({
+  id: action.TripActionId,
+  name: action.Name,
+  shortName: action.ShortName,
+  active: action.Active,
+})
+
+export const tripActionLocationReducer = actionLocation => ({
+  id: actionLocation.TripActionLocationId,
+})
+
+export const tripLocationReducer = location => ({
+  id: location.DrayingTripLocationId,
+  action: location.DrayingAction
+    ? drayingActionReducer(location.DrayingAction)
+    : idReducer(location.DrayingActionId),
+  driver: location.Driver
+    ? driverReducer(location.Driver)
+    : idReducer(location.DriverId),
+  nickName: location.LocationNickName
+    ? locationNicknameReducer(location.LocationNickName)
+    : idReducer(location.LocationNickNameId),
+  vehicle: location.Vehicle
+    ? vehicleReducer(location.Vehicle)
+    : idReducer(location.VehicleId),
+  trip: location.DrayingTrip
+    ? tripReducer(location.DrayingTrip)
+    : idReducer(location.DrayingTripId),
+  ...(location.Order && { order: location.Order }),
+  state: location.DrayingTripLocationState
+    ? locationStateReducer(location.DrayingTripLocationState)
+    : idReducer(location.DrayingTripLocationStateId),
+  enRouteAt: location.EnRouteAt,
+  arrivedAt: location.ArrivedAt,
+  completedAt: location.CompletedAt,
+  skippedAt: location.SkippedAt,
+  scheduledArrivalAt: location.ScheduledArrivalAt,
+  scheduledCompletedAt: location.ScheduledCompletedAt,
+  estimatedScheduledArrivalAt: location.EstimatedScheduledArrivalAt,
+  estimatedScheduledCompletedAt: location.EstimatedScheduledCompletedAt,
+  estimatedWaitingTime: location.EstimatedWaitingTime,
+  locationType: location.LocationType
+    ? locationTypeReducer(location.LocationType)
+    : idReducer(location.LocationTypeId),
+  travelMiles: location.TravelMiles,
+  travelTime: location.TravelTime,
+  estimatedTravelMiles: location.EstimatedTravelMiles,
+  estimatedTravelTime: location.EstimatedTravelTime,
+  notes: location.Notes,
+  modifiedBy: location.ModifiedBy,
+  modifiedOn: location.ModifiedOn,
+  createdBy: location.CreatedBy,
+  createdOn: location.CreatedOn,
+})
+
+export const tripMessageReducer = message => ({
+  id: message.DrayingTripMessageId,
+})
+
+export const tripStatusReducer = status => ({
+  id: status.TripStatusId,
+  name: status.Name,
+  order: status.Order,
+  active: status.Active,
+})
+
+export const vehicleReducer = vehicle => ({
+  id: vehicle.VehicleId,
+})

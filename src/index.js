@@ -3,7 +3,9 @@ import { ApolloServer } from 'apollo-server-express'
 import typeDefs from './schema'
 import resolvers from './resolvers'
 import DrayingApi from './datasources/draying'
+import DriverApi from './datasources/driver'
 import LoginApi from './datasources/login'
+import RouteApi from './datasources/route'
 import cookieParser from 'cookie-parser'
 
 require('dotenv').config()
@@ -11,6 +13,8 @@ require('dotenv').config()
 const dataSources = () => ({
   drayingApi: new DrayingApi(),
   loginApi: new LoginApi(),
+  driverApi: new DriverApi(),
+  routeApi: new RouteApi(),
 })
 
 const port = process.env.PORT || 4000
@@ -37,6 +41,7 @@ var whitelist = process.env.WHITE_LIST || [
 ]
 const corsOptions = {
   origin: function(origin, callback) {
+    console.log(`Orgin: ${origin}`)
     if (whitelist.indexOf(origin) !== -1 || origin === undefined) {
       callback(null, true)
     } else {

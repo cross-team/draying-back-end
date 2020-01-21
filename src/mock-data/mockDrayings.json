@@ -1,0 +1,527 @@
+{ "data": [
+  {
+    "id": 22,
+    "order": 2,
+    "client": {
+      "companyName": "test",
+      "id": 19
+    },
+    "deliveryLocation": {
+      "id": 46,
+      "nickName": "Test Address",
+      "location": {
+        "id": 134
+      },
+      "isDefault": false,
+      "active": true,
+      "locationNickName": {
+        "id": 135
+      },
+      "locationType": {
+        "id": 1
+      },
+      "receivingHoursOpen": "08:00:00",
+      "receivingHoursClose": "18:00:00",
+      "companyId": 2,
+      "createdBy": 5,
+      "createdOn": null,
+      "locCity": "Miami",
+      "locCountry": "US",
+      "locState": "FL",
+      "locStreet": "9090 NW 5th Ln",
+      "locSuite": "",
+      "locZip": "33126",
+      "googleAddress": "9090 NW 5th Ln, Miami, FL 33126, USA",
+      "latitude": 25.7750801,
+      "longitude": -80.3300456
+    },
+    "booking": null,
+    "container": "SZLU9517229",
+    "containerType": {
+      "id": 3,
+      "name": "Reefer",
+      "shortName": "RF"
+    },
+    "containerSize": {
+      "id": 2,
+      "name": "40'",
+      "size": 40
+    },
+    "estimateAvailableOn": "2019-11-29",
+    "lastFreeDay": "2019-12-05",
+    "daysToReturn": 3,
+    "lastDayToReturn": "2019-12-09",
+    "holds": null,
+    "line": "MSC",
+    "feesDues": null,
+    "feesPaid": null,
+    "preGate": null,
+    "yardLocation": null,
+    "yardStatus": null,
+    "loadEmpty": null,
+    "weight": null,
+    "overDimension": "",
+    "hazmat": "",
+    "voyageCode": "949N",
+    "lloydsNo": null,
+    "vesselName": "ALLEGRO",
+    "estimateDischarge": null,
+    "containerStage": {
+      "id": 6,
+      "name": "Dispatched"
+    },
+    "SCAC": null,
+    "earlyReturnDate": null,
+    "createdOn": "2019-12-04T21:46:33.313",
+    "createdBy": 5,
+    "modifiedOn": "2019-12-12T00:49:52.043",
+    "modifiedBy": 5,
+    "price": 345.0,
+    "priceSuggested": 345.0,
+    "daysStorage": null,
+    "isLive": true,
+    "prePull": false,
+    "yardStop": false,
+    "chassisSplit": false,
+    "urgent": false,
+    "appointmentNeeded": false,
+    "appointmentDate": null,
+    "estimateDeliverTimeFrom": null,
+    "estimateDeliverTimeTo": null,
+    "notReleasedPull": false,
+    "terminalLocation": {
+      "id": 11,
+      "location": {
+        "id": 2
+      },
+      "nickName": "Port Everglades Terminal (PET)",
+      "shortName": "PET-MSC",
+      "radius": 1.5,
+      "locCity": "Fort Lauderdale",
+      "locCountry": "",
+      "locState": "FL",
+      "locStreet": "4200 McIntosh Rd",
+      "locSuite": "",
+      "locZip": "33316",
+      "googleAddress": "4200 McIntosh Rd, Fort Lauderdale, FL 33316, USA",
+      "latitude": 26.0686694,
+      "longitude": -80.120818699999973
+    },
+    "overweight": false,
+    "isOverDimension": false,
+    "available": true,
+    "isHazmat": false,
+    "estimatedDeliveryDateFrom": "2019-11-29",
+    "cutOffDate": null,
+    "portStatus": {
+      "id": 7
+    },
+    "dontDispatch": false,
+    "estimatedDeliveryDateTo": "2019-12-10",
+    "currentLocationType": {
+      "id": 6
+    },
+    "loadType": {
+      "id": 1,
+      "name": "Import",
+      "shortName": "Imp"
+    },
+    "shippingLine": {
+      "id": 1,
+      "name": "Mediterranean",
+      "shortName": "MSC"
+    },
+    "estimateTotalMilesRoundTrip": 81.080000000000013,
+    "estimateTotalTimeRoundTrip": 382,
+    "priority": 361.0,
+    "lastDayToPull": "2019-12-05T16:00:00",
+    "pullDay": "2019-12-05",
+    "specificAppoinmentPickUpFromClient": true,
+    "pickUpClientDateFrom": "2019-12-13",
+    "pickUpClientDateTo": null,
+    "pickUpClientTimeFrom": "12:00:00",
+    "pickUpClientTimeTo": null,
+    "lastDayToDeliverToClient": "2019-12-10",
+    "dispatchingPriority": 5.0,
+    "streetTurn": null,
+    "originStreetTurnDrayingId": null,
+    "startLocationStreetTurnId": null,
+    "seal": null,
+    "customsStatus": null,
+    "lineStatus": null,
+    "lastGateMoveStatus": "EMPTY IN",
+    "lastGateDateTime": "2019-12-06T09:41:00",
+    "returnTerminal": {
+      "id": 20,
+      "location": {
+        "id": 34
+      },
+      "nickName": "M&S Yard",
+      "shortName": "M&S",
+      "radius": 1.0,
+      "locCity": "Miami",
+      "locCountry": "US",
+      "locState": "FL",
+      "locStreet": "2500 NW 46th St",
+      "locSuite": "",
+      "locZip": "33142",
+      "googleAddress": "2500 NW 46th St, Miami, FL 33142, USA",
+      "latitude": 25.8158445,
+      "longitude": -80.2387316
+    },
+    "isLoaded": null,
+    "deliveryOrder": {
+      "id": 18
+    },
+    "manualTerminal": false,
+    "autoLoad": true,
+    "appointmentTime": null,
+    "returnDate": "2019-12-06T09:41:00",
+    "completedDate": null,
+    "lastDateTimeToDeliverLive": "2019-12-09T13:55:00",
+    "lastDateTimeToDeliverDrop": "2019-12-06T13:55:00",
+    "latestDeliveryDateTimeLive": "2019-12-09T13:55:00",
+    "latestDeliveryDateTimeDrop": "2019-12-06T13:55:00",
+    "latestPickDateTime": "2019-12-09T13:55:00",
+    "latestPullDateTime": "2019-12-09T13:55:00",
+    "availableDay": "2019-12-04",
+    "reviewed": false,
+    "invoiced": false,
+    "carrier": {
+      "id": 2
+    },
+    "bonded": false,
+    "streetTurnMuted": false,
+    "drayingAlerts": [],
+    "trips": [
+      {
+        "id": 794,
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
+        },
+        "draying": {
+          "id": 22
+        },
+        "status": {
+          "id": 1,
+          "name": "Cancel"
+        },
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
+        },
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
+        },
+        "paidByClient": false,
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:07:24.363",
+        "modifiedOn": "2019-12-05T15:07:39.157",
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "extraStops": [],
+        "messages": []
+      },
+      {
+        "id": 795,
+        "draying": {
+          "id": 22
+        },
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
+        },
+        "status": {
+          "id": 1,
+          "name": "Cancel"
+        },
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
+        },
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
+        },
+        "paidByClient": false,
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:08:27.073",
+        "modifiedOn": "2019-12-05T15:11:02.897",
+        "extraStops": [],
+        "messages": []
+      },
+      {
+        "id": 796,
+        "draying": {
+          "id": 22
+        },
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
+        },
+        "status": {
+          "id": 1,
+          "name": "Cancel"
+        },
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
+        },
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
+        },
+        "paidByClient": false,
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:11:49.117",
+        "modifiedOn": "2019-12-05T15:11:55.3",
+        "extraStops": [],
+        "messages": []
+      },
+      {
+        "id": 797,
+        "draying": {
+          "id": 22
+        },
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
+        },
+        "status": {
+          "id": 1,
+          "name": "Cancel"
+        },
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
+        },
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
+        },
+        "paidByClient": false,
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:12:11.523",
+        "modifiedOn": "2019-12-05T15:12:24.677",
+        "extraStops": [],
+        "messages": []
+      },
+      {
+        "id": 798,
+        "draying": {
+          "id": 22
+        },
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
+        },
+        "status": {
+          "id": 1,
+          "name": "Cancel"
+        },
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
+        },
+        "orderRoute": 1,
+        "tripActionLocation": {
+          "id": 4
+        },
+        "paidByClient": false,
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:12:39.457",
+        "modifiedOn": "2019-12-05T15:12:44.957",
+        "extraStops": [],
+        "messages": []
+      },
+      {
+        "id": 799,
+        "draying": {
+          "id": 22
+        },
+        "action": {
+          "id": 5,
+          "name": "Live Unload",
+          "shortName": "Live U"
+        },
+        "status": {
+          "id": 6,
+          "name": "Completed"
+        },
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
+        },
+        "orderRoute": 1,
+        "tripActionLocation":{
+          "id": 4
+        },
+        "paidByClient": true,
+        "route": {
+          "id": 107
+        },
+        "startLocationType": {
+          "id": 5,
+          "name": "Port"
+        },
+        "endLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-05T15:13:01.91",
+        "modifiedOn": "2019-12-06T01:39:13.713",
+        "extraStops": [],
+        "messages": []
+      },
+      {
+        "id": 803,
+        "draying": {
+          "id": 22
+        },
+        "action": {
+          "id": 7,
+          "name": "Yard Stop",
+          "shortName": "YS"
+        },
+        "status": {
+          "id": 6,
+          "name": "Completed"
+        },
+        "driver": {
+          "id": 48,
+          "firstName": "RICHARD",
+          "lastName": "NOVOA",
+          "isSmartTrucking": false
+        },
+        "orderRoute": 2,
+        "tripActionLocation": {
+          "id": 54
+        },
+        "paidByClient": true,
+        "route": {
+            "id": 107
+        },
+        "startLocationType": {
+          "id": 2,
+          "name": "Client"
+        },
+        "endLocationType": {
+          "id": 6,
+          "name": "Yard"
+        },
+        "containerLoadedStart": false,
+        "containerLoadedEnd": false,
+        "createdOn": "2019-12-06T01:39:13.933",
+        "modifiedOn": "2019-12-13T17:17:41.427",
+        "extraStops": [],
+        "messages": []
+      }
+    ],
+    "extraStops": [
+      {
+        "id": 62,
+        "draying": {
+          "id": 22
+        },
+        "status": {
+          "id": 3
+        },
+        "order": 1,
+        "deliveryLocation": {
+          "id": 52,
+          "nickName": "Loadsmart",
+          "location": {
+            "id": 171
+          },
+          "isDefault": false,
+          "active": true,
+          "locationType": {
+            "id": 1
+          },
+          "receivingHoursOpen": "08:00:00",
+          "receivingHoursClose": "18:00:00",
+          "locationNickName": {
+            "id": 168
+          },
+          "companyId": 2,
+          "createdBy": 30,
+          "createdOn": null,
+          "locCity": "New York",
+          "locCountry": "US",
+          "locState": "NY",
+          "locStreet": "459 W Broadway",
+          "locSuite": "",
+          "locZip": "10012",
+          "googleAddress": "459 W Broadway, New York, NY 10012, USA",
+          "latitude": 40.7261324,
+          "longitude": -74.000196599999981
+        }
+      }
+    ]
+  }
+]
+}

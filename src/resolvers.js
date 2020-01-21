@@ -1,4 +1,4 @@
-import { paginateResults, fromCursorHash, pageInfoReducer } from './utils'
+import { paginateResults, pageInfoReducer } from './utils'
 import jwt from 'jsonwebtoken'
 
 export default {
@@ -13,6 +13,40 @@ export default {
         results: allDrayings,
       })
       return pageInfoReducer(drayings, allDrayings)
+    },
+    driversCapacity: async (
+      _,
+      { date, orderBy, sortAsc, driverName, before, after, first, last },
+      { dataSources },
+    ) => {
+      const allDrivers = await dataSources.driverApi.getDriversCapacity({
+        date,
+        orderBy,
+        sortAsc,
+        driverName,
+      })
+      const drivers = paginateResults({
+        before,
+        after,
+        first,
+        last,
+        results: allDrivers,
+      })
+      return pageInfoReducer(drivers, allDrivers)
+    },
+    driverRoute: async (
+      _,
+      { driverId, fromDate, toDate, pending, orderBy },
+      { dataSources },
+    ) => {
+      const route = await dataSources.routeApi.getDriverRoute({
+        driverId,
+        fromDate,
+        toDate,
+        pending,
+        orderBy,
+      })
+      return route
     },
   },
   Mutation: {
@@ -39,13 +73,6 @@ export default {
         )
       }
       return { ...loginResponse, token, email }
-    },
-  },
-  Draying: {
-    order: draying => {
-      return {
-        id: draying.order,
-      }
     },
   },
   Node: {
