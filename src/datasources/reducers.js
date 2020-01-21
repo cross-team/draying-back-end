@@ -35,7 +35,7 @@ export const containerTypeReducer = containerType => ({
 })
 
 export const containerStageReducer = containerStage => ({
-  id: containerStage.StageId,
+  id: containerStage.ContainerStageId,
 })
 
 export const deliveryLocationReducer = deliveryLocation => ({
