@@ -24,7 +24,7 @@ export default {
     ) => {
       if ((!!routeDriverId && !routeDate) || (!routeDriverId && !!routeDate)) {
         throw new ApolloError(
-          `Must provide either 'routeDriverId' and 'routeDate' together`,
+          `Must provide 'routeDriverId' and 'routeDate' together`,
         )
       }
       const allDrayings = await dataSources.drayingApi.getAllDrayings({
@@ -48,7 +48,7 @@ export default {
     },
     draying: async (_, { drayingId }, { dataSources }) => {
       if (typeof drayingId === 'undefined') {
-        throw new ApolloError(`Must provide either 'drayingId'`)
+        throw new ApolloError(`Must provide 'drayingId'`)
       }
       const draying = await dataSources.drayingApi.getDeliveryOrderDraying({
         drayingId,
@@ -57,7 +57,7 @@ export default {
     },
     drayingNextActions: async (_, { drayingId, tripId }, { dataSources }) => {
       if (typeof drayingId === 'undefined') {
-        throw new ApolloError(`Must provide either 'drayingId'`)
+        throw new ApolloError(`Must provide 'drayingId'`)
       }
       const drayingNextActions = await dataSources.drayingApi.getDrayingNextActions(
         { drayingId, tripId },
