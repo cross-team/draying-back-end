@@ -1177,7 +1177,7 @@ const typeDefs = gql`
     VIN: String
     odometerMeters: Int
     # TODO confirm
-     ## engineHours: null
+    ## engineHours: null
     modifiedBy: Int
     modifiedOn: String
     createdBy: Int
@@ -1192,7 +1192,7 @@ const typeDefs = gql`
     carrier: Carrier
     eLDTokenCarrierId: Int
     companyId: Int
-    licensePlate": null,
+    licensePlate: String
     eLDLink: String
 
     ##vehicleHistories: []
