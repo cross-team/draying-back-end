@@ -4,8 +4,34 @@ import { ApolloError } from 'apollo-server-express'
 
 export default {
   Query: {
-    drayings: async (_, { before, after, first, last }, { dataSources }) => {
-      const allDrayings = await dataSources.drayingApi.getAllDrayings()
+    drayings: async (
+      _,
+      {
+        containerStages,
+        containerTypes,
+        currentLocationTypes,
+        inMovement,
+        routeDriverId,
+        routeDate,
+        sort,
+        orderBy,
+        before,
+        after,
+        first,
+        last,
+      },
+      { dataSources },
+    ) => {
+      const allDrayings = await dataSources.drayingApi.getAllDrayings({
+        containerStages,
+        containerTypes,
+        currentLocationTypes,
+        inMovement,
+        routeDriverId,
+        routeDate,
+        sort,
+        orderBy,
+      })
       const drayings = paginateResults({
         before,
         after,
