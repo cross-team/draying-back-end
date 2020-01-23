@@ -19,13 +19,37 @@ class DrayingAPI extends RESTDataSource {
       : []
   }
 
-  async getAllDrayings() {
-    const { data } = await this.get('Draying/Dispatching')
+  async getAllDrayings({
+    containerStages,
+    containerTypes,
+    currentLocationTypes,
+    inMovement,
+    routeDriverId,
+    routeDate,
+    sort,
+    orderBy,
+  }) {
+    const params = {
+      ContainerStages: containerStages || [],
+      ContainerTypes: containerTypes || [],
+      CurrentLocationTypes: currentLocationTypes || [],
+      InMovement: inMovement,
+      RouteDriverId: routeDriverId,
+      RouteDate: routeDate,
+      Sort: sort,
+      OrderBy: orderBy,
+    }
+    const { data } = await this.get('Draying/Dispatching', params)
     let drayings = []
     if (data && data.drayings) {
       drayings = data.drayings
     }
     return this.drayingsReducer(drayings)
+  }
+
+  async getDeliveryOrderDraying({ drayingId }) {
+    const { data } = await this.get(`DeliveryOrderDraying/${drayingId}`)
+    return drayingReducer(data)
   }
 }
 export default DrayingAPI

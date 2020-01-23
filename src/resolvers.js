@@ -1,5 +1,6 @@
 import { paginateResults, pageInfoReducer } from './utils'
 import jwt from 'jsonwebtoken'
+import { ApolloError } from 'apollo-server-express'
 
 export default {
   Query: {
@@ -13,6 +14,15 @@ export default {
         results: allDrayings,
       })
       return pageInfoReducer(drayings, allDrayings)
+    },
+    drayingOnRouteForDriver: async (_, { drayingId }, { dataSources }) => {
+      if (drayingId === undefined) {
+        throw new ApolloError(`Must provide either 'drayingId'`)
+      }
+      const draying = await dataSources.drayingApi.getDeliveryOrderDraying({
+        drayingId,
+      })
+      return draying
     },
     driversCapacity: async (
       _,
