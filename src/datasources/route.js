@@ -14,6 +14,10 @@ class RouteApi extends RESTDataSource {
     )
   }
 
+  routesReducer(routes) {
+    return Array.isArray(routes) ? routes.map(route => routeReducer(route)) : []
+  }
+
   async getDriverRoute({ driverId, fromDate, toDate, pending, orderBy }) {
     let queryParams = {
       DriverId: driverId,
@@ -51,7 +55,7 @@ class RouteApi extends RESTDataSource {
     if (data) {
       routes = data
     }
-    return Array.isArray(routes) ? routes.map(route => routeReducer(route)) : []
+    return this.routesReducer(routes)
   }
 }
 export default RouteApi

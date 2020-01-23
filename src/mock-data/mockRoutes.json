@@ -1,0 +1,804 @@
+{
+  "data": [
+    {
+      "id": 129,
+      "driver": {
+        "id": 48,
+        "firstName": "RICHARD",
+        "lastName": "NOVOA",
+        "phone": "7869098462",
+        "defaultStartingHoS": null,
+        "userName": null,
+        "licenseNumber": "11111",
+        "licenseState": "fl",
+        "eldExempt": null,
+        "eldExemptReason": null,
+        "eldBigDayExemptionEnabled": null,
+        "eldAdverseWeatherExemptionEnabled": null,
+        "eldPcEnabled": null,
+        "eldYmEnabled": null,
+        "eldDayStartHour": null,
+        "active": true,
+        "isDeactivated": null,
+        "driverUserId": null,
+        "saturdayShift": false,
+        "weeklyWorkHours": 40.0,
+        "workRadius": 50,
+        "baseWeeklySalary": null,
+        "salaryPerMile": null,
+        "salaryPerTripDelivered": null,
+
+        "defaultYard": {
+          "id": 143
+        },
+        "homeAddress": {
+          "id": 143
+        },
+        "defaultVehicle": {
+          "id": 52
+        },
+        "ownerOperator": false,
+        "modifiedBy": null,
+        "modifiedOn": "0001-01-01T00:00:00",
+        "createdBy": null,
+        "createdOn": "0001-01-01T00:00:00",
+        "eLDTokenCarrierId": null,
+        "isSmartTrucking": false,
+        "companyId": 0
+      },
+      "vehicle": {
+        "id": 52,
+        "externalVehicleId": null,
+        "name": "Test",
+        "VIN": "1234567890",
+        "odometerMeters": 0,
+        "modifiedBy": null,
+        "modifiedOn": "2019-10-22T21:12:32.16",
+        "createdBy": null,
+        "createdOn": "2019-10-19T00:16:23.423",
+        "active": null,
+        "year": "2019",
+        "brand": "ford",
+        "model": "focus",
+        "weekCost": 200.0,
+        "costPerMile": 1.0,
+        "odometer": 1,
+        "eLDTokenCarrierId": null,
+        "companyId": 0,
+        "licensePlate": null,
+        "eLDLink": ""
+      },
+      "externalRouteId": null,
+      "extarnalGroupId": null,
+      "name": "12/20/2019",
+      "scheduledStartDateTime": "2019-12-20T01:00:00",
+      "scheduledEndDateTime": "2019-12-20T03:39:00",
+      "timeZone": "Eastern Standard Time",
+      "timeZoneDstOffset": 0,
+      "timeZoneRawOffset": -18000,
+      "startDateTime": null,
+      "endDateTime": null,
+      "isEditable": false,
+      "modifiedBy": 0,
+      "modifiedOn": "2019-12-21T01:21:29.2",
+      "createdBy": 0,
+      "createdOn": "2019-12-19T16:06:28.72",
+      "trips": [
+        {
+          "id": 838,
+          "draying": {
+            "id": 41,
+            "deliveryOrder": {
+              "id": 22
+            },
+            "order": null,
+            "booking": "NAM3717535i",
+            "container": "4",
+            "containerSize": {
+              "id": 2,
+              "name": "40'",
+              "size": 40
+            },
+            "containerType": {
+              "id": 2,
+              "name": "High Cube",
+              "shortName": "HC",
+              "order": 0,
+              "active": false
+            },
+            "drayingAlerts": [],
+            "drayingRoundTrips": [],
+            "estimateAvailableOn": null,
+            "lastFreeDay": null,
+            "daysToReturn": null,
+            "lastDayToReturn": "2019-12-19T00:00:00",
+            "holds": null,
+            "line": null,
+            "feesDues": null,
+            "feesPaid": null,
+            "preGate": null,
+            "yardLocation": null,
+            "yardStatus": null,
+            "loadEmpty": null,
+            "weight": null,
+            "overDimension": null,
+            "hazmat": null,
+            "voyageCode": null,
+            "lloydsNo": null,
+            "vesselName": null,
+            "estimateDischarge": null,
+            "containerStage": {
+              "id": 6
+            },
+            "SCAC": null,
+            "earlyReturnDate": "2019-12-13T00:00:00",
+            "createdOn": "0001-01-01T00:00:00",
+            "createdBy": 0,
+            "modifiedOn": "0001-01-01T00:00:00",
+            "modifiedBy": 0,
+            "price": null,
+            "priceSuggested": null,
+            "daysStorage": null,
+            "isLive": true,
+            "prePull": false,
+            "yardStop": false,
+            "chassisSplit": false,
+            "urgent": false,
+            "appointmentNeeded": null,
+            "appointmentDate": "2019-12-18T00:00:00",
+            "estimateDeliverTimeFrom": null,
+            "estimateDeliverTimeTo": null,
+            "notReleasedPull": null,
+            "terminalLocation": {
+              "id": 0,
+              "shortName": "SFCT",
+              "isDefault": false,
+              "active": false,
+              "locationType": {
+                "id": 0
+              },
+              "radius": null,
+              "modifiedBy": 0,
+              "modifiedOn": "0001-01-01T00:00:00",
+              "autoLoad": false,
+              "isTerminal": false,
+              "isDepot": false,
+              "location": {
+                "id": 0,
+                "partial": false,
+                "modifiedBy": null,
+                "name": null,
+                "location": {
+                  "id": 0
+                },
+                "locStreet": null,
+                "locSuite": null,
+                "locCity": null,
+                "locZip": null,
+                "locState": null,
+                "locCountry": null,
+                "googleAddress": null,
+                "latitude": null,
+                "longitude": null
+              },
+              "nickName": "South Florida Container Terminal",
+              "locStreet": null,
+              "locSuite": null,
+              "locCity": null,
+              "locZip": null,
+              "locState": null,
+              "locCountry": null,
+              "googleAddress": null,
+              "latitude": null,
+              "longitude": null
+            },
+            "overweight": false,
+            "isOverDimension": false,
+            "available": null,
+            "isHazmat": false,
+            "estimatedDeliveryDateFrom": null,
+            "estimatedDeliveryDateTo": null,
+            "cutOffDate": "2019-12-19T00:00:00",
+            "portStatus": {
+              "id": 0,
+              "name": "Available",
+              "shortName": "AV",
+              "order": 0,
+              "active": false
+            },
+            "dontDispatch": false,
+            "loadType": {
+              "id": 2
+            },
+            "estimateTotalMilesRoundTrip": null,
+            "estimateTotalTimeRoundTrip": null,
+            "priority": 0.0,
+            "lastDayToPull": null,
+            "pullDay": "2019-12-20T00:00:00",
+            "specificAppoinmentPickUpFromClient": null,
+            "pickUpClientDateFrom": null,
+            "pickUpClientDateTo": null,
+            "pickUpClientTimeFrom": null,
+            "pickUpClientTimeTo": null,
+            "currentLocationType": {
+              "id": 0,
+              "name": "Yard"
+            },
+            "lastDayToDeliverToClient": null,
+            "dispatchingPriority": 0.0,
+            "manualTerminal": false,
+            "autoLoad": false,
+            "appointmentTime": null,
+            "deliveryLocation": {
+              "id": 0,
+              "isDefault": false,
+              "active": false,
+              "locationType": {
+                "id": 0
+              },
+              "partial": false,
+              "location": {
+                "id": 0,
+                "partial": false,
+                "modifiedBy": null,
+                "name": null,
+                "location": {
+                  "id": 134
+                },
+                "locStreet": "9090 NW 5th Ln",
+                "locSuite": "",
+                "locCity": "Miami",
+                "locZip": "33126",
+                "locState": "FL",
+                "locCountry": "US",
+                "googleAddress": "9090 NW 5th Ln, Miami, FL 33126, USA",
+                "latitude": 25.7750801,
+                "longitude": -80.3300456
+              },
+              "nickName": "Test Address",
+              "locStreet": null,
+              "locSuite": null,
+              "locCity": null,
+              "locZip": null,
+              "locState": null,
+              "locCountry": null,
+              "googleAddress": null,
+              "latitude": null,
+              "longitude": null,
+              "deliveryContacts": [],
+              "deliveryOrders": [],
+              "drayings": [],
+              "receivingHoursOpen": null,
+              "receivingHoursClose": null
+            },
+            "client": {
+              "id": 0,
+              "companyName": "test"
+            },
+            "returnTerminal": {
+              "id": 0,
+              "shortName": "SFCT",
+              "isDefault": false,
+              "active": false,
+              "locationType": {
+                "id": 0
+              },
+              "radius": null,
+              "modifiedBy": 0,
+              "modifiedOn": "0001-01-01T00:00:00",
+              "autoLoad": false,
+              "isTerminal": false,
+              "isDepot": false,
+              "location": {
+                "id": 0,
+                "partial": false,
+                "modifiedBy": null,
+                "name": null,
+                "location": {
+                  "id": 0
+                },
+                "locStreet": null,
+                "locSuite": null,
+                "locCity": null,
+                "locZip": null,
+                "locState": null,
+                "locCountry": null,
+                "googleAddress": null,
+                "latitude": null,
+                "longitude": null
+              },
+              "nickName": "South Florida Container Terminal",
+              "locStreet": null,
+              "locSuite": null,
+              "locCity": null,
+              "locZip": null,
+              "locState": null,
+              "locCountry": null,
+              "googleAddress": null,
+              "latitude": null,
+              "longitude": null
+            },
+            "shippingLine": {
+              "id": 0,
+              "name": "CMA-CGM",
+              "shortName": "CMA",
+              "url": null,
+              "active": false
+            },
+
+            "trips": [
+              {
+                "id": 835,
+                "draying": {
+                  "id": 41
+                },
+                "action": {
+                  "id": 0,
+                  "name": "Pre-Pull",
+                  "shortName": "PP",
+                  "active": false
+                },
+                "status": {
+                  "id": 6
+                },
+                "modifiedBy": 0,
+                "modifiedOn": "2019-12-21T01:12:32.4",
+                "createdBy": 0,
+                "createdOn": "2019-12-21T01:11:51.8633333",
+                "orderRoute": null,
+                "driver": {
+                  "id": 51,
+                  "firstName": "Test",
+                  "lastName": "Test 45",
+                  "phone": "",
+                  "defaultStartingHoS": null,
+                  "userName": null,
+                  "licenseNumber": "12badf",
+                  "licenseState": "FL",
+                  "eldExempt": null,
+                  "eldExemptReason": null,
+                  "eldBigDayExemptionEnabled": null,
+                  "eldAdverseWeatherExemptionEnabled": null,
+                  "eldPcEnabled": null,
+                  "eldYmEnabled": null,
+                  "eldDayStartHour": null,
+                  "active": true,
+                  "isDeactivated": null,
+                  "driverUserId": null,
+                  "saturdayShift": false,
+                  "weeklyWorkHours": 45.0,
+                  "workRadius": 140,
+                  "baseWeeklySalary": null,
+                  "salaryPerMile": null,
+                  "salaryPerTripDelivered": null,
+                  "defaultYard": {
+                      "id": 170
+                  },
+                  "homeAddress": {
+                      "id": 170
+                  },
+                  "defaultVehicle": {
+                    "id": 52
+                  },
+                  "ownerOperator": false,
+                  "modifiedBy": null,
+                  "modifiedOn": "0001-01-01T00:00:00",
+                  "createdBy": null,
+                  "createdOn": "0001-01-01T00:00:00",
+                  "eLDTokenCarrierId": null,
+                  "isSmartTrucking": false,
+                  "companyId": 0
+                },
+                "paidByClient": null,
+                "startLocationType": {
+                  "id": 0
+                },
+                "containerLoadedStart": false,
+                "containerLoadedEnd": null,
+                "route": {
+                  "id": 138
+                },
+                "externalRouteId": null,
+                "costs": [],
+                "extraStops": null,
+                "messages": []
+              },
+              {
+                "id": 838,
+                "draying": {
+                  "id": 41
+                },
+                "action": {
+                  "id": 0,
+                  "name": "Live Load",
+                  "shortName": "Live L",
+                  "active": false
+                },
+                "status": {
+                  "id": 5
+                },
+                "modifiedBy": 0,
+                "modifiedOn": "2020-01-15T16:24:03.4366667",
+                "createdBy": 0,
+                "createdOn": "2019-12-21T01:21:51.69",
+                "paidByClient": null,
+                "startLocationType": {
+                  "id": 0
+                },
+                "containerLoadedStart": false,
+                "containerLoadedEnd": null,
+                "route": {
+                  "id": 129
+                },
+                "externalRouteId": null,
+                "driver": {
+                  "id": 48,
+                  "firstName": "RICHARD",
+                  "lastName": "NOVOA",
+                  "phone": "7869098462",
+                  "defaultStartingHoS": null,
+                  "userName": null,
+                  "licenseNumber": "11111",
+                  "licenseState": "fl",
+                  "eldExempt": null,
+                  "eldExemptReason": null,
+                  "eldBigDayExemptionEnabled": null,
+                  "eldAdverseWeatherExemptionEnabled": null,
+                  "eldPcEnabled": null,
+                  "eldYmEnabled": null,
+                  "eldDayStartHour": null,
+                  "active": true,
+                  "isDeactivated": null,
+                  "driverUserId": null,
+                  "saturdayShift": false,
+                  "weeklyWorkHours": 40.0,
+                  "workRadius": 50,
+                  "baseWeeklySalary": null,
+                  "salaryPerMile": null,
+                  "salaryPerTripDelivered": null,
+                  "defaultYard": {
+                    "id": 143
+                  },
+                  "homeAddress": {
+                    "id": 143
+                  },
+                  "defaultVehicle": {
+                    "id": 52
+                  },
+                  "ownerOperator": false,
+                  "modifiedBy": null,
+                  "modifiedOn": "0001-01-01T00:00:00",
+                  "createdBy": null,
+                  "createdOn": "0001-01-01T00:00:00",
+                  "eLDTokenCarrierId": null,
+                  "isSmartTrucking": false,
+                  "companyId": 0
+                },
+                "extraStops": null,
+                "costs": [],
+                "messages": [],
+                "orderRoute": null
+              }
+            ],
+            "extraStops": [
+              {
+                "id": 70,
+                "draying": {
+                  "id": 41
+                },
+                "deliveryLocation": {
+                  "id": 0,
+                  "isDefault": false,
+                  "active": false,
+                  "locationType": {
+                    "id": 0
+                  },
+                  "receivingHoursOpen": null,
+                  "receivingHoursClose": null,
+                  "partial": false,
+                  "deliveryContacts": [],
+                  "location": {
+                    "id": 0,
+                    "partial": false,
+                    "modifiedBy": null,
+                    "name": null,
+                    "location": {
+                      "id": 169
+                    },
+                    "locStreet": "112 Fontainebleau Blvd",
+                    "locSuite": "",
+                    "locCity": "Miami",
+                    "locZip": "33172",
+                    "locState": "FL",
+                    "locCountry": "US",
+                    "googleAddress": "112 Fontainebleau Blvd, Miami, FL 33172, USA",
+                    "latitude": 25.7697564,
+                    "longitude": -80.339279499999975
+                  },
+                  "nickName": "Fontainebleau",
+                  "locStreet": null,
+                  "locSuite": null,
+                  "locCity": null,
+                  "locZip": null,
+                  "locState": null,
+                  "locCountry": null,
+                  "googleAddress": null,
+                  "latitude": null,
+                  "longitude": null,
+                  "deliveryOrders": [],
+                  "drayings": []
+                },
+                "order": 1,
+                "status": {
+                  "id": 3
+                },
+                "createdOn": "0001-01-01T00:00:00",
+                "createdBy": 0,
+                "modifiedOn": "0001-01-01T00:00:00",
+                "modifiedBy": 0
+              }
+            ],
+            "seal": null,
+            "customsStatus": null,
+            "lineStatus": null,
+            "lastGateMoveStatus": null,
+            "lastGateDateTime": null,
+            "isLoaded": null,
+            "streetTurn": null,
+            "startLocationStreetTurnId": null,
+            "originStreetTurnDrayingId": null,
+            "returnDate": null,
+            "completedDate": null,
+            "lastDateTimeToDeliverLive": null,
+            "lastDateTimeToDeliverDrop": null,
+            "latestDeliveryDateTimeLive": null,
+            "latestDeliveryDateTimeDrop": null,
+            "latestPickDateTime": null,
+            "latestPullDateTime": null,
+            "availableDay": null,
+            "streetTurnMuted": false,
+            "reviewed": false,
+            "invoiced": false,
+            "bonded": false
+          },
+          "action": {
+            "id": 0,
+            "name": "Live Load",
+            "shortName": "Live L",
+            "active": false
+          },
+          "status": {
+            "id": 5,
+            "name": "In movement",
+            "order": 0,
+            "active": false
+          },
+          "modifiedBy": 0,
+          "modifiedOn": "2020-01-15T16:24:03.437",
+          "createdBy": 0,
+          "createdOn": "2019-12-21T01:21:51.69",
+          "orderRoute": 0,
+          "driver": {
+              "id": 48
+          },
+          "tripActionLocation": {
+            "id": 29
+          },
+          "paidByClient": null,
+          "startLocationType": {
+            "id": 3
+          },
+          "endLocationType": {
+            "id": 2
+          },
+          "containerLoadedStart": false,
+          "containerLoadedEnd": true,
+          "externalRouteId": null,
+          "extraStops": null,
+          "costs": [],
+          "messages": [],
+          "locations": [
+            {
+              "id": 3366,
+              "driver": {
+                "id": 48
+              },
+              "vehicle": {
+                "id": 52
+              },
+              "action": {
+                "id": 0,
+                "name": "Pick Empty",
+                "active": true,
+                "time": 15,
+                "modifiedBy": null,
+                "modifiedOn": null
+              },
+              "trip": {
+                "id": 838
+              },
+              "order": 1,
+              "state": {
+                "id": 1
+              },
+              "enRouteAt": null,
+              "arrivedAt": null,
+              "completedAt": null,
+              "skippedAt": null,
+              "scheduledArrivalAt": "2019-12-20T01:00:00",
+              "scheduledCompletedAt": "2019-12-20T01:15:00",
+              "estimatedScheduledArrivalAt": "2019-12-20T01:00:00",
+              "estimatedScheduledCompletedAt": "2019-12-20T01:15:00",
+              "estimatedWaitingTime": 15,
+              "nickName": {
+                "id": 15,
+                "partial": false,
+                "modifiedBy": null,
+                "name": "2500 NW 46th St, Miami, FL 33142, USA",
+                "location": {
+                  "id": 34
+                },
+                "locStreet": "2500 NW 46th St",
+                "locSuite": "",
+                "locCity": "Miami",
+                "locZip": "33142",
+                "locState": "FL",
+                "locCountry": "US",
+                "googleAddress": "2500 NW 46th St, Miami, FL 33142, USA",
+                "latitude": 25.8158445,
+                "longitude": -80.2387316
+              },
+              "travelMiles": null,
+              "travelTime": null,
+              "estimatedTravelMiles": 0.0,
+              "estimatedTravelTime": 0,
+              "notes": null,
+              "modifiedBy": "system",
+              "modifiedOn": "2020-01-15T16:24:04.9033333",
+              "createdBy": "system",
+              "createdOn": "2020-01-15T16:24:04.9033333"
+            },
+            {
+              "id": 3367,
+              "driver": {
+                "id": 48
+              },
+              "vehicle": {
+                "id": 52
+              },
+              "action": {
+                "id": 0,
+                "name": "Load",
+                "active": true,
+                "time": 90,
+                "modifiedBy": null,
+                "modifiedOn": null
+              },
+              "trip": {
+                "id": 838
+              },
+              "order": 2,
+              "notes": null,
+              "state": {
+                "id": 1
+              },
+              "enRouteAt": null,
+              "arrivedAt": null,
+              "completedAt": null,
+              "skippedAt": null,
+              "scheduledArrivalAt": "2019-12-20T01:35:00",
+              "scheduledCompletedAt": "2019-12-20T03:05:00",
+              "estimatedScheduledArrivalAt": "2019-12-20T01:35:00",
+              "estimatedScheduledCompletedAt": "2019-12-20T03:05:00",
+              "estimatedWaitingTime": 90,
+              "nickName": {
+                "id": 135,
+                "partial": false,
+                "modifiedBy": null,
+                "name": "Test Address",
+                "location": {
+                  "id": 134
+                },
+                "locStreet": "9090 NW 5th Ln",
+                "locSuite": "",
+                "locCity": "Miami",
+                "locZip": "33126",
+                "locState": "FL",
+                "locCountry": "US",
+                "googleAddress": "9090 NW 5th Ln, Miami, FL 33126, USA",
+                "latitude": 25.7750801,
+                "longitude": -80.3300456
+              },
+              "travelMiles": null,
+              "travelTime": null,
+              "estimatedTravelMiles": 9.6,
+              "estimatedTravelTime": 20,
+              "modifiedBy": "system",
+              "modifiedOn": "2020-01-15T16:24:04.9033333",
+              "createdBy": "system",
+              "createdOn": "2020-01-15T16:24:04.9033333"
+            },
+            {
+              "id": 3368,
+              "driver": {
+                "id": 48
+              },
+              "vehicle": {
+                "id": 52
+              },
+              "action": {
+                "id": 0,
+                "name": "End Of Day",
+                "active": true,
+                "time": 15,
+                "modifiedBy": null,
+                "modifiedOn": null
+              },
+              "trip": {
+                "id": 838
+              },
+              "order": 3,
+              "state": {
+                "id": 1
+              },
+              "enRouteAt": null,
+              "arrivedAt": null,
+              "completedAt": null,
+              "skippedAt": null,
+              "scheduledArrivalAt": "2019-12-20T03:39:00",
+              "scheduledCompletedAt": "2019-12-20T03:39:00",
+              "estimatedScheduledArrivalAt": "2019-12-20T03:39:00",
+              "estimatedScheduledCompletedAt": "2019-12-20T03:39:00",
+              "estimatedWaitingTime": null,
+              "nickName": {
+                "id": 15,
+                "partial": false,
+                "modifiedBy": null,
+                "name": "2500 NW 46th St, Miami, FL 33142, USA",
+                "location": {
+                  "id": 34
+                },
+                "locStreet": "2500 NW 46th St",
+                "locSuite": "",
+                "locCity": "Miami",
+                "locZip": "33142",
+                "locState": "FL",
+                "locCountry": "US",
+                "googleAddress": "2500 NW 46th St, Miami, FL 33142, USA",
+                "latitude": 25.8158445,
+                "longitude": -80.2387316
+              },
+              "travelMiles": null,
+              "travelTime": null,
+              "estimatedTravelMiles": 9.46,
+              "estimatedTravelTime": 34,
+              "notes": null,
+              "modifiedBy": "system",
+              "modifiedOn": "2020-01-15T16:24:06.48",
+              "createdBy": "system",
+              "createdOn": "2020-01-15T16:24:06.48"
+            }
+          ]
+        }
+      ],
+      "startLocationNickName": {
+        "id": 15,
+        "partial": false,
+        "modifiedBy": null,
+        "name": "2500 NW 46th St, Miami, FL 33142, USA",
+        "location": {
+          "id": 34
+        },
+        "locStreet": "2500 NW 46th St",
+        "locSuite": "",
+        "locCity": "Miami",
+        "locZip": "33142",
+        "locState": "FL",
+        "locCountry": "US",
+        "googleAddress": "2500 NW 46th St, Miami, FL 33142, USA",
+        "latitude": 25.8158445,
+        "longitude": -80.2387316
+      }
+    }
+  ]
+}

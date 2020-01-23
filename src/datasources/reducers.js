@@ -58,8 +58,10 @@ export const deliveryLocationReducer = deliveryLocation => ({
     : idReducer(deliveryLocation.LocationNickNameId),
   createdBy: deliveryLocation.CreatedBy,
   createdOn: deliveryLocation.CreatedOn,
-  ...(deliveryLocation.Partial && { partial: deliveryLocation.Partial }),
-  ...(deliveryLocation.DeliveryContacts && {
+  ...(deliveryLocation.Partial !== null && {
+    partial: deliveryLocation.Partial,
+  }),
+  ...(deliveryLocation.DeliveryContacts !== null && {
     deliveryContacts: deliveryLocation.DeliveryContacts,
   }),
   ...(deliveryLocation.DeliveryOrders && {
@@ -68,6 +70,7 @@ export const deliveryLocationReducer = deliveryLocation => ({
   ...(deliveryLocation.DeliveryOrderDrayings && {
     drayings: deliveryLocation.DeliveryOrderDrayings.map(drayingReducer),
   }),
+  partial: deliveryLocation.Partial,
   locStreet: deliveryLocation.LocStreet,
   locSuite: deliveryLocation.LocSuite,
   locCity: deliveryLocation.LocCity,
@@ -93,9 +96,10 @@ export const drayingReducer = draying => ({
     : idReducer(draying.DeliveryLocationId),
   booking: draying.Booking,
   container: draying.Container,
-  containerSize: draying.ContainerSize
-    ? containerSizeReducer(draying.ContainerSize)
-    : idReducer(draying.ContainerSizeId),
+  containerSize:
+    draying.ContainerSize && draying.ContainerSize.ContainerSizeId
+      ? containerSizeReducer(draying.ContainerSize)
+      : idReducer(draying.ContainerSizeId || draying.ContainerSize),
   containerType: draying.ContainerType
     ? containerTypeReducer(draying.ContainerType)
     : idReducer(draying.ContainerTypeId),
@@ -120,7 +124,7 @@ export const drayingReducer = draying => ({
   estimateDischarge: draying.EstimateDischarge,
   containerStage: draying.ContainerStage
     ? containerStageReducer(draying.ContainerStage)
-    : undefined,
+    : idReducer(draying.StageId),
   SCAC: draying.SCAC,
   earlyReturnDate: draying.EarlyReturnDate,
   createdOn: draying.CreatedOn,
@@ -230,7 +234,7 @@ export const drayingActionReducer = action => ({
   active: action.Active,
   time: action.Time,
   modifiedOn: action.ModifiedOn,
-  modifiedBy: action.modifiedBy,
+  modifiedBy: action.ModifiedBy,
 })
 
 export const drayingAlertReducer = drayingAlert => ({
@@ -279,7 +283,7 @@ export const driverReducer = driver => ({
     : idReducer(driver.HomeAddressId),
   defaultVehicle: driver.Vehicle
     ? vehicleReducer(driver.Vehicle)
-    : idReducer(driver.VehicleId),
+    : idReducer(driver.DefaultVehicleId),
   ownerOperator: driver.OwnerOperator,
   modifiedBy: driver.ModifiedBy,
   modifiedOn: driver.ModifiedOn,
@@ -305,10 +309,10 @@ export const extraStopReducer = extraStop => ({
   status: extraStop.Status
     ? tripStatusReducer(extraStop.Status)
     : idReducer(extraStop.StatusId),
-  ...(extraStop.CreatedOn && { createdOn: extraStop.CreatedOn }),
-  ...(extraStop.CreatedBy && { createdBy: extraStop.CreatedBy }),
-  ...(extraStop.ModifiedOn && { modifiedOn: extraStop.ModifiedOn }),
-  ...(extraStop.ModifiedBy && { modifiedBy: extraStop.ModifiedBy }),
+  ...(extraStop.CreatedOn !== null && { createdOn: extraStop.CreatedOn }),
+  ...(extraStop.CreatedBy !== null && { createdBy: extraStop.CreatedBy }),
+  ...(extraStop.ModifiedOn !== null && { modifiedOn: extraStop.ModifiedOn }),
+  ...(extraStop.ModifiedBy !== null && { modifiedBy: extraStop.ModifiedBy }),
 })
 
 export const loadTypeReducer = loadType => ({
@@ -446,9 +450,9 @@ export const terminalLocationReducer = terminal => ({
   autoLoad: terminal.AutoLoad,
   nickName: terminal.NickName,
   isTerminal: terminal.IsTerminal,
-  isDeport: terminal.IsDepot,
-  drayingTimeActionTerminals: terminal.DrayingTimeActionTerminals,
-  terminalLocationHours: terminal.TerminalLocationHours,
+  isDepot: terminal.IsDepot,
+  // drayingTimeActionTerminals: terminal.DrayingTimeActionTerminals,
+  // terminalLocationHours: terminal.TerminalLocationHours,
   locStreet: terminal.LocStreet,
   locSuite: terminal.LocSuite,
   locCity: terminal.LocCity,
@@ -471,7 +475,7 @@ export const tripReducer = trip => {
     paidByClient: trip.PaidByClient,
     containerLoadedStart: trip.ContainerLoadedStart,
     containerLoadedEnd: trip.ContainerLoadedEnd,
-    externalRouteId: trip.externalRouteId,
+    externalRouteId: trip.ExternalRouteId,
     startLocationType: trip.StartLocationType
       ? locationTypeReducer(trip.StartLocationType)
       : idReducer(trip.StartLocationTypeId),
@@ -533,10 +537,10 @@ export const tripLocationReducer = location => ({
   trip: location.DrayingTrip
     ? tripReducer(location.DrayingTrip)
     : idReducer(location.DrayingTripId),
-  ...(location.Order && { order: location.Order }),
-  state: location.DrayingTripLocationState
-    ? locationStateReducer(location.DrayingTripLocationState)
-    : idReducer(location.DrayingTripLocationStateId),
+  ...(location.Order !== null && { order: location.Order }),
+  state: location.LocationState
+    ? locationStateReducer(location.LocationState)
+    : idReducer(location.LocationStateId),
   enRouteAt: location.EnRouteAt,
   arrivedAt: location.ArrivedAt,
   completedAt: location.CompletedAt,
@@ -573,4 +577,26 @@ export const tripStatusReducer = status => ({
 
 export const vehicleReducer = vehicle => ({
   id: vehicle.VehicleId,
+  externalVehicleId: vehicle.ExternalVehicleId,
+  name: vehicle.Name,
+  VIN: vehicle.VIN,
+  odometerMeters: vehicle.OdometerMeters,
+  modifiedBy: vehicle.ModifiedBy,
+  modifiedOn: vehicle.ModifiedOn,
+  createdBy: vehicle.CreatedBy,
+  createdOn: vehicle.CreatedOn,
+  active: vehicle.Active,
+  year: vehicle.Year,
+  brand: vehicle.Brand,
+  model: vehicle.Model,
+  weekCost: vehicle.WeekCost,
+  costPerMile: vehicle.CostPerMile,
+  odometer: vehicle.Odometer,
+  carrier: vehicle.Carrier
+    ? carrierReducer(vehicle.Carrier)
+    : idReducer(vehicle.CarrierId),
+  eLDTokenCarrierId: vehicle.ELDTokenCarrierId,
+  companyId: vehicle.CompanyId,
+  licensePlate: vehicle.LicensePlate,
+  eLDLink: vehicle.ELDLink,
 })

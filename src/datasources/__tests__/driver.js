@@ -22,11 +22,15 @@ describe('DriverAPI.driverCapacityReducer', () => {
   })
 })
 
-// describe('DriverAPI.getDriversCapaciry]', () => {
-//   it('looks up drayings from api', async () => {
-//     mocks.get.mockReturnValueOnce({ data: { drayings: [mockDriverResponse] } })
-//     const res = await ds.getAllDrivers()
-//     expect(res).toEqual([mockDriver])
-//     expect(mocks.get).toBeCalledWith('Driver/Dispatching')
-//   })
-// })
+describe('DriverAPI.getDriversCapaciry]', () => {
+  it('looks up drayings from api', async () => {
+    mocks.get.mockReturnValueOnce({ data: [mockCapacityResponse] })
+    const res = await ds.getDriversCapacity({ date: '1/13/2020' })
+    expect(res).toEqual([mockCapacity])
+    expect(mocks.get).toBeCalledWith('driver/capacity', {
+      OrderBy: 'name',
+      RouteDate: '1/13/2020',
+      Sort: true,
+    })
+  })
+})
