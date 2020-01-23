@@ -199,6 +199,7 @@ const typeDefs = gql`
   type Draying implements Node {
     # delivery order Order, order para orden  Int
     id: ID!
+    order: Order
     sortOrder: Int
     client: Client
     deliveryLocation: DeliveryLocation
@@ -1171,6 +1172,30 @@ const typeDefs = gql`
 
   type Vehicle implements Node {
     id: ID!
+    externalVehicleId: Int
+    name: String
+    VIN: String
+    odometerMeters: Int
+    # TODO confirm
+     ## engineHours: null
+    modifiedBy: Int
+    modifiedOn: String
+    createdBy: Int
+    createdOn: String
+    active: Boolean
+    year: String
+    brand: String
+    model: String
+    weekCost: Float
+    costPerMile: Float
+    odometer: Int
+    carrier: Carrier
+    eLDTokenCarrierId: Int
+    companyId: Int
+    licensePlate": null,
+    eLDLink: String
+
+    ##vehicleHistories: []
   }
 
   type Mutation {
