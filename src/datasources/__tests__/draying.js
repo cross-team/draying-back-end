@@ -11,6 +11,10 @@ const mocks = {
 const ds = new DrayingAPI()
 ds.get = mocks.get
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 describe('DrayingAPI.drayingReducer', () => {
   it('Properly transforms draying', () => {
     expect(
@@ -43,6 +47,15 @@ describe('DrayingAPI.getAllDrayings]', () => {
       RouteDate: '12/20/2019',
       Sort: false,
       OrderBy: 'priority',
+    })
+  })
+
+  describe('DrayingAPI.getDeliveryOrderDraying', () => {
+    it('looks up draying from api', async () => {
+      mocks.get.mockReturnValueOnce({ data: mockDrayingResponse })
+      const res = await ds.getDeliveryOrderDraying({ drayingId: 22 })
+      expect(res).toEqual(MockDrayings.data[0])
+      expect(mocks.get).toBeCalledWith('DeliveryOrderDraying/22')
     })
   })
 })
