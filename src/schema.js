@@ -6,6 +6,14 @@ const typeDefs = gql`
     Retrieve a list of all draryings
     """
     drayings(
+      containerStages: [Int]
+      containerTypes: [Int]
+      currentLocationTypes: [Int]
+      inMovement: Boolean
+      routeDriverId: Int # Only for route for a specific route and driver
+      routeDate: String # Only for route for a specific route and driver
+      sort: Boolean
+      orderBy: String
       """
       Retrive the first n elements
       """
@@ -23,6 +31,19 @@ const typeDefs = gql`
       """
       after: String
     ): DrayingConnection!
+    draying(drayingId: Int): Draying! # used to expanding information on dryaing
+    drayingNextActions(
+      """
+      Draying id for which to return possible next actions for
+      """
+      drayingId: Int
+      """
+      Active trip for which draying is on.
+      if no trip id was passed, then if there exists a trip in
+      predispatch o dispatch, then it is retrieved
+      """
+      tripId: Int
+    ): NextActions! # For dispatching
     """
     Retrieve a list of drivers and their capacity for a certain date (today if none provided)
     """
@@ -765,6 +786,17 @@ const typeDefs = gql`
 
   interface Node {
     id: ID!
+  }
+
+  type NextActions {
+    tripActions: [TripAction]
+    startLocationTypes: [LocationType]
+    """
+    only is returned if trip id was passed to the query
+    if no trip id was passed, then if there exists a trip in
+    predispatch o dispatch, then it is retrieved
+    """
+    drayingTrip: Trip
   }
 
   type Order implements Node {

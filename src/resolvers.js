@@ -1,10 +1,42 @@
 import { paginateResults, pageInfoReducer } from './utils'
 import jwt from 'jsonwebtoken'
+import { ApolloError } from 'apollo-server-express'
 
 export default {
   Query: {
-    drayings: async (_, { before, after, first, last }, { dataSources }) => {
-      const allDrayings = await dataSources.drayingApi.getAllDrayings()
+    drayings: async (
+      _,
+      {
+        containerStages,
+        containerTypes,
+        currentLocationTypes,
+        inMovement,
+        routeDriverId,
+        routeDate,
+        sort,
+        orderBy,
+        before,
+        after,
+        first,
+        last,
+      },
+      { dataSources },
+    ) => {
+      if ((!!routeDriverId && !routeDate) || (!routeDriverId && !!routeDate)) {
+        throw new ApolloError(
+          `Must provide 'routeDriverId' and 'routeDate' together`,
+        )
+      }
+      const allDrayings = await dataSources.drayingApi.getAllDrayings({
+        containerStages,
+        containerTypes,
+        currentLocationTypes,
+        inMovement,
+        routeDriverId,
+        routeDate,
+        sort,
+        orderBy,
+      })
       const drayings = paginateResults({
         before,
         after,
@@ -13,6 +45,24 @@ export default {
         results: allDrayings,
       })
       return pageInfoReducer(drayings, allDrayings)
+    },
+    draying: async (_, { drayingId }, { dataSources }) => {
+      if (typeof drayingId === 'undefined') {
+        throw new ApolloError(`Must provide 'drayingId'`)
+      }
+      const draying = await dataSources.drayingApi.getDeliveryOrderDraying({
+        drayingId,
+      })
+      return draying
+    },
+    drayingNextActions: async (_, { drayingId, tripId }, { dataSources }) => {
+      if (typeof drayingId === 'undefined') {
+        throw new ApolloError(`Must provide 'drayingId'`)
+      }
+      const drayingNextActions = await dataSources.drayingApi.getDrayingNextActions(
+        { drayingId, tripId },
+      )
+      return drayingNextActions
     },
     driversCapacity: async (
       _,
@@ -39,6 +89,9 @@ export default {
       { driverId, fromDate, toDate, pending, orderBy },
       { dataSources },
     ) => {
+      if (!fromDate || !toDate) {
+        throw new ApolloError(`Must provide either 'fromDate' and 'toDate'`)
+      }
       const route = await dataSources.routeApi.getDriverRoute({
         driverId,
         fromDate,
