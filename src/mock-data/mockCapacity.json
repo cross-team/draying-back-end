@@ -72,6 +72,9 @@
               "trip": {
                 "id": 841
               },
+              "state": {
+                  "id": 1
+              },
               "order": 2,
               "enRouteAt": null,
               "arrivedAt": null,
@@ -108,6 +111,9 @@
               },
               "trip": {
                 "id": 841
+              },
+              "state": {
+                "id": 1
               },
               "order": 3,
               "enRouteAt": null,
