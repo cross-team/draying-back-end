@@ -31,7 +31,7 @@ const typeDefs = gql`
       """
       after: String
     ): DrayingConnection!
-    drayingOnRouteForDriver(drayingId: Int): Draying!
+    drayingOnRoute(drayingId: Int): Draying!
     """
     Retrieve a list of drivers and their capacity for a certain date (today if none provided)
     """

@@ -15,7 +15,7 @@ export default {
       })
       return pageInfoReducer(drayings, allDrayings)
     },
-    drayingOnRouteForDriver: async (_, { drayingId }, { dataSources }) => {
+    drayingOnRoute: async (_, { drayingId }, { dataSources }) => {
       if (drayingId === undefined) {
         throw new ApolloError(`Must provide either 'drayingId'`)
       }
