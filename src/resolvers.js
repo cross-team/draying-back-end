@@ -15,14 +15,23 @@ export default {
       })
       return pageInfoReducer(drayings, allDrayings)
     },
-    drayingOnRoute: async (_, { drayingId }, { dataSources }) => {
-      if (drayingId === undefined) {
+    draying: async (_, { drayingId }, { dataSources }) => {
+      if (typeof drayingId === 'undefined') {
         throw new ApolloError(`Must provide either 'drayingId'`)
       }
       const draying = await dataSources.drayingApi.getDeliveryOrderDraying({
         drayingId,
       })
       return draying
+    },
+    drayingNextActions: async (_, { drayingId, tripId }, { dataSources }) => {
+      if (typeof drayingId === 'undefined') {
+        throw new ApolloError(`Must provide either 'drayingId'`)
+      }
+      const drayingNextActions = await dataSources.drayingApi.getDrayingNextActions(
+        { drayingId, tripId },
+      )
+      return drayingNextActions
     },
     driversCapacity: async (
       _,

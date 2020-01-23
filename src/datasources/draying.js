@@ -1,5 +1,10 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import { drayingReducer } from './reducers'
+import {
+  drayingReducer,
+  tripActionReducer,
+  locationTypeReducer,
+  tripReducer,
+} from './reducers'
 class DrayingAPI extends RESTDataSource {
   constructor() {
     super()
@@ -50,6 +55,27 @@ class DrayingAPI extends RESTDataSource {
   async getDeliveryOrderDraying({ drayingId }) {
     const { data } = await this.get(`DeliveryOrderDraying/${drayingId}`)
     return drayingReducer(data)
+  }
+
+  nextActionsReducer(nextActions) {
+    return {
+      tripActions: nextActions.trip_actions
+        ? nextActions.trip_actions.map(tripActionReducer)
+        : null,
+      startLocationTypes: nextActions.start_locations
+        ? nextActions.start_locations.map(locationTypeReducer)
+        : null,
+      drayingTrip: tripReducer(nextActions.draying_trip),
+    }
+  }
+
+  async getDrayingNextActions({ drayingId, tripId }) {
+    let query = `DeliveryOrderDraying/${drayingId}/nextactions`
+    if (typeof tripId !== 'undefined') {
+      query = `${query}/${tripId}`
+    }
+    const { data } = await this.get(query)
+    return this.nextActionsReducer(data)
   }
 }
 export default DrayingAPI
