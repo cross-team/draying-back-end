@@ -22,6 +22,11 @@ export default {
       },
       { dataSources },
     ) => {
+      if ((!!routeDriverId && !routeDate) || (!routeDriverId && !!routeDate)) {
+        throw new ApolloError(
+          `Must provide either 'routeDriverId' and 'routeDate' together`,
+        )
+      }
       const allDrayings = await dataSources.drayingApi.getAllDrayings({
         containerStages,
         containerTypes,
@@ -84,6 +89,9 @@ export default {
       { driverId, fromDate, toDate, pending, orderBy },
       { dataSources },
     ) => {
+      if (!fromDate || !toDate) {
+        throw new ApolloError(`Must provide either 'fromDate' and 'toDate'`)
+      }
       const route = await dataSources.routeApi.getDriverRoute({
         driverId,
         fromDate,
