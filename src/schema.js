@@ -6,6 +6,14 @@ const typeDefs = gql`
     Retrieve a list of all draryings
     """
     drayings(
+      containerStages: [Int]
+      containerTypes: [Int]
+      currentLocationTypes: [Int]
+      inMovement: Boolean
+      routeDriverId: Int
+      routeDate: String
+      sort: Boolean
+      orderBy: String
       """
       Retrive the first n elements
       """
@@ -23,6 +31,7 @@ const typeDefs = gql`
       """
       after: String
     ): DrayingConnection!
+    drayingOnRoute(drayingId: Int): Draying!
     """
     Retrieve a list of drivers and their capacity for a certain date (today if none provided)
     """
