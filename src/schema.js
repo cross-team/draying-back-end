@@ -169,7 +169,8 @@ const typeDefs = gql`
     """
     Use this one instead of partial, locStree...
     """
-    location: Location
+    location: LocationNickName
+    companyId: Int
     isDefault: Boolean
     active: Boolean
     locationType: LocationType
@@ -274,7 +275,7 @@ const typeDefs = gql`
     """
     container stages (review, completed, )
     """
-    stage: ContainerStage
+    containerStage: ContainerStage
     """
     Carrier code (Standard carrier code)
     """
@@ -702,7 +703,8 @@ const typeDefs = gql`
     Address information about a company
     """
     deliveryLocation: DeliveryLocation
-    order: Order
+    ## verify
+    order: Int
     status: TripStatus
     createdOn: String
     createdBy: String
@@ -951,7 +953,7 @@ const typeDefs = gql`
   """
   type TerminalLocation implements Node {
     id: ID!
-    location: Location
+    location: LocationNickName
     nickName: String
     shortName: String
     isDefault: Boolean
@@ -1008,6 +1010,14 @@ const typeDefs = gql`
   """
   type LocationAction implements Node {
     id: ID!
+    name: String
+    active: Boolean
+    """
+    time in minutes
+    """
+    time: Int
+    modifiedOn: String
+    modifiedBy: Int
   }
   """
   Information about the trip and it's capacity
@@ -1074,6 +1084,13 @@ const typeDefs = gql`
     """
     state: LocationState
     """
+    Action being made at current location (Pick Empty, Pick
+    Loaded, Drop Empty, Drop Loaded, Load, Unload, Chassis
+    Swap, End of Day and Start Day) In a trip, only 2 location
+    have action location id value between 1-6 (main actions)
+    """
+    action: LocationAction
+    """
     Date and time route started
     """
     enRouteAt: String
@@ -1105,11 +1122,7 @@ const typeDefs = gql`
     Date and time scheduled to be completed calculated by the API
     """
     estimatedScheduledCompletedAt: String
-    """
-    Action being made at current location (load, unload, swap...) LocationAction
-    """
-    tripActionLocation: TripActionLocation
-    ## order on the trip
+    ## sort order on the trip
     order: Int
     driver: Driver
     vehicle: Vehicle
@@ -1159,6 +1172,30 @@ const typeDefs = gql`
 
   type Vehicle implements Node {
     id: ID!
+    externalVehicleId: Int
+    name: String
+    VIN: String
+    odometerMeters: Int
+    # TODO confirm
+     ## engineHours: null
+    modifiedBy: Int
+    modifiedOn: String
+    createdBy: Int
+    createdOn: String
+    active: Boolean
+    year: String
+    brand: String
+    model: String
+    weekCost: Float
+    costPerMile: Float
+    odometer: Int
+    carrier: Carrier
+    eLDTokenCarrierId: Int
+    companyId: Int
+    licensePlate": null,
+    eLDLink: String
+
+    ##vehicleHistories: []
   }
 
   type Mutation {
