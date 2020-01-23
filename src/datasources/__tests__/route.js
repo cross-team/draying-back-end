@@ -12,16 +12,16 @@ const mocks = {
 const ds = new RouteAPI()
 ds.get = mocks.get
 
-describe('RouteAPI.driverCapacityReducer', () => {
-  it('Properly transforms route', () => {
+describe('RouteAPI.routesReducer', () => {
+  it('Properly transforms routes', () => {
     expect(
       JSON.parse(JSON.stringify(ds.routesReducer([mockRouteResponse]))),
     ).toEqual([mockRoutes])
   })
 })
 
-describe('RouteAPI.getRoutesCapaciry]', () => {
-  it('looks up drayings from api', async () => {
+describe('RouteAPI.getDriverRoute]', () => {
+  it(`looks up driver's routes from api`, async () => {
     mocks.get.mockReturnValueOnce({ data: [mockRouteResponse] })
     const params = {
       driverId: '47',
