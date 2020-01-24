@@ -14,10 +14,46 @@ export const clientReducer = client => ({
   companyName: client.CompanyName,
 })
 
-export const costReducer = cost => ({
-  id: cost.CostId,
-  type: cost.Type,
-  reason: cost.Reason,
+export const drayingCostReducer = cost => ({
+  id: cost.DrayingCostId,
+  draying: cost.DeliveryOrderDraying
+    ? drayingReducer(cost.DeliveryOrderDraying)
+    : idReducer(cost.DeliveryOrderDrayingId),
+  trip: cost.DrayingTrip
+    ? tripReducer(cost.DrayingTrip)
+    : idReducer(cost.DrayingTripId),
+  costReason: cost.CostReason
+    ? costReasonReducer(cost.CostReason)
+    : idReducer(cost.CostReasonId),
+  companyCost: cost.CompanyCost,
+  companyCostSuggested: cost.CompanyCostSuggested,
+  shipperCharges: cost.ShipperCharges,
+  shipperChargesSuggested: cost.ShipperChargesSuggested,
+  driverPayment: cost.DriverPayment,
+  driverPaymentSuggested: cost.DriverPaymentSuggested,
+  invoiceDescription: cost.InvoiceDescription,
+  internalDescription: cost.InternalDescription,
+  createdOn: cost.CreatedOn,
+  createdBy: cost.CreatedBy,
+  modifiedOn: cost.ModifiedOn,
+  modifiedBy: cost.ModifiedBy,
+  reviewed: cost.Reviewed,
+})
+
+export const costReasonReducer = cost => ({
+  id: cost.CostReasonId,
+  name: cost.Name,
+  active: cost.Active,
+  order: cost.Orden,
+  costType: cost.CostType
+    ? costTypeReducer(cost.CostType)
+    : idReducer(cost.CostTypeId),
+})
+
+export const costTypeReducer = cost => ({
+  id: cost.CostTypeId,
+  name: cost.Name,
+  active: cost.Active,
 })
 
 export const containerSizeReducer = containerSize => ({
@@ -264,9 +300,6 @@ export const driverReducer = driver => ({
   eldPcEnabled: driver.EldPcEnabled,
   eldYmEnabled: driver.EldYmEnabled,
   eldDayStartHour: driver.EldDayStartHour,
-  vehicle: driver.Vehicle
-    ? vehicleReducer(driver.Vehicle)
-    : idReducer(driver.VehicleId),
   isDeactivated: driver.IsDeactivated,
   driverUserId: driver.DriverUserId,
   saturdayShift: driver.SaturdayShift,
@@ -370,6 +403,9 @@ export const locationStateReducer = state => ({
 export const locationTypeReducer = locationType => ({
   id: locationType.LocationTypeId,
   name: locationType.Name,
+  active: locationType.Active,
+  description: locationType.Description,
+  order: locationType.Order,
 })
 
 export const orderReducer = order => {
@@ -499,7 +535,9 @@ export const tripReducer = trip => {
     extraStops: trip.DrayingTripExtraStops
       ? trip.DrayingTripExtraStops.map(extraStopReducer)
       : null,
-    ...(trip.DrayingCosts && { costs: trip.DrayingCosts.map(costReducer) }), // available on route
+    ...(trip.DrayingCosts && {
+      costs: trip.DrayingCosts.map(drayingCostReducer),
+    }), // available on route
     messages: trip.DrayingTripMessages
       ? trip.DrayingTripMessages.map(tripMessageReducer)
       : null,
@@ -518,6 +556,30 @@ export const tripActionReducer = action => ({
 
 export const tripActionLocationReducer = actionLocation => ({
   id: actionLocation.TripActionLocationId,
+  name: actionLocation.Name,
+  loadType: actionLocation.LoadType
+    ? loadTypeReducer(actionLocation.LoadType)
+    : idReducer(actionLocation.LoadTypeId),
+  currentLocationType: actionLocation.CurrentLocationType
+    ? locationTypeReducer(actionLocation.CurrentLocationType)
+    : idReducer(actionLocation.CurrentLocationTypeId),
+  nextLocationType: actionLocation.NextLocationType
+    ? locationTypeReducer(actionLocation.NextLocationType)
+    : idReducer(actionLocation.NextLocationTypeId),
+  chassisRequiredStart: actionLocation.ChassisRequiredStart,
+  chassisStatusEnd: actionLocation.ChassisStatusEnd,
+  containerLoadedStart: actionLocation.ContainerLoadedStart,
+  containerLoadedEnd: actionLocation.ContainerLoadedEnd,
+  completedJob: actionLocation.CompletedJob,
+  isPayable: actionLocation.IsPayable,
+  action: actionLocation.Action
+    ? tripActionReducer(actionLocation.Action)
+    : idReducer(actionLocation.ActionId),
+  active: actionLocation.Active,
+  confirmPayable: actionLocation.ConfirmPayable,
+  hasSequenceAction: actionLocation.HasSequenceAction,
+  order: actionLocation.Order,
+  isDriverPayable: actionLocation.IsDriverPayable,
 })
 
 export const tripLocationReducer = location => ({
@@ -566,6 +628,20 @@ export const tripLocationReducer = location => ({
 
 export const tripMessageReducer = message => ({
   id: message.DrayingTripMessageId,
+  trip: message.DrayingTrip
+    ? tripReducer(message.DrayingTrip)
+    : idReducer(message.DrayingTripId),
+  messageTypeId: message.MessageTypeId,
+  communicationMethodId: message.CommunicationMethodId,
+  subject: message.Subject,
+  body: message.Body,
+  to: message.To,
+  sent: message.Sent,
+  createdOn: message.CreatedOn,
+  createdBy: message.CreatedBy,
+  driver: message.Driver
+    ? driverReducer(message.Driver)
+    : idReducer(message.DriverId),
 })
 
 export const tripStatusReducer = status => ({
