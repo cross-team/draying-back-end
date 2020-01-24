@@ -65,7 +65,9 @@ class DrayingAPI extends RESTDataSource {
       startLocationTypes: nextActions.start_locations
         ? nextActions.start_locations.map(locationTypeReducer)
         : null,
-      drayingTrip: tripReducer(nextActions.draying_trip),
+      drayingTrip: nextActions.draying_trip
+        ? tripReducer(nextActions.draying_trip)
+        : null,
     }
   }
 

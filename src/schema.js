@@ -176,13 +176,16 @@ const typeDefs = gql`
 
   type CostReason implements Node {
     id: ID!
-    type: CostType
-    reason: String
+    name: String
+    active: Boolean
+    order: Int
+    costType: CostType
   }
 
   type CostType implements Node {
     id: ID!
     name: String
+    active: Boolean
   }
 
   type DeliveryLocation implements Node {
@@ -582,6 +585,20 @@ const typeDefs = gql`
     id: ID!
     draying: Draying!
     trip: Trip
+    companyCost: Float
+    costReason: CostReason
+    shipperCharges: Float
+    shipperChargesSuggested: Float
+    driverPayment: Float
+    driverPaymentSuggested: Float
+    companyCostSuggested: Float
+    invoiceDescription: String
+    internalDescription: String
+    createdOn: String
+    createdBy: Int
+    modifiedOn: String
+    modifiedBy: Int
+    reviewed: Boolean
   }
   type DrayingAlert implements Node {
     id: ID!
@@ -640,8 +657,6 @@ const typeDefs = gql`
     eldPcEnabled: Boolean
     eldYmEnabled: Boolean
     eldDayStartHour: String
-
-    ##vehicle: Vehicle remove
     isDeactivated: Boolean
     driverUserId: Int
     saturdayShift: Boolean
@@ -766,6 +781,9 @@ const typeDefs = gql`
   type LocationType implements Node {
     id: ID!
     name: String
+    active: Boolean
+    description: String
+    order: Int
   }
   type LocationNickName implements Node {
     id: ID!
@@ -1018,10 +1036,36 @@ const typeDefs = gql`
   # where does it start and end
   type TripActionLocation implements Node {
     id: ID!
+    name: String
+    loadType: LoadType
+    currentLocationType: LocationType
+    nextLocationType: LocationType
+    chassisRequiredStart: Boolean
+    chassisStatusEnd: Boolean
+    containerLoadedStart: Boolean
+    containerLoadedEnd: Boolean
+    completedJob: Boolean
+    isPayable: Boolean
+    action: TripAction
+    active: Boolean
+    confirmPayable: Boolean
+    hasSequenceAction: Boolean
+    order: Int
+    isDriverPayable: Boolean
   }
 
   type TripMessage implements Node {
     id: ID!
+    trip: Trip
+    driver: Driver
+    messageTypeId: Int
+    communicationMethodId: Int
+    subject: String
+    body: String
+    to: String
+    sent: Boolean
+    createdOn: String
+    createdBy: Int
   }
 
   type TripStatus implements Node {

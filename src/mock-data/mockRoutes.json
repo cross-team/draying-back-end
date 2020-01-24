@@ -222,7 +222,9 @@
             "pickUpClientTimeTo": null,
             "currentLocationType": {
               "id": 0,
-              "name": "Yard"
+              "name": "Yard",
+              "active": false,
+              "order": 0
             },
             "lastDayToDeliverToClient": null,
             "dispatchingPriority": 0.0,
