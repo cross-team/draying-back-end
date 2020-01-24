@@ -1,0 +1,321 @@
+{
+  "data": {
+    "tripActions": [
+      {
+        "id": 5,
+        "name": "Live Unload",
+        "shortName": "Live U",
+        "active": true
+      },
+      {
+        "id": 6,
+        "name": "Drop",
+        "shortName": "Drop",
+        "active": true
+      }
+    ],
+    "startLocationTypes": [
+      {
+        "id": 3,
+        "name": "Yard",
+        "order": 3,
+        "active": false,
+        "description": null
+      }
+    ],
+    "drayingTrip": {
+      "id": 848,
+      "draying": {
+        "id": 4
+      },
+      "action": {
+        "id": 6,
+        "name": "Drop",
+        "shortName": "Drop",
+        "active": true
+      },
+      "status": {
+        "id": 4,
+        "name": "Pre-dispatch",
+        "order": 4,
+        "active": true
+      },
+      "modifiedBy": 25,
+      "modifiedOn": "2020-01-20T20:35:17.863",
+      "createdBy": 25,
+      "createdOn": "2020-01-20T20:23:59.927",
+      "orderRoute": 1,
+      "driver": {
+        "id": 48,
+        "firstName": "RICHARD",
+        "lastName": "NOVOA",
+        "phone": "7869098462",
+        "defaultStartingHoS": null,
+        "userName": null,
+        "licenseNumber": "11111",
+        "licenseState": "fl",
+        "eldExempt": null,
+        "eldExemptReason": null,
+        "eldBigDayExemptionEnabled": null,
+        "eldAdverseWeatherExemptionEnabled": null,
+        "eldPcEnabled": null,
+        "eldYmEnabled": null,
+        "eldDayStartHour": null,
+        "defaultVehicle": {
+          "id": 52
+        },
+        "active": true,
+        "isDeactivated": null,
+        "driverUserId": null,
+        "saturdayShift": false,
+        "weeklyWorkHours": 40.0,
+        "workRadius": 50,
+        "baseWeeklySalary": 1.0,
+        "salaryPerMile": 1.0,
+        "salaryPerTripDelivered": 1.0,
+        "defaultYard": {
+          "id": 143
+        },
+        "homeAddress": {
+          "id": 143
+        },
+        "ownerOperator": false,
+        "modifiedBy": 5,
+        "modifiedOn": "2019-11-08T19:56:20.787",
+        "createdBy": 24,
+        "createdOn": "2019-11-06T20:15:41.417",
+        "carrier": {
+          "id": 1
+        },
+        "eLDTokenCarrierId": null,
+        "isSmartTrucking": false,
+        "companyId": 2
+      },
+      "tripActionLocation": {
+        "id": 7,
+        "name": "Drop",
+        "loadType": {
+          "id": 1
+        },
+        "currentLocationType": {
+          "id": 3
+        },
+        "nextLocationType": {
+          "id": 2
+        },
+        "chassisRequiredStart": false,
+        "chassisStatusEnd": false,
+        "containerLoadedStart": true,
+        "containerLoadedEnd": false,
+        "completedJob": false,
+        "isPayable": true,
+        "action": {
+          "id": 6
+        },
+        "active": true,
+        "confirmPayable": false,
+        "hasSequenceAction": false,
+        "order": 2,
+        "isDriverPayable": true
+      },
+      "paidByClient": true,
+      "startLocationType": {
+        "id": 3,
+        "name": "Yard",
+        "order": 3,
+        "active": false,
+        "description": "Before Client"
+      },
+      "endLocationType": {
+        "id": 2,
+        "name": "Client",
+        "order": 2,
+        "active": false,
+        "description": ""
+      },
+      "containerLoadedStart": true,
+      "containerLoadedEnd": false,
+      "route": {
+        "id": 147,
+        "externalRouteId": null,
+        "extarnalGroupId": null,
+        "name": null,
+        "scheduledStartDateTime": "2020-01-20T07:30:00",
+        "scheduledEndDateTime": "0001-01-01T00:00:00",
+        "startLocationNickName": {
+          "id": 0
+        },
+        "timeZone": null,
+        "timeZoneDstOffset": null,
+        "timeZoneRawOffset": null,
+        "startDateTime": null,
+        "endDateTime": null,
+        "isEditable": false,
+        "modifiedBy": 0,
+        "modifiedOn": "0001-01-01T00:00:00",
+        "createdBy": 0,
+        "createdOn": "0001-01-01T00:00:00",
+        "trips": []
+      },
+      "externalRouteId": null,
+      "extraStops": [],
+      "costs": [
+        {
+          "id": 1218,
+          "draying": {
+            "id": 4
+          },
+          "trip": {
+            "id": 848
+          },
+          "costReason": {
+            "id": 2,
+            "name": "Driver",
+            "active": false,
+            "order": 1,
+            "costType": {
+              "id": 1,
+              "name": "Trip",
+              "active": true
+            }
+          },
+          "shipperCharges": 0.0,
+          "shipperChargesSuggested": null,
+          "driverPayment": null,
+          "driverPaymentSuggested": 30.0,
+          "companyCost": 0.0,
+          "companyCostSuggested": null,
+          "invoiceDescription": null,
+          "internalDescription": null,
+          "createdOn": "2020-01-20T20:24:01.99",
+          "createdBy": 25,
+          "modifiedOn": "2020-01-20T20:35:19.64",
+          "modifiedBy": 25,
+          "reviewed": false
+        }
+      ],
+      "messages": [
+        {
+          "id": 138,
+          "trip": {
+            "id": 848
+          },
+          "messageTypeId": 1,
+          "communicationMethodId": 1,
+          "subject": null,
+          "body": "from: Yard | CONT: MEDU3827016 | 20' | to: Test Address, 9090 NW 5th Ln, Miami, FL 33126, USA",
+          "to": "+17869098462",
+          "sent": true,
+          "createdOn": "2020-01-20T16:24:02.217",
+          "createdBy": 25,
+          "driver": {
+            "id": 48,
+            "firstName": "RICHARD",
+            "lastName": "NOVOA",
+            "phone": "7869098462",
+            "defaultStartingHoS": null,
+            "userName": null,
+            "licenseNumber": "11111",
+            "licenseState": "fl",
+            "eldExempt": null,
+            "eldExemptReason": null,
+            "eldBigDayExemptionEnabled": null,
+            "eldAdverseWeatherExemptionEnabled": null,
+            "eldPcEnabled": null,
+            "eldYmEnabled": null,
+            "eldDayStartHour": null,
+            "active": true,
+            "isDeactivated": null,
+            "driverUserId": null,
+            "saturdayShift": false,
+            "weeklyWorkHours": 40.0,
+            "workRadius": 50,
+            "baseWeeklySalary": 1.0,
+            "salaryPerMile": 1.0,
+            "salaryPerTripDelivered": 1.0,
+            "defaultYard": {
+              "id": 143
+            },
+            "homeAddress": {
+              "id": 143
+            },
+            "defaultVehicle": {
+              "id": 52
+            },
+            "ownerOperator": false,
+            "modifiedBy": 5,
+            "modifiedOn": "2019-11-08T19:56:20.787",
+            "createdBy": 24,
+            "createdOn": "2019-11-06T20:15:41.417",
+            "carrier": {
+              "id": 1
+            },
+            "eLDTokenCarrierId": null,
+            "isSmartTrucking": false,
+            "companyId": 2
+          }
+        },
+        {
+          "id": 139,
+          "trip": {
+            "id": 848
+          },
+          "driver": {
+            "id": 48,
+            "firstName": "RICHARD",
+            "lastName": "NOVOA",
+            "phone": "7869098462",
+            "defaultStartingHoS": null,
+            "userName": null,
+            "licenseNumber": "11111",
+            "licenseState": "fl",
+            "eldExempt": null,
+            "eldExemptReason": null,
+            "eldBigDayExemptionEnabled": null,
+            "eldAdverseWeatherExemptionEnabled": null,
+            "eldPcEnabled": null,
+            "eldYmEnabled": null,
+            "eldDayStartHour": null,
+            "active": true,
+            "isDeactivated": null,
+            "driverUserId": null,
+            "saturdayShift": false,
+            "weeklyWorkHours": 40.0,
+            "workRadius": 50,
+            "baseWeeklySalary": 1.0,
+            "salaryPerMile": 1.0,
+            "salaryPerTripDelivered": 1.0,
+            "defaultYard": {
+              "id": 143
+            },
+            "homeAddress": {
+              "id": 143
+            },
+            "defaultVehicle": {
+              "id": 52
+            },
+            "ownerOperator": false,
+            "modifiedBy": 5,
+            "modifiedOn": "2019-11-08T19:56:20.787",
+            "createdBy": 24,
+            "createdOn": "2019-11-06T20:15:41.417",
+            "carrier": {
+              "id": 1
+            },
+            "eLDTokenCarrierId": null,
+            "isSmartTrucking": false,
+            "companyId": 2
+          },
+          "messageTypeId": 1,
+          "communicationMethodId": 1,
+          "subject": null,
+          "body": "from: Yard | CONT: MEDU3827016 | 20' | to: Test Address, 9090 NW 5th Ln, Miami, FL 33126, USA",
+          "to": "+17869098462",
+          "sent": true,
+          "createdOn": "2020-01-20T16:35:19.853",
+          "createdBy": 25
+        }
+      ]
+    }
+  }
+}
