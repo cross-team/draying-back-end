@@ -3,11 +3,16 @@ import { gql } from 'apollo-server-express'
 const typeDefs = gql`
   type Query {
     """
-    Retrieve a list of all draryings
+    Retrieve a list of all drayings.
+    Query inputs filter what drayings are retrieved.
+    Returns a DrayingConnection which holds information about the drayings for pagination.
     """
     drayings(
       containerStages: [Int]
       containerTypes: [Int]
+      """
+      Input argument: array of location type ids
+      """
       currentLocationTypes: [Int]
       inMovement: Boolean
       routeDriverId: Int # Only for route for a specific route and driver
@@ -15,11 +20,11 @@ const typeDefs = gql`
       sort: Boolean
       orderBy: String
       """
-      Retrive the first n elements
+      Retrieve the first n elements
       """
       first: Int
       """
-      Retrieve teh last n elements
+      Retrieve the last n elements
       """
       last: Int
       """
@@ -31,10 +36,10 @@ const typeDefs = gql`
       """
       after: String
     ): DrayingConnection!
-    draying(drayingId: Int): Draying! # used to expanding information on dryaing
+    draying(drayingId: Int): Draying! # used to expanding information on draying
     drayingNextActions(
       """
-      Draying id for which to return possible next actions for
+      Draying id for which to return possible next trip actions for
       """
       drayingId: Int
       """
@@ -49,7 +54,7 @@ const typeDefs = gql`
     """
     driversCapacity(
       """
-      date to retrive capacity for example -"1/13/2020"
+      date to retrieve capacity for example -"1/13/2020"
       """
       date: String
       """
@@ -100,6 +105,9 @@ const typeDefs = gql`
 
       """
       toDate: String
+      """
+      A trip that has not been completed (TripStatus id  2 > x < 6)
+      """
       pending: Boolean
       orderBy: OrderBy
     ): [Route]!
@@ -218,7 +226,7 @@ const typeDefs = gql`
   }
 
   """
-  A container
+  A draying has a container and/or a booking.
   """
   type Draying implements Node {
     # delivery order Order, order para orden  Int
@@ -228,7 +236,10 @@ const typeDefs = gql`
     client: Client
     deliveryLocation: DeliveryLocation
     """
-    Booking ID
+    Booking number.
+    A booking number is an identifier for a container
+    (or multiple containers) that does not have a containerid.)
+    Only drayings with loadType "export" have booking numbers.
     """
     booking: String
     """
@@ -604,6 +615,12 @@ const typeDefs = gql`
     id: ID!
   }
 
+  """
+  DrayingConnection
+    - has information to aid in pagination
+    - contains the array of drayings in the node
+    - Edges place the cursor to a point in the array which help locate a draying in the array
+  """
   type DrayingConnection {
     """
     Information to aid in pagination.
@@ -632,6 +649,9 @@ const typeDefs = gql`
     cursor: String!
   }
 
+  """
+  Has all of the driver's information.
+  """
   type Driver implements Node {
     id: ID!
     firstName: String
@@ -684,7 +704,10 @@ const typeDefs = gql`
     """
     capacityInfo: DriverCapacity
   }
-  #
+
+  """
+  Has information about a driver's capacity including a percentage of capacity occupied.
+  """
   type DriverCapacity {
     """
     Date and time the driver starts the route for the day queried (default: today)
@@ -748,6 +771,9 @@ const typeDefs = gql`
     modifiedBy: String
   }
 
+  """
+  LoadType indentifies whether the draying is Import or Export
+  """
   type LoadType implements Node {
     id: ID!
     name: String
@@ -1034,11 +1060,23 @@ const typeDefs = gql`
 
   ## what the truck is doing with it starts and ends and what action at the location
   # where does it start and end
+
+  """
+  Includes all of the information about the trip action.
+  """
   type TripActionLocation implements Node {
     id: ID!
     name: String
     loadType: LoadType
+
+    """
+    Trip starting point a.k.a. 'From'
+    """
     currentLocationType: LocationType
+
+    """
+    Trip starting point a.k.a. 'From'
+    """
     nextLocationType: LocationType
     chassisRequiredStart: Boolean
     chassisStatusEnd: Boolean
@@ -1049,6 +1087,11 @@ const typeDefs = gql`
     action: TripAction
     active: Boolean
     confirmPayable: Boolean
+
+    """
+    When the user completes the current trip action,
+    prompt the user to confirm a new action (create a new trip).
+    """
     hasSequenceAction: Boolean
     order: Int
     isDriverPayable: Boolean
@@ -1096,9 +1139,9 @@ const typeDefs = gql`
     modifiedBy: Int
   }
   """
-  Information about the trip and it's capacity
+  Information about the current active trip and its capacity for driver 'x' on day 'y'.
   """
-  type TripCapacity implements Node { ### TripCapacity for current trip
+  type TripCapacity implements Node {
     id: ID!
     companyName: String
     """
