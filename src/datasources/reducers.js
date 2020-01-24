@@ -300,9 +300,6 @@ export const driverReducer = driver => ({
   eldPcEnabled: driver.EldPcEnabled,
   eldYmEnabled: driver.EldYmEnabled,
   eldDayStartHour: driver.EldDayStartHour,
-  // defaultVehicle: driver.DefaultVehicle
-  //   ? vehicleReducer(driver.DefaultVehicle)
-  //   : idReducer(driver.VehicleId),
   isDeactivated: driver.IsDeactivated,
   driverUserId: driver.DriverUserId,
   saturdayShift: driver.SaturdayShift,
