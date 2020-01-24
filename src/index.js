@@ -52,13 +52,12 @@ const corsOptions = {
 }
 app.use('*', cookieParser())
 
-server.applyMiddleware({
-  app,
-  path: '/',
-  cors: corsOptions,
-})
-
 if (process.env.NODE_ENV !== 'test') {
+  server.applyMiddleware({
+    app,
+    path: '/',
+    cors: corsOptions,
+  })
   app.get('/', function(req, res) {
     res.send(JSON.stringify({ Hello: 'World' }))
   })
