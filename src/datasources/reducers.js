@@ -220,8 +220,11 @@ export const drayingReducer = draying => ({
   autoLoad: draying.AutoLoad,
   appointmentTime: draying.AppointmentTime,
   returnTerminal: draying.ReturnTerminal
-    ? terminalLocationReducer(draying.ReturnTerminal)
+    ? returnTerminalReducer(draying.ReturnTerminal)
     : idReducer(draying.ReturnTerminalId),
+  pickUpTerminal: draying.PickUpTerminal
+    ? pickUpTerminalReducer(draying.PickUpTerminal)
+    : idReducer(draying.PickUpTerminalId),
   trips: draying.DrayingTrips ? draying.DrayingTrips.map(tripReducer) : null,
   drayingAlerts: draying.DrayingAlerts
     ? draying.DrayingAlerts.map(drayingAlertReducer)
@@ -469,8 +472,7 @@ export const shippingLineReducer = shippingLine => ({
   active: shippingLine.Active,
 })
 
-export const terminalLocationReducer = terminal => ({
-  id: terminal.TerminalLocationId,
+export const terminalReducer = terminal => ({
   shortName: terminal.ShortName,
   isDefault: terminal.IsDefault,
   active: terminal.Active,
@@ -498,6 +500,21 @@ export const terminalLocationReducer = terminal => ({
   googleAddress: terminal.GoogleAddress,
   latitude: terminal.Latitude,
   longitude: terminal.Longitude,
+})
+
+export const returnTerminalReducer = terminal => ({
+  id: terminal.TerminalLocationId,
+  ...terminalReducer(terminal),
+})
+
+export const pickUpTerminalReducer = terminal => ({
+  id: terminal.TerminalLocationId,
+  ...terminalReducer(terminal),
+})
+
+export const terminalLocationReducer = terminal => ({
+  id: terminal.TerminalLocationId,
+  ...terminalReducer(terminal),
 })
 
 export const tripReducer = trip => {
