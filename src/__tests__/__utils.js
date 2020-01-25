@@ -10,6 +10,7 @@ import {
   ApolloServer,
   DrayingAPI,
   LoginAPI,
+  corsOptions,
 } from '../'
 
 /**
@@ -36,16 +37,23 @@ const constructTestServer = ({ context = defaultContext } = {}) => {
 const startTestServer = async server => {
   // if using apollo-server-express...
   const app = express()
-  server.applyMiddleware({ app })
+  server.applyMiddleware({
+    app,
+    path: '/',
+    cors: corsOptions,
+  })
   const httpServer = await app.listen(5000)
 
   const link = new HttpLink({
     uri: `http://localhost:${5000}`,
     fetch,
+    credentials: 'include',
+    headers: [],
   })
 
-  const executeOperation = ({ query, variables = {} }) =>
-    execute(link, { query, variables })
+  const executeOperation = ({ query, variables = {} }) => {
+    return execute(link, { query, variables })
+  }
 
   return {
     link,
