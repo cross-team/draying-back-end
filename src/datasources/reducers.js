@@ -32,14 +32,14 @@ export const drayingAppointmentReducer = appointment => ({
   extraStop: appointment.DeliveryOrderDrayingExtraStop
     ? extraStopReducer(appointment.DeliveryOrderDrayingExtraStop)
     : idReducer(appointment.DeliveryOrderDrayingExtraStopId),
-  appointmentDate: '2019-11-28T00:00:00',
-  appointmentTime: null,
-  note: '',
-  active: true,
-  createdOn: '0001-01-01T00:00:00',
-  createdBy: 0,
-  modifiedOn: '0001-01-01T00:00:00',
-  modifiedBy: 0,
+  appointmentDate: appointment.AppointmentDate,
+  appointmentTime: appointment.AppointmentTime,
+  note: appointment.Note,
+  active: appointment.Active,
+  createdOn: appointment.CreatedOn,
+  createdBy: appointment.CreatedBy,
+  modifiedOn: appointment.ModifiedOn,
+  modifiedBy: appointment.ModifiedBy,
 })
 
 export const drayingCostReducer = cost => ({
