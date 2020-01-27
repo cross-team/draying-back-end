@@ -5,6 +5,10 @@ export const idReducer = id =>
       }
     : undefined
 
+const appointmentTypeReducer = type => ({
+  id: type.AppointmentTypeId,
+})
+
 export const carrierReducer = carrier => ({
   id: carrier.CarrierId,
 })
@@ -12,6 +16,30 @@ export const carrierReducer = carrier => ({
 export const clientReducer = client => ({
   id: client.ClientId,
   companyName: client.CompanyName,
+})
+
+export const drayingAppointmentReducer = appointment => ({
+  id: appointment.DrayingAppointmentId,
+  draying: appointment.DeliveryOrderDraying
+    ? drayingReducer(appointment.DeliveryOrderDraying)
+    : idReducer(appointment.DeliveryOrderDrayingId),
+  type: appointment.AppointmentType
+    ? appointmentTypeReducer(appointment.AppointmentType)
+    : idReducer(appointment.AppointmentTypeId),
+  locationType: appointment.AppointmentLocationType
+    ? locationTypeReducer(appointment.AppointmentLocationTypeId)
+    : idReducer(appointment.AppointmentLocationTypeId),
+  extraStop: appointment.DeliveryOrderDrayingExtraStop
+    ? extraStopReducer(appointment.DeliveryOrderDrayingExtraStop)
+    : idReducer(appointment.DeliveryOrderDrayingExtraStopId),
+  appointmentDate: appointment.AppointmentDate,
+  appointmentTime: appointment.AppointmentTime,
+  note: appointment.Note,
+  active: appointment.Active,
+  createdOn: appointment.CreatedOn,
+  createdBy: appointment.CreatedBy,
+  modifiedOn: appointment.ModifiedOn,
+  modifiedBy: appointment.ModifiedBy,
 })
 
 export const drayingCostReducer = cost => ({
@@ -264,6 +292,9 @@ export const drayingReducer = draying => ({
     : idReducer(draying.CarrierId),
   extraStops: draying.DeliveryOrderDrayingExtraStops
     ? draying.DeliveryOrderDrayingExtraStops.map(extraStopReducer)
+    : null,
+  appointments: draying.DrayingAppointments
+    ? draying.DrayingAppointments.map(drayingAppointmentReducer)
     : null,
 })
 

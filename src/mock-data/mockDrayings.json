@@ -539,6 +539,28 @@
           "longitude": -74.000196599999981
         }
       }
+    ],
+    "appointments": [
+      {
+        "id": 34,
+        "draying": {
+          "id": 22
+        },
+        "type": {
+          "id": 1
+        },
+        "locationType": {
+          "id": 2
+        },
+        "appointmentDate": "2019-11-28T00:00:00",
+        "appointmentTime": null,
+        "note": "",
+        "active": true,
+        "createdOn": "0001-01-01T00:00:00",
+        "createdBy": 0,
+        "modifiedOn": "0001-01-01T00:00:00",
+        "modifiedBy": 0
+      }
     ]
   }
 ]

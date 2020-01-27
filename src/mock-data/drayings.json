@@ -560,7 +560,27 @@
           "CanStreetTurn": 0,
           "CanCompleteStreetTurn": 0,
           "CanReceiveStreetTurn": 0,
-          "DriverStreetTurn": null
+          "DriverStreetTurn": null,
+          "DrayingAppointments": [
+            {
+              "DrayingAppointmentId": 34,
+              "DeliveryOrderDrayingId": 22,
+              "AppointmentTypeId": 1,
+              "AppointmentLocationTypeId": 2,
+              "DeliveryOrderDrayingExtraStopId": null,
+              "AppointmentDate": "2019-11-28T00:00:00",
+              "AppointmentTime": null,
+              "Note": "",
+              "Active": true,
+              "CreatedOn": "0001-01-01T00:00:00",
+              "CreatedBy": 0,
+              "ModifiedOn": "0001-01-01T00:00:00",
+              "ModifiedBy": 0,
+              "DeliveryOrderDrayingExtraStop": null,
+              "AppointmentLocationType": null,
+              "AppointmentType": null
+            }
+          ]
         },
         {
           "DeliveryOrderDrayingId": 29,
@@ -775,6 +795,26 @@
                 "Latitude": 25.7750801,
                 "Longitude": -80.3300456
               }
+            }
+          ],
+          "DrayingAppointments": [
+            {
+              "DrayingAppointmentId": 34,
+              "DeliveryOrderDrayingId": 19,
+              "AppointmentTypeId": 1,
+              "AppointmentLocationTypeId": 2,
+              "DeliveryOrderDrayingExtraStopId": null,
+              "AppointmentDate": "2019-11-28T00:00:00",
+              "AppointmentTime": null,
+              "Note": "",
+              "Active": true,
+              "CreatedOn": "0001-01-01T00:00:00",
+              "CreatedBy": 0,
+              "ModifiedOn": "0001-01-01T00:00:00",
+              "ModifiedBy": 0,
+              "DeliveryOrderDrayingExtraStop": null,
+              "AppointmentLocationType": null,
+              "AppointmentType": null
             }
           ],
           "CanStreetTurn": 0,
