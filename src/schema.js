@@ -49,6 +49,11 @@ const typeDefs = gql`
       """
       tripId: Int
     ): NextActions! # For dispatching
+    drayingCheckContainerNumber(
+      drayingId: Int
+      containerNumber: String
+    ): CheckContainerNumberResponse!
+
     """
     Retrieve a list of drivers and their capacity for a certain date (today if none provided)
     """
@@ -146,6 +151,20 @@ const typeDefs = gql`
 
   type Carrier implements Node {
     id: ID!
+  }
+
+  type ContainerFound {
+    container: String
+    drayingId: Int
+    orderId: Int
+    createdOn: String
+    companyName: String
+  }
+
+  type CheckContainerNumberResponse {
+    exists: Boolean
+    message: String
+    containersFound: [ContainerFound]
   }
 
   type Client implements Node {
@@ -1341,6 +1360,13 @@ const typeDefs = gql`
 
   type Mutation {
     login(user: LoginInput): LoginResponse!
+    updateDraying(drayingId: Int, field: String, value: String): UpdateResponse!
+  }
+
+  type UpdateResponse {
+    success: Boolean
+    message: String
+    updatedId: Int
   }
 
   input LoginInput {

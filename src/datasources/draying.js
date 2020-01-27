@@ -79,5 +79,65 @@ class DrayingAPI extends RESTDataSource {
     const { data } = await this.get(query)
     return this.nextActionsReducer(data)
   }
+
+  async updateParameter({ drayingId, field, value }) {
+    const query = `DeliveryOrderDraying/UpdateParameter/`
+    const response = await this.post(query, {
+      DeliveryOrderDrayingId: drayingId,
+      key: field,
+      value,
+    })
+    if (response.status) {
+      return {
+        success: response.status,
+        message: 'success',
+        updatedId: drayingId,
+      }
+    }
+    return {
+      success: response.status,
+      message: 'Oops Something went wrong',
+      updatedId: null,
+    }
+  }
+
+  async checkContainerNumber({ drayingId, containerNumber }) {
+    const query = `DeliveryOrderDraying/CheckContainerNumber`
+    const containerReducer = container => ({
+      container: container.Container,
+      drayingId: container.DeliveryOrderDrayingId,
+      orderId: container.DeliveryOrderId,
+      createdOn: container.CreatedOn,
+      companyName: container.CompanyName,
+    })
+    try {
+      const response = await this.post(query, [
+        {
+          DeliveryOrderDrayingId: drayingId,
+          Container: containerNumber,
+        },
+      ])
+      if (response.status && response.data[containerNumber]) {
+        return {
+          exists: true,
+          message: 'Container alreadly exists',
+          containersFound: response.data[containerNumber].map(containerReducer),
+        }
+      }
+      return {
+        exists: false,
+        message: 'Container not found in system',
+      }
+    } catch (error) {
+      return {
+        exists: false,
+        message: 'Oops something went wrong',
+      }
+    }
+  }
+
+  async updateDraying({ drayingId, field, value }) {
+    return this.updateParameter({ drayingId, field, value })
+  }
 }
 export default DrayingAPI
