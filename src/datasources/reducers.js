@@ -222,6 +222,9 @@ export const drayingReducer = draying => ({
   returnTerminal: draying.ReturnTerminal
     ? terminalLocationReducer(draying.ReturnTerminal)
     : idReducer(draying.ReturnTerminalId),
+  pickUpTerminal: draying.PickUpTerminal
+    ? terminalLocationReducer(draying.PickUpTerminal)
+    : idReducer(draying.PickUpTerminalId),
   trips: draying.DrayingTrips ? draying.DrayingTrips.map(tripReducer) : null,
   drayingAlerts: draying.DrayingAlerts
     ? draying.DrayingAlerts.map(drayingAlertReducer)

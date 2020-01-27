@@ -173,6 +173,22 @@
             "Latitude": 25.8158445,
             "Longitude": -80.2387316
           },
+          "PickUpTerminal": {
+            "TerminalLocationId": 20,
+            "LocationId": 34,
+            "NickName": "M&S Yard",
+            "ShortName": "M&S",
+            "Radius": 1.0,
+            "LocCity": "Miami",
+            "LocCountry": "US",
+            "LocState": "FL",
+            "LocStreet": "2500 NW 46th St",
+            "LocSuite": "",
+            "LocZip": "33142",
+            "GoogleAddress": "2500 NW 46th St, Miami, FL 33142, USA",
+            "Latitude": 25.8158445,
+            "Longitude": -80.2387316
+          },
           "LoadType": {
             "LoadTypeId": 1,
             "Name": "Import",
