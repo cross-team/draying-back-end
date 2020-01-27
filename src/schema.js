@@ -547,6 +547,10 @@ const typeDefs = gql`
     """
     returnTerminal: TerminalLocation
     """
+    PickUp terminal
+    """
+    pickUpTerminal: TerminalLocation
+    """
     Date returned
     """
     returnDate: String
@@ -831,17 +835,17 @@ const typeDefs = gql`
     id: ID!
     location: Location
     name: String
-    partial: Boolean @deprecated(reason: "Use location instead.")
+    partial: Boolean
     modifiedBy: String
-    locStreet: String @deprecated(reason: "Use location instead.")
-    locSuite: String @deprecated(reason: "Use location instead.")
-    locCity: String @deprecated(reason: "Use location instead.")
-    locZip: Int @deprecated(reason: "Use location instead.")
-    locState: String @deprecated(reason: "Use location instead.")
-    locCountry: String @deprecated(reason: "Use location instead.")
-    googleAddress: String @deprecated(reason: "Use location instead.")
-    latitude: Float @deprecated(reason: "Use location instead.")
-    longitude: Float @deprecated(reason: "Use location instead.")
+    locStreet: String
+    locSuite: String
+    locCity: String
+    locZip: Int
+    locState: String
+    locCountry: String
+    googleAddress: String
+    latitude: Float
+    longitude: Float
   }
 
   interface Node {
