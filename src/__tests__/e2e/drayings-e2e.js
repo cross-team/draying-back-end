@@ -34,9 +34,28 @@ import { startTestServer, toPromise } from '../__utils'
 
 const LAUNCH_LIST_QUERY = gql`
   {
-    drayings(first: 1) {
-      nodes {
-        id
+    drayings(first: 25) {
+      __typename
+      totalCount
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
+      edges {
+        node {
+          id
+          booking
+          client {
+            id
+          }
+          containerSize {
+            name
+          }
+          container
+          __typename
+        }
       }
     }
   }

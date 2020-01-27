@@ -2,23 +2,18 @@
 
 exports[`Server - e2e gets list of drayings\` 1`] = `
 Object {
-  "data": null,
-  "errors": Array [
-    Object {
-      "extensions": Object {
-        "code": "INTERNAL_SERVER_ERROR",
+  "data": Object {
+    "drayings": Object {
+      "__typename": "DrayingConnection",
+      "edges": Array [],
+      "pageInfo": Object {
+        "endCursor": null,
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": null,
       },
-      "locations": Array [
-        Object {
-          "column": 3,
-          "line": 2,
-        },
-      ],
-      "message": "Cannot read property '.DRAYINGAUTH' of undefined",
-      "path": Array [
-        "drayings",
-      ],
+      "totalCount": 0,
     },
-  ],
+  },
 }
 `;

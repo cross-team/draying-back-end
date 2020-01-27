@@ -2,6 +2,7 @@ import { HttpLink } from 'apollo-link-http'
 import fetch from 'node-fetch'
 import { execute, toPromise } from 'apollo-link'
 import express from 'express'
+import cookieParser from 'cookie-parser'
 
 import {
   context as defaultContext,
@@ -37,18 +38,25 @@ const constructTestServer = ({ context = defaultContext } = {}) => {
 const startTestServer = async server => {
   // if using apollo-server-express...
   const app = express()
+  app.use('*', cookieParser())
   server.applyMiddleware({
     app,
     path: '/',
     cors: corsOptions,
   })
-  const httpServer = await app.listen(5000)
+  const PORT = 4000
+  const httpServer = await app.listen(PORT)
+
+  const exampleCookie = ''
+  const headers = {
+    Cookie: `.DRAYINGAUTH=${exampleCookie}}`,
+  }
 
   const link = new HttpLink({
-    uri: `http://localhost:${5000}`,
+    uri: `http://localhost:${PORT}`,
     fetch,
     credentials: 'include',
-    headers: [],
+    headers,
   })
 
   const executeOperation = ({ query, variables = {} }) => {
