@@ -7,6 +7,8 @@ export const idReducer = id =>
 
 const appointmentTypeReducer = type => ({
   id: type.AppointmentTypeId,
+  name: type.Name,
+  shortName: type.ShortName,
 })
 
 export const carrierReducer = carrier => ({

@@ -136,6 +136,8 @@ const typeDefs = gql`
 
   type DrayingAppointmentType implements Node {
     id: ID!
+    name: String
+    shortName: String
   }
 
   type Booking implements Node {
