@@ -49,6 +49,16 @@ const typeDefs = gql`
       """
       tripId: Int
     ): NextActions! # For dispatching
+    drayingCheckContainerNumber(
+      drayingId: Int
+      containerNumber: String
+    ): CheckContainerNumberResponse!
+
+    drayingTripDestinations(
+      drayingId: Int
+      tripActionId: Int
+      startLocationTypeId: Int
+    ): drayingTripDestination!
     """
     Retrieve a list of drivers and their capacity for a certain date (today if none provided)
     """
@@ -146,6 +156,20 @@ const typeDefs = gql`
 
   type Carrier implements Node {
     id: ID!
+  }
+
+  type ContainerFound {
+    container: String
+    drayingId: Int
+    orderId: Int
+    createdOn: String
+    companyName: String
+  }
+
+  type CheckContainerNumberResponse {
+    exists: Boolean
+    message: String
+    containersFound: [ContainerFound]
   }
 
   type Client implements Node {
@@ -660,6 +684,12 @@ const typeDefs = gql`
     Identifies the total count of items in the connection.
     """
     totalCount: Int!
+  }
+
+  type drayingTripDestination {
+    success: Boolean
+    message: String
+    tripActionLocations: [TripActionLocation]
   }
 
   type DrayingRoundTrip implements Node {
@@ -1341,6 +1371,14 @@ const typeDefs = gql`
 
   type Mutation {
     login(user: LoginInput): LoginResponse!
+    updateDraying(drayingId: Int, field: String, value: String): UpdateResponse!
+    dispatchDraying(trip: DispatchDrayingInput!): UpdateResponse!
+  }
+
+  type UpdateResponse {
+    success: Boolean
+    message: String
+    updatedId: Int
   }
 
   input LoginInput {
@@ -1354,6 +1392,30 @@ const typeDefs = gql`
     message: String!
     token: String!
     email: String!
+  }
+
+  """
+  Base trip input object
+  """
+  input DispatchDrayingInput {
+    drayingId: Int
+    tripActionId: Int
+    tripStatusId: Int
+    """
+    delivery order ID
+    """
+    orderId: Int
+    driverId: Int
+    tripActionLocationId: Int
+    startLocationTypeId: Int
+    endLocationTypeId: Int
+    # drayingCosts: []
+    # drayingTripLocations: []
+    tripMessages: [TripMessageInput]
+  }
+
+  input TripMessageInput {
+    body: String
   }
 `
 export default typeDefs

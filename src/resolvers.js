@@ -64,6 +64,35 @@ export default {
       )
       return drayingNextActions
     },
+    drayingTripDestinations: async (
+      _,
+      { drayingId, tripActionId, startLocationTypeId },
+      { dataSources },
+    ) => {
+      const response = await dataSources.tripApi.drayingTripDestinations({
+        drayingId,
+        tripActionId,
+        startLocationTypeId,
+      })
+      return response
+    },
+    drayingCheckContainerNumber: async (
+      _,
+      { drayingId, containerNumber },
+      { dataSources },
+    ) => {
+      if (
+        typeof drayingId === 'undefined' ||
+        typeof containerNumber === 'undefined'
+      ) {
+        throw new ApolloError(`Must provide 'drayingId'`)
+      }
+      const response = await dataSources.drayingApi.checkContainerNumber({
+        drayingId,
+        containerNumber,
+      })
+      return response
+    },
     driversCapacity: async (
       _,
       { date, orderBy, sortAsc, driverName, before, after, first, last },
@@ -90,7 +119,7 @@ export default {
       { dataSources },
     ) => {
       if (!fromDate || !toDate) {
-        throw new ApolloError(`Must provide either 'fromDate' and 'toDate'`)
+        throw new ApolloError(`Must provide both 'fromDate' and 'toDate'`)
       }
       const route = await dataSources.routeApi.getDriverRoute({
         driverId,
@@ -126,6 +155,31 @@ export default {
         )
       }
       return { ...loginResponse, token, email }
+    },
+    updateDraying: async (_, { drayingId, field, value }, { dataSources }) => {
+      if (
+        typeof drayingId === 'undefined' ||
+        typeof field === 'undefined' ||
+        typeof value === 'undefined'
+      ) {
+        throw new ApolloError(
+          `Must provide 'drayingId', 'field' and 'value' together`,
+        )
+      }
+
+      const updateResponse = await dataSources.drayingApi.updateDraying({
+        drayingId,
+        field,
+        value,
+      })
+      return updateResponse
+    },
+    dispatchDraying: async (_, { trip }, { dataSources }) => {
+      if (typeof trip === 'undefined') {
+        throw new ApolloError(`Must provide 'trip'.`)
+      }
+      const reponse = await dataSources.routeApi.dispatchDraying({ trip })
+      return reponse
     },
   },
   Node: {
