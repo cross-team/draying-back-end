@@ -70,7 +70,7 @@ class RouteApi extends RESTDataSource {
       DeliveryOrderDrayingId: trip.drayingId,
       TripActionId: trip.tripActionId,
       TripStatusId: trip.tripStatusId,
-      Order: trip.orderId,
+      ...(trip.orderId && { Order: trip.orderId }),
       // ModifiedBy: null
       // ModifiedOn: null
       // CreatedBy: null
@@ -80,7 +80,9 @@ class RouteApi extends RESTDataSource {
       TripActionLocationId: trip.tripActionLocationId,
       // PaidByClient: PaidByClient
       StartLocationTypeId: trip.startLocationTypeId,
-      EndLocationTypeId: trip.endLocationTypeId,
+      ...(trip.endLocationTypeId && {
+        EndLocationTypeId: trip.endLocationTypeId,
+      }),
       // RouteId: null,
       // DrayingCosts: trip.drayingCosts,
       // TripAction: {TripActionId: null, Name: "", ShortName: "", Active: true}
@@ -94,19 +96,26 @@ class RouteApi extends RESTDataSource {
         ? trip.tripMessages.map(messagesMapper)
         : null,
     }
-    const response = await this.post(path, params)
-
-    if (response.status) {
-      return {
-        success: true,
-        message: 'success',
-        updatedId: trip.id,
+    try {
+      const response = await this.post(path, params)
+      if (response.status) {
+        return {
+          success: true,
+          message: 'success',
+          updatedId: trip.id,
+        }
       }
-    }
-    return {
-      success: false,
-      message: 'Oops something went wrong, unable to dispatch',
-      updatedId: false,
+      return {
+        success: false,
+        message: 'Oops something went wrong, unable to dispatch',
+        updatedId: false,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: error.extensions.response.body.message,
+        updatedId: null,
+      }
     }
   }
 }

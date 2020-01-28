@@ -54,6 +54,10 @@ const typeDefs = gql`
       containerNumber: String
     ): CheckContainerNumberResponse!
 
+    """
+    Retrieves possible destinations for a draying and its trip action and
+    start location type
+    """
     drayingTripDestinations(
       drayingId: Int
       tripActionId: Int
@@ -1372,6 +1376,9 @@ const typeDefs = gql`
   type Mutation {
     login(user: LoginInput): LoginResponse!
     updateDraying(drayingId: Int, field: String, value: String): UpdateResponse!
+    """
+    Dispatches draying on a trip
+    """
     dispatchDraying(trip: DispatchDrayingInput!): UpdateResponse!
   }
 
