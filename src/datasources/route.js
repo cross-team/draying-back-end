@@ -57,5 +57,57 @@ class RouteApi extends RESTDataSource {
     }
     return this.routesReducer(routes)
   }
+
+  async dispatchDraying({ trip }) {
+    const path = `route/dispatch`
+    const messagesMapper = message => {
+      return {
+        Body: message.body,
+      }
+    }
+    const params = {
+      // DrayingTripId: null,
+      DeliveryOrderDrayingId: trip.drayingId,
+      TripActionId: trip.tripActionId,
+      TripStatusId: trip.tripStatusId,
+      Order: trip.orderId,
+      // ModifiedBy: null
+      // ModifiedOn: null
+      // CreatedBy: null
+      // CreatedOn: null
+      // OrderRoute: null
+      DriverId: trip.driverId,
+      TripActionLocationId: trip.tripActionLocationId,
+      // PaidByClient: PaidByClient
+      StartLocationTypeId: trip.startLocationTypeId,
+      EndLocationTypeId: trip.endLocationTypeId,
+      // RouteId: null,
+      // DrayingCosts: trip.drayingCosts,
+      // TripAction: {TripActionId: null, Name: "", ShortName: "", Active: true}
+      // Driver: {DriverId: null, Active: true, DefaultVehicleId: null, ExternalDriverId: null, FirstName: "",…}
+      // StartLocationType: {LocationTypeId: null, Name: ""}
+      // EndLocationType: {LocationTypeId: null, Name: ""}
+      // TripStatus: {TripStatusId: null, Name: "", Order: null, Active: true}
+      // TripActionLocation: {TripActionLocationId: null, Name: "", LoadTypeId: null, CurrentLocationTypeId: null,…}
+      // DrayingTripLocations: trip.locations ? trip.locations : null,
+      DrayingTripMessages: trip.tripMessages
+        ? trip.tripMessages.map(messagesMapper)
+        : null,
+    }
+    const response = await this.post(path, params)
+
+    if (response.status) {
+      return {
+        success: true,
+        message: 'success',
+        updatedId: trip.id,
+      }
+    }
+    return {
+      success: false,
+      message: 'Oops something went wrong, unable to dispatch',
+      updatedId: false,
+    }
+  }
 }
 export default RouteApi

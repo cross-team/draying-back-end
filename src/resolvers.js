@@ -64,6 +64,18 @@ export default {
       )
       return drayingNextActions
     },
+    drayingTripDestinations: async (
+      _,
+      { drayingId, tripActionId, startLocationTypeId },
+      { dataSources },
+    ) => {
+      const response = await dataSources.tripApi.drayingTripDestinations({
+        drayingId,
+        tripActionId,
+        startLocationTypeId,
+      })
+      return response
+    },
     drayingCheckContainerNumber: async (
       _,
       { drayingId, containerNumber },
@@ -161,6 +173,13 @@ export default {
         value,
       })
       return updateResponse
+    },
+    dispatchDraying: async (_, { trip }, { dataSources }) => {
+      if (typeof trip === 'undefined') {
+        throw new ApolloError(`Must provide 'trip'.`)
+      }
+      const reponse = await dataSources.routeApi.dispatchDraying({ trip })
+      return reponse
     },
   },
   Node: {
