@@ -4,7 +4,9 @@ import {
   tripActionReducer,
   locationTypeReducer,
   tripReducer,
+  tripMessageReducer,
 } from './reducers'
+import { serverErrorUpdateResponse } from './errors'
 class DrayingAPI extends RESTDataSource {
   constructor() {
     super()
@@ -138,6 +140,116 @@ class DrayingAPI extends RESTDataSource {
 
   async updateDraying({ drayingId, field, value }) {
     return this.updateParameter({ drayingId, field, value })
+  }
+
+  async canUndoTripAction({ drayingId }) {
+    try {
+      const reponse = await this.get(
+        `DeliveryOrderDraying/${drayingId}/tripback`,
+      )
+      if (reponse.status) {
+        const { data } = reponse
+        if (data.DriverId) {
+          return {
+            canUndo: true,
+            driverId: data.DriverId,
+            tripStatusId: data.TripStatusId,
+            drayingId: data.DeliveryOrderDrayingId,
+            tripMessages: data.DrayingTripMessages.map(tripMessageReducer),
+          }
+        }
+        return {
+          canUndo: false,
+        }
+      }
+      return {
+        canUndo: false,
+      }
+    } catch (error) {
+      return { canUndo: null, message: error.extensions.response.body.message }
+    }
+  }
+
+  async undoTripAction({ drayingId, sendMessage, body }) {
+    try {
+      const response = await this.post(
+        `DeliveryOrderDraying/${drayingId}/tripback`,
+        {
+          SendMessage: sendMessage,
+          Body: body,
+        },
+      )
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: drayingId,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async addExtraStop({ extraStopsAndPrices }) {
+    const extraStopMapper = extraStop => ({
+      DeliveryOrderDrayingId: extraStop.drayingId,
+      DeliveryLocationId: extraStop.deliveryLocationId,
+    })
+    const tripActionPriceMapper = price => ({
+      DeliveryOrderDrayingId: price.drayingId,
+      TripActionOrder: price.tripActionOrder,
+      TripActionId: price.tripActionId,
+      Price: price.price,
+      PriceQuote: price.priceQuote,
+    })
+
+    const path = 'DeliveryOrderDrayingExtraStopWithPrices'
+    const params = {
+      DeliveryOrderDrayingExtraStops: extraStopsAndPrices.extraStops.map(
+        extraStopMapper,
+      ),
+      DeliveryOrderDrayingTripActionPrices: extraStopsAndPrices.tripActionPrices.map(
+        tripActionPriceMapper,
+      ),
+    }
+    try {
+      const response = await this.post(path, params)
+      if (response.status) {
+        return { success: true, message: 'Success!', updatedId: null }
+      }
+      return {
+        success: false,
+        message: response.message,
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async updateFields({ drayingId, drayingFields }) {
+    const errors = []
+    drayingFields.forEach(field => {
+      try {
+        this.updateParameter({
+          drayingId,
+          field: field.field,
+          value: field.value,
+        })
+      } catch (error) {
+        errors.push(serverErrorUpdateResponse(error))
+      }
+    })
+    return {
+      success: errors.length === 0,
+      errors,
+    }
   }
 }
 export default DrayingAPI
