@@ -2,6 +2,8 @@ import { gql } from 'apollo-server-express'
 
 const typeDefs = gql`
   type Query {
+    containerSizes: [ContainerSize]!
+    containerTypes: [ContainerType]!
     """
     Retrieve a list of all drayings.
     Query inputs filter what drayings are retrieved.

@@ -4,6 +4,14 @@ import { ApolloError } from 'apollo-server-express'
 
 export default {
   Query: {
+    containerTypes: async (_, __, { dataSources }) => {
+      const response = await dataSources.lookUpApi.getContainerTypes()
+      return response
+    },
+    containerSizes: async (_, __, { dataSources }) => {
+      const response = await dataSources.lookUpApi.getContainerSizes()
+      return response
+    },
     drayings: async (
       _,
       {
@@ -123,7 +131,7 @@ export default {
       return pageInfoReducer(drivers, allDrivers)
     },
     deliveryLocations: async (_, __, { dataSources }) => {
-      const response = await dataSources.deliveryLocationApi.getDeliveryLocations()
+      const response = await dataSources.lookUpApi.getDeliveryLocations()
       return response
     },
     driverRoute: async (
