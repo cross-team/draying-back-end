@@ -9,6 +9,7 @@ import RouteApi from './datasources/route'
 import TripApi from './datasources/trip'
 import cookieParser from 'cookie-parser'
 import QuoteApi from './datasources/quote'
+import DeliveryLocationApi from './datasources/deliveryLocation'
 
 require('dotenv').config()
 
@@ -19,6 +20,7 @@ const dataSources = () => ({
   routeApi: new RouteApi(),
   tripApi: new TripApi(),
   quoteApi: new QuoteApi(),
+  deliveryLocationApi: new DeliveryLocationApi(),
 })
 
 const port = process.env.PORT || 4000

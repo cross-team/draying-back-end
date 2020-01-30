@@ -122,6 +122,10 @@ export default {
       })
       return pageInfoReducer(drivers, allDrivers)
     },
+    deliveryLocations: async (_, __, { dataSources }) => {
+      const response = await dataSources.deliveryLocationApi.getDeliveryLocations()
+      return response
+    },
     driverRoute: async (
       _,
       { driverId, fromDate, toDate, pending, orderBy },
@@ -223,6 +227,19 @@ export default {
     ) => {
       const response = await dataSources.drayingApi.addExtraStop({
         extraStopsAndPrices,
+      })
+      return response
+    },
+    addDrayingAlert: async (
+      _,
+      { drayingId, dateFrom, description, active },
+      { dataSources },
+    ) => {
+      const response = await dataSources.drayingApi.addAlert({
+        drayingId,
+        dateFrom,
+        description,
+        active,
       })
       return response
     },
