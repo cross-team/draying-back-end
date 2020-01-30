@@ -251,5 +251,30 @@ class DrayingAPI extends RESTDataSource {
       errors,
     }
   }
+
+  async addAlert({ drayingId, dateFrom, description, active }) {
+    try {
+      const response = await this.post(`DrayingAlert`, {
+        DeliveryOrderDrayingId: drayingId,
+        DateFrom: dateFrom,
+        Description: description,
+        Active: active,
+      })
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: null,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
 }
 export default DrayingAPI

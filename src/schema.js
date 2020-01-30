@@ -66,6 +66,8 @@ const typeDefs = gql`
 
     drayingCanUndoTripAction(drayingId: Int): CanUndoTripActionResponse!
 
+    deliveryLocations: [DeliveryLocation]!
+
     quoteExtraStopPrices(
       drayingId: Int
       deliveryLocationId: Int
@@ -1417,8 +1419,13 @@ const typeDefs = gql`
       extraStopsAndPrices: AddDrayingExtraStopInput
     ): UpdateResponse!
     # changeReturnTerminal(): UpdateResponse!
-    # addAlert(): UpdateResponse!
-    # addCost(): UpdateResponse!
+    addDrayingAlert(
+      drayingId: Int
+      dateFrom: String
+      description: String
+      active: Boolean
+    ): UpdateResponse!
+    # addDrayingCost(): UpdateResponse!
     # updateTrip(): UpdateResponse!
     # cancelTrip(): UpdateResponse!
     # lostTrip(): UpdateResponse!
