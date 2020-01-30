@@ -63,6 +63,13 @@ const typeDefs = gql`
       tripActionId: Int
       startLocationTypeId: Int
     ): drayingTripDestination!
+
+    drayingCanUndoTripAction(drayingId: Int): CanUndoTripActionResponse!
+
+    quoteExtraStopPrices(
+      drayingId: Int
+      deliveryLocationId: Int
+    ): [ExtraStopPrice]!
     """
     Retrieve a list of drivers and their capacity for a certain date (today if none provided)
     """
@@ -132,6 +139,14 @@ const typeDefs = gql`
     CAPACITY
   }
 
+  type ExtraStopPrice {
+    tripActionId: Int
+    tripActionOrder: Int
+    name: String
+    price: Float
+    suggestedPrice: Float
+  }
+
   type DrayingAppointment implements Node {
     id: ID!
     draying: Draying
@@ -160,6 +175,15 @@ const typeDefs = gql`
 
   type Carrier implements Node {
     id: ID!
+  }
+
+  type CanUndoTripActionResponse {
+    canUndo: Boolean
+    message: String
+    driverId: Int
+    tripStatusId: Int
+    drayingId: Int
+    tripMessages: [TripMessage]
   }
 
   type ContainerFound {
@@ -1376,16 +1400,62 @@ const typeDefs = gql`
   type Mutation {
     login(user: LoginInput): LoginResponse!
     updateDraying(drayingId: Int, field: String, value: String): UpdateResponse!
+    updateDrayingFields(
+      drayingId: Int
+      drayingFields: [DrayingFieldsInput]
+    ): UpdateFieldsResponse!
     """
     Dispatches draying on a trip
     """
     dispatchDraying(trip: DispatchDrayingInput!): UpdateResponse!
+    undoDrayingTripAction(
+      drayingId: Int
+      sendMessage: Boolean
+      body: String
+    ): UpdateResponse!
+    addDrayingExtraStop(
+      extraStopsAndPrices: AddDrayingExtraStopInput
+    ): UpdateResponse!
+    # changeReturnTerminal(): UpdateResponse!
+    # addAlert(): UpdateResponse!
+    # addCost(): UpdateResponse!
+    # updateTrip(): UpdateResponse!
+    # cancelTrip(): UpdateResponse!
+    # lostTrip(): UpdateResponse!
   }
 
   type UpdateResponse {
     success: Boolean
     message: String
     updatedId: Int
+  }
+
+  type UpdateFieldsResponse {
+    success: Boolean
+    errors: [UpdateResponse]
+  }
+
+  input AddDrayingExtraStopInput {
+    extraStops: [ExtraStopInput]
+    tripActionPrices: [TripActionPriceInput]
+  }
+
+  input ExtraStopInput {
+    drayingId: Int
+    deliveryLocationId: Int
+  }
+
+  input DrayingFieldsInput {
+    field: String
+    value: String
+  }
+
+  input TripActionPriceInput {
+    drayingId: Int
+    tripActionOrder: Int
+    tripActionId: Int
+    price: Float
+    priceQuote: Float
   }
 
   input LoginInput {

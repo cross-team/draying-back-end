@@ -93,6 +93,15 @@ export default {
       })
       return response
     },
+    drayingCanUndoTripAction: async (_, { drayingId }, { dataSources }) => {
+      if (typeof drayingId === 'undefined') {
+        throw new ApolloError(`Must provide 'drayingId'.`)
+      }
+      const response = await dataSources.drayingApi.canUndoTripAction({
+        drayingId,
+      })
+      return response
+    },
     driversCapacity: async (
       _,
       { date, orderBy, sortAsc, driverName, before, after, first, last },
@@ -129,6 +138,17 @@ export default {
         orderBy,
       })
       return route
+    },
+    quoteExtraStopPrices: async (
+      _,
+      { drayingId, deliveryLocationId },
+      { dataSources },
+    ) => {
+      const response = await dataSources.quoteApi.extraStopPrices({
+        drayingId,
+        deliveryLocationId,
+      })
+      return response
     },
   },
   Mutation: {
@@ -179,6 +199,42 @@ export default {
         throw new ApolloError(`Must provide 'trip'.`)
       }
       const reponse = await dataSources.routeApi.dispatchDraying({ trip })
+      return reponse
+    },
+    undoDrayingTripAction: async (
+      _,
+      { drayingId, sendMessage = false, body = '' },
+      { dataSources },
+    ) => {
+      if (typeof drayingId === 'undefined') {
+        throw new ApolloError(`Must provide 'drayingId'.`)
+      }
+      const response = await dataSources.drayingApi.undoTripAction({
+        drayingId,
+        sendMessage,
+        body,
+      })
+      return response
+    },
+    addDrayingExtraStop: async (
+      _,
+      { extraStopsAndPrices },
+      { dataSources },
+    ) => {
+      const response = await dataSources.drayingApi.addExtraStop({
+        extraStopsAndPrices,
+      })
+      return response
+    },
+    updateDrayingFields: async (
+      _,
+      { drayingId, drayingFields },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.drayingApi.updateFields({
+        drayingId,
+        drayingFields,
+      })
       return reponse
     },
   },
