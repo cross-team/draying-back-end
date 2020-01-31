@@ -2,6 +2,8 @@ import { gql } from 'apollo-server-express'
 
 const typeDefs = gql`
   type Query {
+    containerSizes: [ContainerSize]!
+    containerTypes: [ContainerType]!
     """
     Retrieve a list of all drayings.
     Query inputs filter what drayings are retrieved.
@@ -49,6 +51,29 @@ const typeDefs = gql`
       """
       tripId: Int
     ): NextActions! # For dispatching
+    drayingCheckContainerNumber(
+      drayingId: Int
+      containerNumber: String
+    ): CheckContainerNumberResponse!
+
+    """
+    Retrieves possible destinations for a draying and its trip action and
+    start location type
+    """
+    drayingTripDestinations(
+      drayingId: Int
+      tripActionId: Int
+      startLocationTypeId: Int
+    ): drayingTripDestination!
+
+    drayingCanUndoTripAction(drayingId: Int): CanUndoTripActionResponse!
+
+    deliveryLocations: [DeliveryLocation]!
+
+    quoteExtraStopPrices(
+      drayingId: Int
+      deliveryLocationId: Int
+    ): [ExtraStopPrice]!
     """
     Retrieve a list of drivers and their capacity for a certain date (today if none provided)
     """
@@ -118,8 +143,34 @@ const typeDefs = gql`
     CAPACITY
   }
 
+  type ExtraStopPrice {
+    tripActionId: Int
+    tripActionOrder: Int
+    name: String
+    price: Float
+    suggestedPrice: Float
+  }
+
   type DrayingAppointment implements Node {
     id: ID!
+    draying: Draying
+    type: DrayingAppointmentType
+    locationType: LocationType
+    extraStop: ExtraStop
+    appointmentDate: String
+    appointmentTime: String
+    note: String
+    active: Boolean
+    createdOn: String
+    createdBy: Int
+    modifiedOn: String
+    modifiedBy: Int
+  }
+
+  type DrayingAppointmentType implements Node {
+    id: ID!
+    name: String
+    shortName: String
   }
 
   type Booking implements Node {
@@ -128,6 +179,29 @@ const typeDefs = gql`
 
   type Carrier implements Node {
     id: ID!
+  }
+
+  type CanUndoTripActionResponse {
+    canUndo: Boolean
+    message: String
+    driverId: Int
+    tripStatusId: Int
+    drayingId: Int
+    tripMessages: [TripMessage]
+  }
+
+  type ContainerFound {
+    container: String
+    drayingId: Int
+    orderId: Int
+    createdOn: String
+    companyName: String
+  }
+
+  type CheckContainerNumberResponse {
+    exists: Boolean
+    message: String
+    containersFound: [ContainerFound]
   }
 
   type Client implements Node {
@@ -531,6 +605,10 @@ const typeDefs = gql`
     """
     returnTerminal: TerminalLocation
     """
+    PickUp terminal
+    """
+    pickUpTerminal: TerminalLocation
+    """
     Date returned
     """
     returnDate: String
@@ -638,6 +716,12 @@ const typeDefs = gql`
     Identifies the total count of items in the connection.
     """
     totalCount: Int!
+  }
+
+  type drayingTripDestination {
+    success: Boolean
+    message: String
+    tripActionLocations: [TripActionLocation]
   }
 
   type DrayingRoundTrip implements Node {
@@ -815,17 +899,17 @@ const typeDefs = gql`
     id: ID!
     location: Location
     name: String
-    partial: Boolean @deprecated(reason: "Use location instead.")
+    partial: Boolean
     modifiedBy: String
-    locStreet: String @deprecated(reason: "Use location instead.")
-    locSuite: String @deprecated(reason: "Use location instead.")
-    locCity: String @deprecated(reason: "Use location instead.")
-    locZip: Int @deprecated(reason: "Use location instead.")
-    locState: String @deprecated(reason: "Use location instead.")
-    locCountry: String @deprecated(reason: "Use location instead.")
-    googleAddress: String @deprecated(reason: "Use location instead.")
-    latitude: Float @deprecated(reason: "Use location instead.")
-    longitude: Float @deprecated(reason: "Use location instead.")
+    locStreet: String
+    locSuite: String
+    locCity: String
+    locZip: Int
+    locState: String
+    locCountry: String
+    googleAddress: String
+    latitude: Float
+    longitude: Float
   }
 
   interface Node {
@@ -1319,6 +1403,68 @@ const typeDefs = gql`
 
   type Mutation {
     login(user: LoginInput): LoginResponse!
+    updateDraying(drayingId: Int, field: String, value: String): UpdateResponse!
+    updateDrayingFields(
+      drayingId: Int
+      drayingFields: [DrayingFieldsInput]
+    ): UpdateFieldsResponse!
+    """
+    Dispatches draying on a trip
+    """
+    dispatchDraying(trip: DispatchDrayingInput!): UpdateResponse!
+    undoDrayingTripAction(
+      drayingId: Int
+      sendMessage: Boolean
+      body: String
+    ): UpdateResponse!
+    addDrayingExtraStop(
+      extraStopsAndPrices: AddDrayingExtraStopInput
+    ): UpdateResponse!
+    # changeReturnTerminal(): UpdateResponse!
+    addDrayingAlert(
+      drayingId: Int
+      dateFrom: String
+      description: String
+      active: Boolean
+    ): UpdateResponse!
+    # addDrayingCost(): UpdateResponse!
+    # updateTrip(): UpdateResponse!
+    # cancelTrip(): UpdateResponse!
+    # lostTrip(): UpdateResponse!
+  }
+
+  type UpdateResponse {
+    success: Boolean
+    message: String
+    updatedId: Int
+  }
+
+  type UpdateFieldsResponse {
+    success: Boolean
+    errors: [UpdateResponse]
+  }
+
+  input AddDrayingExtraStopInput {
+    extraStops: [ExtraStopInput]
+    tripActionPrices: [TripActionPriceInput]
+  }
+
+  input ExtraStopInput {
+    drayingId: Int
+    deliveryLocationId: Int
+  }
+
+  input DrayingFieldsInput {
+    field: String
+    value: String
+  }
+
+  input TripActionPriceInput {
+    drayingId: Int
+    tripActionOrder: Int
+    tripActionId: Int
+    price: Float
+    priceQuote: Float
   }
 
   input LoginInput {
@@ -1332,6 +1478,30 @@ const typeDefs = gql`
     message: String!
     token: String!
     email: String!
+  }
+
+  """
+  Base trip input object
+  """
+  input DispatchDrayingInput {
+    drayingId: Int
+    tripActionId: Int
+    tripStatusId: Int
+    """
+    delivery order ID
+    """
+    orderId: Int
+    driverId: Int
+    tripActionLocationId: Int
+    startLocationTypeId: Int
+    endLocationTypeId: Int
+    # drayingCosts: []
+    # drayingTripLocations: []
+    tripMessages: [TripMessageInput]
+  }
+
+  input TripMessageInput {
+    body: String
   }
 `
 export default typeDefs

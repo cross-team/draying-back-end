@@ -173,6 +173,22 @@
             "Latitude": 25.8158445,
             "Longitude": -80.2387316
           },
+          "PickUpTerminal": {
+            "TerminalLocationId": 20,
+            "LocationId": 34,
+            "NickName": "M&S Yard",
+            "ShortName": "M&S",
+            "Radius": 1.0,
+            "LocCity": "Miami",
+            "LocCountry": "US",
+            "LocState": "FL",
+            "LocStreet": "2500 NW 46th St",
+            "LocSuite": "",
+            "LocZip": "33142",
+            "GoogleAddress": "2500 NW 46th St, Miami, FL 33142, USA",
+            "Latitude": 25.8158445,
+            "Longitude": -80.2387316
+          },
           "LoadType": {
             "LoadTypeId": 1,
             "Name": "Import",
@@ -544,7 +560,27 @@
           "CanStreetTurn": 0,
           "CanCompleteStreetTurn": 0,
           "CanReceiveStreetTurn": 0,
-          "DriverStreetTurn": null
+          "DriverStreetTurn": null,
+          "DrayingAppointments": [
+            {
+              "DrayingAppointmentId": 34,
+              "DeliveryOrderDrayingId": 22,
+              "AppointmentTypeId": 1,
+              "AppointmentLocationTypeId": 2,
+              "DeliveryOrderDrayingExtraStopId": null,
+              "AppointmentDate": "2019-11-28T00:00:00",
+              "AppointmentTime": null,
+              "Note": "",
+              "Active": true,
+              "CreatedOn": "0001-01-01T00:00:00",
+              "CreatedBy": 0,
+              "ModifiedOn": "0001-01-01T00:00:00",
+              "ModifiedBy": 0,
+              "DeliveryOrderDrayingExtraStop": null,
+              "AppointmentLocationType": null,
+              "AppointmentType": null
+            }
+          ]
         },
         {
           "DeliveryOrderDrayingId": 29,
@@ -759,6 +795,26 @@
                 "Latitude": 25.7750801,
                 "Longitude": -80.3300456
               }
+            }
+          ],
+          "DrayingAppointments": [
+            {
+              "DrayingAppointmentId": 34,
+              "DeliveryOrderDrayingId": 19,
+              "AppointmentTypeId": 1,
+              "AppointmentLocationTypeId": 2,
+              "DeliveryOrderDrayingExtraStopId": null,
+              "AppointmentDate": "2019-11-28T00:00:00",
+              "AppointmentTime": null,
+              "Note": "",
+              "Active": true,
+              "CreatedOn": "0001-01-01T00:00:00",
+              "CreatedBy": 0,
+              "ModifiedOn": "0001-01-01T00:00:00",
+              "ModifiedBy": 0,
+              "DeliveryOrderDrayingExtraStop": null,
+              "AppointmentLocationType": null,
+              "AppointmentType": null
             }
           ],
           "CanStreetTurn": 0,

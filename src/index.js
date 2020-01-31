@@ -6,7 +6,10 @@ import DrayingApi from './datasources/draying'
 import DriverApi from './datasources/driver'
 import LoginApi from './datasources/login'
 import RouteApi from './datasources/route'
+import TripApi from './datasources/trip'
 import cookieParser from 'cookie-parser'
+import QuoteApi from './datasources/quote'
+import LookUpApi from './datasources/lookUp'
 
 require('dotenv').config()
 
@@ -15,6 +18,9 @@ const dataSources = () => ({
   loginApi: new LoginApi(),
   driverApi: new DriverApi(),
   routeApi: new RouteApi(),
+  tripApi: new TripApi(),
+  quoteApi: new QuoteApi(),
+  lookUpApi: new LookUpApi(),
 })
 
 const port = process.env.PORT || 4000
