@@ -3,6 +3,8 @@ import {
   deliveryLocationReducer,
   containerTypeReducer,
   containerSizeReducer,
+  costReasonReducer,
+  costTypeReducer,
 } from './reducers'
 
 class LookUpApi extends RESTDataSource {
@@ -50,6 +52,32 @@ class LookUpApi extends RESTDataSource {
       const response = await this.get(path)
       if (response.status) {
         return response.data.map(containerSizeReducer)
+      }
+      return []
+    } catch (error) {
+      return null
+    }
+  }
+
+  async getCostReasons() {
+    const path = `CostReasons`
+    try {
+      const response = await this.get(path)
+      if (response.status) {
+        return response.data.map(costReasonReducer)
+      }
+      return []
+    } catch (error) {
+      return null
+    }
+  }
+
+  async getCostTypes() {
+    const path = `CostTypes`
+    try {
+      const response = await this.get(path)
+      if (response.status) {
+        return response.data.map(costTypeReducer)
       }
       return []
     } catch (error) {
