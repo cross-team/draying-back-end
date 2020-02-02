@@ -115,11 +115,15 @@ export default {
       })
       return response
     },
-    drayingCanUndoTripAction: async (_, { drayingId }, { dataSources }) => {
+    drayingGetUndoTripActionMessage: async (
+      _,
+      { drayingId },
+      { dataSources },
+    ) => {
       if (typeof drayingId === 'undefined') {
         throw new ApolloError(`Must provide 'drayingId'.`)
       }
-      const response = await dataSources.drayingApi.canUndoTripAction({
+      const response = await dataSources.drayingApi.getUndoTripActionMessage({
         drayingId,
       })
       return response
