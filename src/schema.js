@@ -4,6 +4,9 @@ const typeDefs = gql`
   type Query {
     containerSizes: [ContainerSize]!
     containerTypes: [ContainerType]!
+    costReasons: [CostReason]!
+    costTypes: [CostType]!
+    client(clientId: Int!): Client
     """
     Retrieve a list of all drayings.
     Query inputs filter what drayings are retrieved.
@@ -38,7 +41,7 @@ const typeDefs = gql`
       """
       after: String
     ): DrayingConnection!
-    draying(drayingId: Int): Draying! # used to expanding information on draying
+    draying(drayingId: Int!): Draying! # used to expanding information on draying
     drayingNextActions(
       """
       Draying id for which to return possible next trip actions for
@@ -1426,8 +1429,10 @@ const typeDefs = gql`
       dateFrom: String
       description: String
       active: Boolean
+    ): UpdateResponse
+    addDrayingAppointment(
+      appointment: AddDrayingAppointmentInput
     ): UpdateResponse!
-    # addDrayingCost(): UpdateResponse!
     # updateTrip(): UpdateResponse!
     # cancelTrip(): UpdateResponse!
     # lostTrip(): UpdateResponse!
@@ -1442,6 +1447,16 @@ const typeDefs = gql`
   type UpdateFieldsResponse {
     success: Boolean
     errors: [UpdateResponse]
+  }
+
+  input AddDrayingAppointmentInput {
+    drayingId: Int
+    extraStopId: Int
+    appointmentTypeId: Int
+    appointmentLocationTypeId: Int
+    appointmentDate: String
+    appointmentTime: String
+    note: String
   }
 
   input AddDrayingExtraStopInput {

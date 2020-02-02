@@ -5,12 +5,26 @@ import { ApolloError } from 'apollo-server-express'
 export default {
   Query: {
     containerTypes: async (_, __, { dataSources }) => {
-      const response = await dataSources.lookUpApi.getContainerTypes()
-      return response
+      const containerTypes = await dataSources.lookUpApi.getContainerTypes()
+      return containerTypes
     },
     containerSizes: async (_, __, { dataSources }) => {
-      const response = await dataSources.lookUpApi.getContainerSizes()
-      return response
+      const containerSizes = await dataSources.lookUpApi.getContainerSizes()
+      return containerSizes
+    },
+    costReasons: async (_, __, { dataSources }) => {
+      const costReasons = await dataSources.lookUpApi.getCostReasons()
+      return costReasons
+    },
+    costTypes: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getCostTypes()
+      return costTypes
+    },
+    client: async (_, { clientId }, { dataSources }) => {
+      const client = await dataSources.clientApi.getClient({
+        clientId,
+      })
+      return client
     },
     drayings: async (
       _,
@@ -248,6 +262,12 @@ export default {
         dateFrom,
         description,
         active,
+      })
+      return response
+    },
+    addDrayingAppointment: async (_, { appointment }, { dataSources }) => {
+      const response = await dataSources.drayingApi.addAppointment({
+        appointment,
       })
       return response
     },

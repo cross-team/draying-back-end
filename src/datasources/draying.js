@@ -276,5 +276,33 @@ class DrayingAPI extends RESTDataSource {
       return serverErrorUpdateResponse(error)
     }
   }
+
+  async addAppointment({ appointment }) {
+    try {
+      const response = await this.post(`DrayingAlert`, {
+        DeliveryOrderDrayingId: appointment.drayingId,
+        DeliveryOrderDrayingExtraStopId: appointment.extraStopId,
+        AppointmentTypeId: appointment.appointmentTypeId,
+        AppointmentLocationTypeId: appointment.appointmentLocationTypeId,
+        AppointmentDate: appointment.appointmentDate,
+        AppointmentTime: appointment.appointmentTime,
+        Note: appointment.notes,
+      })
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: null,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
 }
 export default DrayingAPI
