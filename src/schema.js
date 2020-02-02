@@ -69,7 +69,7 @@ const typeDefs = gql`
       startLocationTypeId: Int
     ): drayingTripDestination!
 
-    drayingCanUndoTripAction(drayingId: Int): CanUndoTripActionResponse!
+    drayingGetUndoTripActionMessage(drayingId: Int): GetUndoTripActionResponse!
 
     deliveryLocations: [DeliveryLocation]!
 
@@ -184,9 +184,7 @@ const typeDefs = gql`
     id: ID!
   }
 
-  type CanUndoTripActionResponse {
-    canUndo: Boolean
-    message: String
+  type GetUndoTripActionResponse {
     driverId: Int
     tripStatusId: Int
     drayingId: Int

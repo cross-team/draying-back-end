@@ -142,7 +142,7 @@ class DrayingAPI extends RESTDataSource {
     return this.updateParameter({ drayingId, field, value })
   }
 
-  async canUndoTripAction({ drayingId }) {
+  async getUndoTripActionMessage({ drayingId }) {
     try {
       const reponse = await this.get(
         `DeliveryOrderDraying/${drayingId}/tripback`,
@@ -151,20 +151,15 @@ class DrayingAPI extends RESTDataSource {
         const { data } = reponse
         if (data.DriverId) {
           return {
-            canUndo: true,
             driverId: data.DriverId,
             tripStatusId: data.TripStatusId,
             drayingId: data.DeliveryOrderDrayingId,
             tripMessages: data.DrayingTripMessages.map(tripMessageReducer),
           }
         }
-        return {
-          canUndo: false,
-        }
+        return {}
       }
-      return {
-        canUndo: false,
-      }
+      return {}
     } catch (error) {
       return { canUndo: null, message: error.extensions.response.body.message }
     }
