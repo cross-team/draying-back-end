@@ -286,6 +286,41 @@ export default {
       })
       return reponse
     },
+    updateDrayingPickUpLocation: async (
+      _,
+      { drayingId, pickUpTerminalId },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.drayingApi.updatePickUpTerminal({
+        drayingId,
+        pickUpTerminalId,
+      })
+      return reponse
+    },
+    updateDrayingReturnTerminal: async (
+      _,
+      { drayingId, returnTerminalId },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.drayingApi.updateReturnTerminal({
+        drayingId,
+        returnTerminalId,
+      })
+      return reponse
+    },
+    setTripLost: async (
+      _,
+      { tripId, shipperCharges, driverPayment, companyCost },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.tripApi.setLost({
+        tripId,
+        shipperCharges,
+        driverPayment,
+        companyCost,
+      })
+      return reponse
+    },
   },
   Node: {
     __resolveType(node) {
