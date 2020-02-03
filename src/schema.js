@@ -1431,9 +1431,21 @@ const typeDefs = gql`
     addDrayingAppointment(
       appointment: AddDrayingAppointmentInput
     ): UpdateResponse!
+    updateDrayingPickUpLocation(
+      drayingId: Int!
+      pickUpTerminalId: Int!
+    ): UpdateResponse!
+    updateDrayingReturnTerminal(
+      drayingId: Int!
+      returnTerminalId: Int!
+    ): UpdateResponse!
+    setTripLost(
+      tripId: Int!
+      shipperCharges: Float
+      driverPayment: Float
+      companyCost: Float
+    ): UpdateResponse!
     # updateTrip(): UpdateResponse!
-    # cancelTrip(): UpdateResponse!
-    # lostTrip(): UpdateResponse!
   }
 
   type UpdateResponse {

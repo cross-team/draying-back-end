@@ -299,5 +299,57 @@ class DrayingAPI extends RESTDataSource {
       return serverErrorUpdateResponse(error)
     }
   }
+
+  async updatePickUpTerminal({ drayingId, pickUpTerminalId }) {
+    try {
+      const response = await this.put(
+        `DeliveryOrderDraying/${drayingId}/PickUpTerminal`,
+        {
+          DeliveryOrderDrayingId: drayingId,
+          PickUpTerminalId: pickUpTerminalId,
+        },
+      )
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: null,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: drayingId,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async updateReturnTerminal({ drayingId, returnTerminalId }) {
+    try {
+      const response = await this.put(
+        `DeliveryOrderDraying/${drayingId}/ReturnTerminal`,
+        {
+          DeliveryOrderDrayingId: drayingId,
+          ReturnTerminalId: returnTerminalId,
+        },
+      )
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: drayingId,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
 }
 export default DrayingAPI
