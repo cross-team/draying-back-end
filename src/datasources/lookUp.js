@@ -6,6 +6,9 @@ import {
   costReasonReducer,
   costTypeReducer,
   terminalLocationReducer,
+  contactTypeReducer,
+  phoneTypeReducer,
+  shippingLineReducer,
 } from './reducers'
 
 class LookUpApi extends RESTDataSource {
@@ -92,6 +95,45 @@ class LookUpApi extends RESTDataSource {
       const response = await this.get(path)
       if (response.status) {
         return response.data.map(terminalLocationReducer)
+      }
+      return []
+    } catch (error) {
+      return null
+    }
+  }
+
+  async getContactTypes() {
+    const path = `contacttypes`
+    try {
+      const response = await this.get(path)
+      if (response.status) {
+        return response.data.map(contactTypeReducer)
+      }
+      return []
+    } catch (error) {
+      return null
+    }
+  }
+
+  async getPhoneTypes() {
+    const path = `phonetypes`
+    try {
+      const response = await this.get(path)
+      if (response.status) {
+        return response.data.map(phoneTypeReducer)
+      }
+      return []
+    } catch (error) {
+      return null
+    }
+  }
+
+  async getShippingLines() {
+    const path = `shippinglines`
+    try {
+      const response = await this.get(path)
+      if (response.status) {
+        return response.data.map(shippingLineReducer)
       }
       return []
     } catch (error) {

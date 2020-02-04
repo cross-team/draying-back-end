@@ -20,6 +20,12 @@ export const clientReducer = client => ({
   companyName: client.CompanyName,
 })
 
+export const contactTypeReducer = type => ({
+  id: type.ContactTypeId,
+  name: type.Name,
+  sordOrder: type.Order,
+})
+
 export const drayingAppointmentReducer = appointment => ({
   id: appointment.DrayingAppointmentId,
   draying: appointment.DeliveryOrderDraying
@@ -454,6 +460,12 @@ export const orderReducer = order => {
     id: order,
   }
 }
+
+export const phoneTypeReducer = type => ({
+  id: type.PhoneTypeId,
+  name: type.Name,
+  sordOrder: type.Order,
+})
 
 export const portStatusReducer = portStatus => ({
   id: portStatus.ContainerPortStatusId,

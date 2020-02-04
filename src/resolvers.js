@@ -20,6 +20,18 @@ export default {
       const costTypes = await dataSources.lookUpApi.getCostTypes()
       return costTypes
     },
+    contactTypes: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getContactTypes()
+      return costTypes
+    },
+    phoneTypes: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getPhoneTypes()
+      return costTypes
+    },
+    shippingLines: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getShippingLines()
+      return costTypes
+    },
     activeTerminalLocations: async (_, __, { dataSources }) => {
       const costTypes = await dataSources.lookUpApi.getActiveTerminalLocations()
       return costTypes
@@ -345,6 +357,14 @@ export default {
         driverPayment,
         companyCost,
       })
+      return reponse
+    },
+    addDeliveryLocation: async (_, { deliveryLocation }, { dataSources }) => {
+      const reponse = await dataSources.deliveryLocationApi.addDeliveryLocation(
+        {
+          deliveryLocation,
+        },
+      )
       return reponse
     },
   },

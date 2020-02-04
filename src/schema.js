@@ -6,6 +6,9 @@ const typeDefs = gql`
     containerTypes: [ContainerType]!
     costReasons: [CostReason]!
     costTypes: [CostType]!
+    contactTypes: [ContactType]!
+    phoneTypes: [PhoneType]!
+    shippingLines: [ShippingLine]!
     client(clientId: Int!): Client
     """
     Retrieve a list of all drayings.
@@ -152,6 +155,18 @@ const typeDefs = gql`
     name: String
     price: Float
     suggestedPrice: Float
+  }
+
+  type ContactType {
+    id: ID!
+    name: String
+    sortOrder: Int
+  }
+
+  type PhoneType {
+    id: ID!
+    name: String
+    sortOrder: Int
   }
 
   type DrayingAppointment implements Node {
@@ -1462,6 +1477,10 @@ const typeDefs = gql`
       companyCost: Float
     ): UpdateResponse!
     # updateTrip(): UpdateResponse!
+
+    addDeliveryLocation(
+      deliveryLocation: DeliveryLocationInput
+    ): UpdateResponse!
   }
 
   type UpdateResponse {
@@ -1489,6 +1508,51 @@ const typeDefs = gql`
     id: ID!
     deliveryLocationId: Int
     extraStops: [ExtraStopInput]
+  }
+
+  input DeliveryLocationInput {
+    nickName: String!
+    isDefault: Boolean!
+    locationTypeId: Int
+    receivingHoursOpen: String
+    receivingHoursClose: String
+    location: LocationInput!
+    contacts: [DeliveryContactInput!]!
+  }
+
+  input LocationInput {
+    nickName: String!
+    googleAddress: String!
+    locStreet: String!
+    locSuite: String
+    locCity: String!
+    locZip: String!
+    locState: String!
+    locCountry: String!
+    partial: Boolean!
+    preferred: Boolean!
+    latitude: Float!
+    longitude: Float!
+  }
+
+  input DeliveryContactInput {
+    name: String!
+    description: String
+    contactTypeId: Int!
+    active: Boolean!
+    phones: [DeliveryContactPhoneInput!]!
+    emails: [DeliveryContactEmailInput!]!
+  }
+
+  input DeliveryContactPhoneInput {
+    phone: String!
+    phoneTypeId: Int!
+    active: Boolean!
+  }
+
+  input DeliveryContactEmailInput {
+    email: String
+    active: Boolean
   }
 
   input AddDrayingExtraStopInput {
