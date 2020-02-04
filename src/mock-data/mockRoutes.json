@@ -88,10 +88,10 @@
           "id": 838,
           "draying": {
             "id": 41,
-            "deliveryOrder": {
-              "id": 22
+            "sortOrder": null,
+            "order": {
+                "id": 22
             },
-            "order": null,
             "booking": "NAM3717535i",
             "container": "4",
             "containerSize": {

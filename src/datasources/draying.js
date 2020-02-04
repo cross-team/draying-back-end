@@ -6,6 +6,7 @@ import {
   tripReducer,
   tripMessageReducer,
 } from './reducers'
+import { extraStopMapper } from './mappers'
 import { serverErrorUpdateResponse } from './errors'
 class DrayingAPI extends RESTDataSource {
   constructor() {
@@ -191,13 +192,6 @@ class DrayingAPI extends RESTDataSource {
     }
   }
 
-  extraStopMapper(extraStop) {
-    return {
-      DeliveryOrderDrayingId: extraStop.drayingId,
-      DeliveryLocationId: extraStop.deliveryLocationId,
-    }
-  }
-
   async addExtraStop({ extraStopsAndPrices }) {
     const tripActionPriceMapper = price => ({
       DeliveryOrderDrayingId: price.drayingId,
@@ -210,7 +204,7 @@ class DrayingAPI extends RESTDataSource {
     const path = 'DeliveryOrderDrayingExtraStopWithPrices'
     const params = {
       DeliveryOrderDrayingExtraStops: extraStopsAndPrices.extraStops.map(
-        this.extraStopMapper,
+        extraStopMapper,
       ),
       DeliveryOrderDrayingTripActionPrices: extraStopsAndPrices.tripActionPrices.map(
         tripActionPriceMapper,
@@ -381,7 +375,7 @@ class DrayingAPI extends RESTDataSource {
         }),
         ...(draying.extraStops && {
           DeliveryOrderDrayingExtraStops: draying.extraStops.map(
-            this.extraStopMapper,
+            extraStopMapper,
           ),
         }),
       })
