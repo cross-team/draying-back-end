@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser'
 import QuoteApi from './datasources/quote'
 import LookUpApi from './datasources/lookUp'
 import ClientApi from './datasources/client'
+import DeliveryLocationApi from './datasources/deliveryLocation'
 
 require('dotenv').config()
 
@@ -23,6 +24,7 @@ const dataSources = () => ({
   quoteApi: new QuoteApi(),
   lookUpApi: new LookUpApi(),
   clientApi: new ClientApi(),
+  deliveryLocationApi: new DeliveryLocationApi(),
 })
 
 const port = process.env.PORT || 4000

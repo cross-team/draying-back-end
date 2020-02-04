@@ -6,6 +6,9 @@ const typeDefs = gql`
     containerTypes: [ContainerType]!
     costReasons: [CostReason]!
     costTypes: [CostType]!
+    contactTypes: [ContactType]!
+    phoneTypes: [PhoneType]!
+    shippingLines: [ShippingLine]!
     client(clientId: Int!): Client
     """
     Retrieve a list of all drayings.
@@ -58,15 +61,15 @@ const typeDefs = gql`
       drayingId: Int
       containerNumber: String
     ): CheckContainerNumberResponse!
-
+    activeTerminalLocations: [TerminalLocation]!
     """
     Retrieves possible destinations for a draying and its trip action and
     start location type
     """
     drayingTripDestinations(
-      drayingId: Int
-      tripActionId: Int
-      startLocationTypeId: Int
+      drayingId: Int!
+      tripActionId: Int!
+      startLocationTypeId: Int!
     ): drayingTripDestination!
 
     drayingGetUndoTripActionMessage(drayingId: Int): GetUndoTripActionResponse!
@@ -152,6 +155,18 @@ const typeDefs = gql`
     name: String
     price: Float
     suggestedPrice: Float
+  }
+
+  type ContactType {
+    id: ID!
+    name: String
+    sortOrder: Int
+  }
+
+  type PhoneType {
+    id: ID!
+    name: String
+    sortOrder: Int
   }
 
   type DrayingAppointment implements Node {
@@ -553,7 +568,6 @@ const typeDefs = gql`
     """
     appointmentTime: String
 
-    deliveryOrder: Order
     appointments: [DrayingAppointment]
     trips: [Trip]
     drayingAlerts: [DrayingAlert]
@@ -1404,36 +1418,68 @@ const typeDefs = gql`
 
   type Mutation {
     login(user: LoginInput): LoginResponse!
-    updateDraying(drayingId: Int, field: String, value: String): UpdateResponse!
+
+    updateDraying(
+      drayingId: Int!
+      field: String!
+      value: String!
+    ): UpdateResponse!
+
     updateDrayingFields(
       drayingId: Int
       drayingFields: [DrayingFieldsInput]
     ): UpdateFieldsResponse!
+
+    drayingMasterEdit(draying: DrayingInput!): UpdateResponse!
     """
     Dispatches draying on a trip
     """
     dispatchDraying(trip: DispatchDrayingInput!): UpdateResponse!
+
     undoDrayingTripAction(
       drayingId: Int
       sendMessage: Boolean
       body: String
     ): UpdateResponse!
+
     addDrayingExtraStop(
-      extraStopsAndPrices: AddDrayingExtraStopInput
+      extraStopsAndPrices: AddDrayingExtraStopInput!
     ): UpdateResponse!
-    # changeReturnTerminal(): UpdateResponse!
+
+    removeDrayingExtraStop(extraStopId: Int!): UpdateResponse!
+
     addDrayingAlert(
       drayingId: Int
       dateFrom: String
       description: String
       active: Boolean
-    ): UpdateResponse
+    ): UpdateResponse!
+
     addDrayingAppointment(
       appointment: AddDrayingAppointmentInput
     ): UpdateResponse!
+
+    updateDrayingPickUpLocation(
+      drayingId: Int!
+      pickUpTerminalId: Int!
+    ): UpdateResponse!
+
+    updateDrayingReturnTerminal(
+      drayingId: Int!
+      returnTerminalId: Int!
+    ): UpdateResponse!
+
+    setTripLost(
+      tripId: Int!
+      shipperCharges: Float
+      driverPayment: Float
+      companyCost: Float
+    ): UpdateResponse!
     # updateTrip(): UpdateResponse!
-    # cancelTrip(): UpdateResponse!
-    # lostTrip(): UpdateResponse!
+
+    addDeliveryLocation(
+      deliveryLocation: DeliveryLocationInput
+    ): UpdateResponse!
   }
 
   type UpdateResponse {
@@ -1455,6 +1501,57 @@ const typeDefs = gql`
     appointmentDate: String
     appointmentTime: String
     note: String
+  }
+
+  input DrayingInput {
+    id: ID!
+    deliveryLocationId: Int
+    extraStops: [ExtraStopInput]
+  }
+
+  input DeliveryLocationInput {
+    nickName: String!
+    isDefault: Boolean!
+    locationTypeId: Int
+    receivingHoursOpen: String
+    receivingHoursClose: String
+    location: LocationInput!
+    contacts: [DeliveryContactInput!]!
+  }
+
+  input LocationInput {
+    nickName: String!
+    googleAddress: String!
+    locStreet: String!
+    locSuite: String
+    locCity: String!
+    locZip: String!
+    locState: String!
+    locCountry: String!
+    partial: Boolean!
+    preferred: Boolean!
+    latitude: Float!
+    longitude: Float!
+  }
+
+  input DeliveryContactInput {
+    name: String!
+    description: String
+    contactTypeId: Int!
+    active: Boolean!
+    phones: [DeliveryContactPhoneInput!]!
+    emails: [DeliveryContactEmailInput!]!
+  }
+
+  input DeliveryContactPhoneInput {
+    phone: String!
+    phoneTypeId: Int!
+    active: Boolean!
+  }
+
+  input DeliveryContactEmailInput {
+    email: String
+    active: Boolean
   }
 
   input AddDrayingExtraStopInput {

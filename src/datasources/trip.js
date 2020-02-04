@@ -1,5 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
 import { tripActionLocationReducer } from './reducers'
+import { serverErrorUpdateResponse } from './errors'
 class TripApi extends RESTDataSource {
   constructor() {
     super()
@@ -37,5 +38,30 @@ class TripApi extends RESTDataSource {
       message: 'Oops something went wrong, could not retrieve destinations.',
     }
   }
+
+  async setLost({ tripId, shipperCharges, driverPayment, companyCost }) {
+    try {
+      const response = await this.post(`DrayingTrip/${tripId}/lost/`, {
+        ShipperCharges: shipperCharges,
+        DriverPayment: driverPayment,
+        CompanyCost: companyCost,
+      })
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: tripId,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
 }
+
 export default TripApi

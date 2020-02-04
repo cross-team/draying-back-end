@@ -6,6 +6,7 @@ import {
   tripReducer,
   tripMessageReducer,
 } from './reducers'
+import { extraStopMapper } from './mappers'
 import { serverErrorUpdateResponse } from './errors'
 class DrayingAPI extends RESTDataSource {
   constructor() {
@@ -192,10 +193,6 @@ class DrayingAPI extends RESTDataSource {
   }
 
   async addExtraStop({ extraStopsAndPrices }) {
-    const extraStopMapper = extraStop => ({
-      DeliveryOrderDrayingId: extraStop.drayingId,
-      DeliveryLocationId: extraStop.deliveryLocationId,
-    })
     const tripActionPriceMapper = price => ({
       DeliveryOrderDrayingId: price.drayingId,
       TripActionOrder: price.tripActionOrder,
@@ -215,6 +212,23 @@ class DrayingAPI extends RESTDataSource {
     }
     try {
       const response = await this.post(path, params)
+      if (response.status) {
+        return { success: true, message: 'Success!', updatedId: null }
+      }
+      return {
+        success: false,
+        message: response.message,
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async removeExtraStop({ extraStopId }) {
+    const path = `DeliveryOrderDrayingExtraStop/${extraStopId}`
+    try {
+      const response = await this.delete(path)
       if (response.status) {
         return { success: true, message: 'Success!', updatedId: null }
       }
@@ -288,6 +302,88 @@ class DrayingAPI extends RESTDataSource {
           success: true,
           message: 'Success!',
           updatedId: null,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async updatePickUpTerminal({ drayingId, pickUpTerminalId }) {
+    try {
+      const response = await this.put(
+        `DeliveryOrderDraying/${drayingId}/PickUpTerminal`,
+        {
+          DeliveryOrderDrayingId: drayingId,
+          PickUpTerminalId: pickUpTerminalId,
+        },
+      )
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: null,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: drayingId,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async updateReturnTerminal({ drayingId, returnTerminalId }) {
+    try {
+      const response = await this.put(
+        `DeliveryOrderDraying/${drayingId}/ReturnTerminal`,
+        {
+          DeliveryOrderDrayingId: drayingId,
+          ReturnTerminalId: returnTerminalId,
+        },
+      )
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: drayingId,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async masterEdit({ draying }) {
+    try {
+      const response = await this.post(`DeliveryOrderDraying/MasterEdit/`, {
+        DeliveryOrderDrayingId: draying.id,
+        ...(draying.deliveryLocationId && {
+          DeliveryLocationId: draying.deliveryLocationId,
+        }),
+        ...(draying.extraStops && {
+          DeliveryOrderDrayingExtraStops: draying.extraStops.map(
+            extraStopMapper,
+          ),
+        }),
+      })
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: draying.id,
         }
       }
       return {

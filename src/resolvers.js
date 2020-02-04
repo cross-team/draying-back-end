@@ -20,6 +20,22 @@ export default {
       const costTypes = await dataSources.lookUpApi.getCostTypes()
       return costTypes
     },
+    contactTypes: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getContactTypes()
+      return costTypes
+    },
+    phoneTypes: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getPhoneTypes()
+      return costTypes
+    },
+    shippingLines: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getShippingLines()
+      return costTypes
+    },
+    activeTerminalLocations: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getActiveTerminalLocations()
+      return costTypes
+    },
     client: async (_, { clientId }, { dataSources }) => {
       const client = await dataSources.clientApi.getClient({
         clientId,
@@ -224,6 +240,22 @@ export default {
       })
       return updateResponse
     },
+    drayingMasterEdit: async (_, { draying }, { dataSources }) => {
+      if (
+        !(
+          typeof draying.deliveryLocationId !== 'undefined' ||
+          typeof draying.extraStops !== 'undefined'
+        )
+      ) {
+        throw new ApolloError(
+          `Must provide 'deliveryLocationId' or 'extraStops'`,
+        )
+      }
+      const updateResponse = await dataSources.drayingApi.masterEdit({
+        draying,
+      })
+      return updateResponse
+    },
     dispatchDraying: async (_, { trip }, { dataSources }) => {
       if (typeof trip === 'undefined') {
         throw new ApolloError(`Must provide 'trip'.`)
@@ -256,6 +288,12 @@ export default {
       })
       return response
     },
+    removeDrayingExtraStop: async (_, { extraStopId }, { dataSources }) => {
+      const response = await dataSources.drayingApi.removeExtraStop({
+        extraStopId,
+      })
+      return response
+    },
     addDrayingAlert: async (
       _,
       { drayingId, dateFrom, description, active },
@@ -284,6 +322,49 @@ export default {
         drayingId,
         drayingFields,
       })
+      return reponse
+    },
+    updateDrayingPickUpLocation: async (
+      _,
+      { drayingId, pickUpTerminalId },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.drayingApi.updatePickUpTerminal({
+        drayingId,
+        pickUpTerminalId,
+      })
+      return reponse
+    },
+    updateDrayingReturnTerminal: async (
+      _,
+      { drayingId, returnTerminalId },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.drayingApi.updateReturnTerminal({
+        drayingId,
+        returnTerminalId,
+      })
+      return reponse
+    },
+    setTripLost: async (
+      _,
+      { tripId, shipperCharges, driverPayment, companyCost },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.tripApi.setLost({
+        tripId,
+        shipperCharges,
+        driverPayment,
+        companyCost,
+      })
+      return reponse
+    },
+    addDeliveryLocation: async (_, { deliveryLocation }, { dataSources }) => {
+      const reponse = await dataSources.deliveryLocationApi.addDeliveryLocation(
+        {
+          deliveryLocation,
+        },
+      )
       return reponse
     },
   },
