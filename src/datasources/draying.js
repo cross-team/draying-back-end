@@ -191,10 +191,12 @@ class DrayingAPI extends RESTDataSource {
     }
   }
 
-  extraStopMapper = extraStop => ({
-    DeliveryOrderDrayingId: extraStop.drayingId,
-    DeliveryLocationId: extraStop.deliveryLocationId,
-  })
+  extraStopMapper(extraStop) {
+    return {
+      DeliveryOrderDrayingId: extraStop.drayingId,
+      DeliveryLocationId: extraStop.deliveryLocationId,
+    }
+  }
 
   async addExtraStop({ extraStopsAndPrices }) {
     const tripActionPriceMapper = price => ({
