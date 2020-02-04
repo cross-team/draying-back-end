@@ -58,15 +58,15 @@ const typeDefs = gql`
       drayingId: Int
       containerNumber: String
     ): CheckContainerNumberResponse!
-
+    activeTerminalLocations: [TerminalLocation]!
     """
     Retrieves possible destinations for a draying and its trip action and
     start location type
     """
     drayingTripDestinations(
-      drayingId: Int
-      tripActionId: Int
-      startLocationTypeId: Int
+      drayingId: Int!
+      tripActionId: Int!
+      startLocationTypeId: Int!
     ): drayingTripDestination!
 
     drayingGetUndoTripActionMessage(drayingId: Int): GetUndoTripActionResponse!
@@ -1421,6 +1421,7 @@ const typeDefs = gql`
     addDrayingExtraStop(
       extraStopsAndPrices: AddDrayingExtraStopInput
     ): UpdateResponse!
+    removeDrayingExtraStop(extraStopId: Int!): UpdateResponse!
     # changeReturnTerminal(): UpdateResponse!
     addDrayingAlert(
       drayingId: Int
@@ -1439,6 +1440,7 @@ const typeDefs = gql`
       drayingId: Int!
       returnTerminalId: Int!
     ): UpdateResponse!
+    # removeExtraStop()
     setTripLost(
       tripId: Int!
       shipperCharges: Float

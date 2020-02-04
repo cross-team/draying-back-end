@@ -228,6 +228,23 @@ class DrayingAPI extends RESTDataSource {
     }
   }
 
+  async removeExtraStop({ extraStopId }) {
+    const path = `DeliveryOrderDrayingExtraStop/${extraStopId}`
+    try {
+      const response = await this.delete(path)
+      if (response.status) {
+        return { success: true, message: 'Success!', updatedId: null }
+      }
+      return {
+        success: false,
+        message: response.message,
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
   async updateFields({ drayingId, drayingFields }) {
     const errors = []
     drayingFields.forEach(field => {

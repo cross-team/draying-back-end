@@ -20,6 +20,10 @@ export default {
       const costTypes = await dataSources.lookUpApi.getCostTypes()
       return costTypes
     },
+    activeTerminalLocations: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getActiveTerminalLocations()
+      return costTypes
+    },
     client: async (_, { clientId }, { dataSources }) => {
       const client = await dataSources.clientApi.getClient({
         clientId,
@@ -253,6 +257,12 @@ export default {
     ) => {
       const response = await dataSources.drayingApi.addExtraStop({
         extraStopsAndPrices,
+      })
+      return response
+    },
+    removeDrayingExtraStop: async (_, { extraStopId }, { dataSources }) => {
+      const response = await dataSources.drayingApi.removeExtraStop({
+        extraStopId,
       })
       return response
     },

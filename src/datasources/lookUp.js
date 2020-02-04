@@ -5,6 +5,7 @@ import {
   containerSizeReducer,
   costReasonReducer,
   costTypeReducer,
+  terminalLocationReducer,
 } from './reducers'
 
 class LookUpApi extends RESTDataSource {
@@ -78,6 +79,19 @@ class LookUpApi extends RESTDataSource {
       const response = await this.get(path)
       if (response.status) {
         return response.data.map(costTypeReducer)
+      }
+      return []
+    } catch (error) {
+      return null
+    }
+  }
+
+  async getActiveTerminalLocations() {
+    const path = `Draying/ActionLocation`
+    try {
+      const response = await this.get(path)
+      if (response.status) {
+        return response.data.map(terminalLocationReducer)
       }
       return []
     } catch (error) {
