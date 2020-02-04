@@ -156,8 +156,8 @@ export const deliveryLocationReducer = deliveryLocation => ({
 
 export const drayingReducer = draying => ({
   id: draying.DeliveryOrderDrayingId,
-  order: draying.Order,
-  deliveryOrder: draying.DeliveryOrder
+  sortOrder: draying.Order,
+  order: draying.DeliveryOrder
     ? orderReducer(draying.DeliveryOrder)
     : idReducer(draying.DeliveryOrderId),
   client: draying.Client

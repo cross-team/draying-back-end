@@ -1,7 +1,10 @@
 { "data": [
   {
     "id": 22,
-    "order": 2,
+    "order": {
+      "id": 18
+    },
+    "sortOrder": 2,
     "client": {
       "companyName": "test",
       "id": 19
@@ -188,9 +191,6 @@
       "longitude": -80.2387316
     },
     "isLoaded": null,
-    "deliveryOrder": {
-      "id": 18
-    },
     "manualTerminal": false,
     "autoLoad": true,
     "appointmentTime": null,

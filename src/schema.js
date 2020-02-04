@@ -568,7 +568,6 @@ const typeDefs = gql`
     """
     appointmentTime: String
 
-    deliveryOrder: Order
     appointments: [DrayingAppointment]
     trips: [Trip]
     drayingAlerts: [DrayingAlert]
