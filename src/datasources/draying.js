@@ -191,11 +191,14 @@ class DrayingAPI extends RESTDataSource {
     }
   }
 
-  async addExtraStop({ extraStopsAndPrices }) {
-    const extraStopMapper = extraStop => ({
+  extraStopMapper(extraStop) {
+    return {
       DeliveryOrderDrayingId: extraStop.drayingId,
       DeliveryLocationId: extraStop.deliveryLocationId,
-    })
+    }
+  }
+
+  async addExtraStop({ extraStopsAndPrices }) {
     const tripActionPriceMapper = price => ({
       DeliveryOrderDrayingId: price.drayingId,
       TripActionOrder: price.tripActionOrder,
@@ -207,7 +210,7 @@ class DrayingAPI extends RESTDataSource {
     const path = 'DeliveryOrderDrayingExtraStopWithPrices'
     const params = {
       DeliveryOrderDrayingExtraStops: extraStopsAndPrices.extraStops.map(
-        extraStopMapper,
+        this.extraStopMapper,
       ),
       DeliveryOrderDrayingTripActionPrices: extraStopsAndPrices.tripActionPrices.map(
         tripActionPriceMapper,
@@ -215,6 +218,23 @@ class DrayingAPI extends RESTDataSource {
     }
     try {
       const response = await this.post(path, params)
+      if (response.status) {
+        return { success: true, message: 'Success!', updatedId: null }
+      }
+      return {
+        success: false,
+        message: response.message,
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async removeExtraStop({ extraStopId }) {
+    const path = `DeliveryOrderDrayingExtraStop/${extraStopId}`
+    try {
+      const response = await this.delete(path)
       if (response.status) {
         return { success: true, message: 'Success!', updatedId: null }
       }
@@ -340,6 +360,36 @@ class DrayingAPI extends RESTDataSource {
           success: true,
           message: 'Success!',
           updatedId: drayingId,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async masterEdit({ draying }) {
+    try {
+      const response = await this.post(`DeliveryOrderDraying/MasterEdit/`, {
+        DeliveryOrderDrayingId: draying.id,
+        ...(draying.deliveryLocationId && {
+          DeliveryLocationId: draying.deliveryLocationId,
+        }),
+        ...(draying.extraStops && {
+          DeliveryOrderDrayingExtraStops: draying.extraStops.map(
+            this.extraStopMapper,
+          ),
+        }),
+      })
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: draying.id,
         }
       }
       return {

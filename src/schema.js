@@ -58,15 +58,15 @@ const typeDefs = gql`
       drayingId: Int
       containerNumber: String
     ): CheckContainerNumberResponse!
-
+    activeTerminalLocations: [TerminalLocation]!
     """
     Retrieves possible destinations for a draying and its trip action and
     start location type
     """
     drayingTripDestinations(
-      drayingId: Int
-      tripActionId: Int
-      startLocationTypeId: Int
+      drayingId: Int!
+      tripActionId: Int!
+      startLocationTypeId: Int!
     ): drayingTripDestination!
 
     drayingGetUndoTripActionMessage(drayingId: Int): GetUndoTripActionResponse!
@@ -1404,41 +1404,57 @@ const typeDefs = gql`
 
   type Mutation {
     login(user: LoginInput): LoginResponse!
-    updateDraying(drayingId: Int, field: String, value: String): UpdateResponse!
+
+    updateDraying(
+      drayingId: Int!
+      field: String!
+      value: String!
+    ): UpdateResponse!
+
     updateDrayingFields(
       drayingId: Int
       drayingFields: [DrayingFieldsInput]
     ): UpdateFieldsResponse!
+
+    drayingMasterEdit(draying: DrayingInput!): UpdateResponse!
     """
     Dispatches draying on a trip
     """
     dispatchDraying(trip: DispatchDrayingInput!): UpdateResponse!
+
     undoDrayingTripAction(
       drayingId: Int
       sendMessage: Boolean
       body: String
     ): UpdateResponse!
+
     addDrayingExtraStop(
-      extraStopsAndPrices: AddDrayingExtraStopInput
+      extraStopsAndPrices: AddDrayingExtraStopInput!
     ): UpdateResponse!
-    # changeReturnTerminal(): UpdateResponse!
+
+    removeDrayingExtraStop(extraStopId: Int!): UpdateResponse!
+
     addDrayingAlert(
       drayingId: Int
       dateFrom: String
       description: String
       active: Boolean
-    ): UpdateResponse
+    ): UpdateResponse!
+
     addDrayingAppointment(
       appointment: AddDrayingAppointmentInput
     ): UpdateResponse!
+
     updateDrayingPickUpLocation(
       drayingId: Int!
       pickUpTerminalId: Int!
     ): UpdateResponse!
+
     updateDrayingReturnTerminal(
       drayingId: Int!
       returnTerminalId: Int!
     ): UpdateResponse!
+
     setTripLost(
       tripId: Int!
       shipperCharges: Float
@@ -1467,6 +1483,12 @@ const typeDefs = gql`
     appointmentDate: String
     appointmentTime: String
     note: String
+  }
+
+  input DrayingInput {
+    id: ID!
+    deliveryLocationId: Int
+    extraStops: [ExtraStopInput]
   }
 
   input AddDrayingExtraStopInput {

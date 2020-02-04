@@ -20,6 +20,10 @@ export default {
       const costTypes = await dataSources.lookUpApi.getCostTypes()
       return costTypes
     },
+    activeTerminalLocations: async (_, __, { dataSources }) => {
+      const costTypes = await dataSources.lookUpApi.getActiveTerminalLocations()
+      return costTypes
+    },
     client: async (_, { clientId }, { dataSources }) => {
       const client = await dataSources.clientApi.getClient({
         clientId,
@@ -224,6 +228,22 @@ export default {
       })
       return updateResponse
     },
+    drayingMasterEdit: async (_, { draying }, { dataSources }) => {
+      if (
+        !(
+          typeof draying.deliveryLocationId !== 'undefined' ||
+          typeof draying.extraStops !== 'undefined'
+        )
+      ) {
+        throw new ApolloError(
+          `Must provide 'deliveryLocationId' or 'extraStops'`,
+        )
+      }
+      const updateResponse = await dataSources.drayingApi.masterEdit({
+        draying,
+      })
+      return updateResponse
+    },
     dispatchDraying: async (_, { trip }, { dataSources }) => {
       if (typeof trip === 'undefined') {
         throw new ApolloError(`Must provide 'trip'.`)
@@ -253,6 +273,12 @@ export default {
     ) => {
       const response = await dataSources.drayingApi.addExtraStop({
         extraStopsAndPrices,
+      })
+      return response
+    },
+    removeDrayingExtraStop: async (_, { extraStopId }, { dataSources }) => {
+      const response = await dataSources.drayingApi.removeExtraStop({
+        extraStopId,
       })
       return response
     },
