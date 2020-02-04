@@ -191,11 +191,12 @@ class DrayingAPI extends RESTDataSource {
     }
   }
 
+  extraStopMapper = extraStop => ({
+    DeliveryOrderDrayingId: extraStop.drayingId,
+    DeliveryLocationId: extraStop.deliveryLocationId,
+  })
+
   async addExtraStop({ extraStopsAndPrices }) {
-    const extraStopMapper = extraStop => ({
-      DeliveryOrderDrayingId: extraStop.drayingId,
-      DeliveryLocationId: extraStop.deliveryLocationId,
-    })
     const tripActionPriceMapper = price => ({
       DeliveryOrderDrayingId: price.drayingId,
       TripActionOrder: price.tripActionOrder,
@@ -207,7 +208,7 @@ class DrayingAPI extends RESTDataSource {
     const path = 'DeliveryOrderDrayingExtraStopWithPrices'
     const params = {
       DeliveryOrderDrayingExtraStops: extraStopsAndPrices.extraStops.map(
-        extraStopMapper,
+        this.extraStopMapper,
       ),
       DeliveryOrderDrayingTripActionPrices: extraStopsAndPrices.tripActionPrices.map(
         tripActionPriceMapper,
@@ -357,6 +358,36 @@ class DrayingAPI extends RESTDataSource {
           success: true,
           message: 'Success!',
           updatedId: drayingId,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async masterEdit({ draying }) {
+    try {
+      const response = await this.post(`DeliveryOrderDraying/MasterEdit/`, {
+        DeliveryOrderDrayingId: draying.id,
+        ...(draying.deliveryLocationId && {
+          DeliveryLocationId: draying.deliveryLocationId,
+        }),
+        ...(draying.extraStops && {
+          DeliveryOrderDrayingExtraStops: draying.extraStops.map(
+            this.extraStopMapper,
+          ),
+        }),
+      })
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: draying.id,
         }
       }
       return {

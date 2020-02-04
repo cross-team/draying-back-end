@@ -228,6 +228,22 @@ export default {
       })
       return updateResponse
     },
+    drayingMasterEdit: async (_, { draying }, { dataSources }) => {
+      if (
+        !(
+          typeof draying.deliveryLocationId !== 'undefined' ||
+          typeof draying.extraStops !== 'undefined'
+        )
+      ) {
+        throw new ApolloError(
+          `Must provide 'deliveryLocationId' or 'extraStops'`,
+        )
+      }
+      const updateResponse = await dataSources.drayingApi.masterEdit({
+        draying,
+      })
+      return updateResponse
+    },
     dispatchDraying: async (_, { trip }, { dataSources }) => {
       if (typeof trip === 'undefined') {
         throw new ApolloError(`Must provide 'trip'.`)
