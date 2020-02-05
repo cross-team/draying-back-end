@@ -14,7 +14,7 @@ class ExtraStopApi extends RESTDataSource {
     )
   }
 
-  async addDeliveryLocation({ extraStopId, drayingId, deliveryLocationId }) {
+  async updateExtraStop({ extraStopId, drayingId, deliveryLocationId }) {
     const params = {
       DeliveryOrderDrayingExtraStopId: extraStopId,
       DeliveryOrderDrayingId: drayingId,
