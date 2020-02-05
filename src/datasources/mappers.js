@@ -20,9 +20,9 @@ export const locationMapper = location => ({
 
 export const deliveryContactMapper = contact => ({
   Name: contact.name,
-  Description: contact.Description,
-  ContactTypeId: contact.ContactTypeId,
-  Active: contact.Active,
+  Description: contact.description,
+  ContactTypeId: contact.contactTypeId,
+  Active: contact.active,
   DeliveryContactPhones: contact.phones.map(deliveryContactPhoneMapper),
   DeliveryContactEmails: contact.emails.map(deliveryContactEmailMapper),
 })
