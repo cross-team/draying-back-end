@@ -367,6 +367,18 @@ export default {
       )
       return reponse
     },
+    updateExtraStop: async (
+      _,
+      { extraStopId, drayingId, deliveryLocationId },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.extraStopApi.updateExtraStop({
+        extraStopId,
+        drayingId,
+        deliveryLocationId,
+      })
+      return reponse
+    },
   },
   Node: {
     __resolveType(node) {
