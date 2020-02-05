@@ -1480,6 +1480,12 @@ const typeDefs = gql`
     addDeliveryLocation(
       deliveryLocation: DeliveryLocationInput
     ): UpdateResponse!
+
+    updateExtraStop(
+      extraStopId: Int!
+      drayingId: Int!
+      deliveryLocationId: Int!
+    ): UpdateResponse!
   }
 
   type UpdateResponse {
