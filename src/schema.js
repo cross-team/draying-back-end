@@ -1076,7 +1076,7 @@ const typeDefs = gql`
     """
     (yard, cliente, etc...)
     """
-    endLocationTypeId: LocationType
+    endLocationType: LocationType
     """
     When trip starts, is the container loaded or not
     """
