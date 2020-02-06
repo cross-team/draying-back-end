@@ -9,6 +9,7 @@ const typeDefs = gql`
     contactTypes: [ContactType]!
     phoneTypes: [PhoneType]!
     shippingLines: [ShippingLine]!
+    locationTypes: [LocationType]!
     client(clientId: Int!): Client
     """
     Retrieve a list of all drayings.

@@ -36,6 +36,10 @@ export default {
       const costTypes = await dataSources.lookUpApi.getActiveTerminalLocations()
       return costTypes
     },
+    locationTypes: async (_, __, { dataSources }) => {
+      const locationType = await dataSources.lookUpApi.getLocationTypes()
+      return locationType
+    },
     client: async (_, { clientId }, { dataSources }) => {
       const client = await dataSources.clientApi.getClient({
         clientId,
