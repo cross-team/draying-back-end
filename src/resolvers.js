@@ -185,6 +185,23 @@ export default {
       })
       return route
     },
+    drivers: async (
+      _,
+      { active, before, after, first, last },
+      { dataSources },
+    ) => {
+      const allDrivers = await dataSources.driverApi.getAllDrivers({
+        active,
+      })
+      const drivers = paginateResults({
+        before,
+        after,
+        first,
+        last,
+        results: allDrivers,
+      })
+      return pageInfoReducer(drivers, allDrivers)
+    },
     quoteExtraStopPrices: async (
       _,
       { drayingId, deliveryLocationId },

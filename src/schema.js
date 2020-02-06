@@ -142,6 +142,50 @@ const typeDefs = gql`
       pending: Boolean
       orderBy: OrderBy
     ): [Route]!
+
+    drivers(
+      active: Boolean
+      """
+      Retrive the first n elements
+      """
+      first: Int
+      """
+      Retrieve teh last n elements
+      """
+      last: Int
+      """
+      Only return items before this cursor
+      """
+      before: String
+      """
+      Only return items after this cursor
+      """
+      after: String
+    ): DriverConnection!
+  }
+
+  type DriverConnection {
+    """
+    Information to aid in pagination.
+    """
+    pageInfo: PageInfo!
+    """
+    A list of Edges
+    """
+    edges: [DriverEdge]
+    """
+    A list of Nodes
+    """
+    nodes: [Driver]!
+    """
+    Identifies the total count of items in the connection.
+    """
+    totalCount: Int!
+  }
+
+  type DriverEdge {
+    node: Driver!
+    cursor: String!
   }
 
   enum OrderBy {
