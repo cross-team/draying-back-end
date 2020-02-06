@@ -1,5 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
 import { routeReducer } from './reducers'
+import { serverErrorUpdateResponse } from './errors'
 
 class RouteApi extends RESTDataSource {
   constructor() {
@@ -58,51 +59,46 @@ class RouteApi extends RESTDataSource {
     return this.routesReducer(routes)
   }
 
-  async dispatchDraying({ trip }) {
-    const path = `route/dispatch`
+  tripInputMapper(trip) {
     const messagesMapper = message => {
       return {
         Body: message.body,
       }
     }
-    const params = {
-      // DrayingTripId: null,
-      DeliveryOrderDrayingId: trip.drayingId,
-      TripActionId: trip.tripActionId,
-      TripStatusId: trip.tripStatusId,
+    return {
+      ...(trip.tripId && { DrayingTripId: trip.tripId }),
+      ...(trip.drayingId && { DeliveryOrderDrayingId: trip.drayingId }),
+      ...(trip.drayingId && { TripActionId: trip.tripActionId }),
+      ...(trip.tripStatusId && { TripStatusId: trip.tripStatusId }),
       ...(trip.orderId && { Order: trip.orderId }),
-      // ModifiedBy: null
-      // ModifiedOn: null
-      // CreatedBy: null
-      // CreatedOn: null
-      // OrderRoute: null
-      DriverId: trip.driverId,
-      TripActionLocationId: trip.tripActionLocationId,
-      // PaidByClient: PaidByClient
-      StartLocationTypeId: trip.startLocationTypeId,
+      ...(trip.driverId && { DriverId: trip.driverId }),
+      ...(trip.tripActionLocationId && {
+        TripActionLocationId: trip.tripActionLocationId,
+      }),
+      ...(trip.paidByClient && { PaidByClient: trip.paidByClient }),
+      ...(trip.startLocationTypeId && {
+        StartLocationTypeId: trip.startLocationTypeId,
+      }),
       ...(trip.endLocationTypeId && {
         EndLocationTypeId: trip.endLocationTypeId,
       }),
-      // RouteId: null,
-      // DrayingCosts: trip.drayingCosts,
-      // TripAction: {TripActionId: null, Name: "", ShortName: "", Active: true}
-      // Driver: {DriverId: null, Active: true, DefaultVehicleId: null, ExternalDriverId: null, FirstName: "",…}
-      // StartLocationType: {LocationTypeId: null, Name: ""}
-      // EndLocationType: {LocationTypeId: null, Name: ""}
-      // TripStatus: {TripStatusId: null, Name: "", Order: null, Active: true}
-      // TripActionLocation: {TripActionLocationId: null, Name: "", LoadTypeId: null, CurrentLocationTypeId: null,…}
-      // DrayingTripLocations: trip.locations ? trip.locations : null,
-      DrayingTripMessages: trip.tripMessages
-        ? trip.tripMessages.map(messagesMapper)
-        : null,
+      ...(trip.routeId && { RouteId: trip.routeId }),
+      ...(trip.tripMessages && {
+        DrayingTripMessages: trip.tripMessages.map(messagesMapper),
+      }),
     }
+  }
+
+  async dispatchDraying({ trip }) {
+    const path = `route/dispatch`
+    const params = this.tripInputMapper(trip)
     try {
       const response = await this.post(path, params)
       if (response.status) {
         return {
           success: true,
           message: 'success',
-          updatedId: trip.id,
+          updatedId: null,
         }
       }
       return {
@@ -111,11 +107,28 @@ class RouteApi extends RESTDataSource {
         updatedId: false,
       }
     } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
+  async updateTrip({ trip }) {
+    try {
+      const params = this.tripInputMapper(trip)
+      const response = await this.put(`route/dispatch/`, params)
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: trip.tripId,
+        }
+      }
       return {
         success: false,
-        message: error.extensions.response.body.message,
+        message: 'something went wrong unable to update',
         updatedId: null,
       }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
     }
   }
 }
