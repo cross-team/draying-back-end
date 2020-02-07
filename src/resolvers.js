@@ -367,6 +367,17 @@ export default {
       })
       return reponse
     },
+    updateDrayingDeliveryLocation: async (
+      _,
+      { drayingId, deliveryLocationId },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.drayingApi.updateDeliveryLocation({
+        drayingId,
+        deliveryLocationId,
+      })
+      return reponse
+    },
     setTripLost: async (
       _,
       { tripId, shipperCharges, driverPayment, companyCost },
@@ -377,6 +388,12 @@ export default {
         shipperCharges,
         driverPayment,
         companyCost,
+      })
+      return reponse
+    },
+    updateTrip: async (_, { trip }, { dataSources }) => {
+      const reponse = await dataSources.routeApi.updateTrip({
+        trip,
       })
       return reponse
     },

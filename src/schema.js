@@ -1514,6 +1514,11 @@ const typeDefs = gql`
       returnTerminalId: Int!
     ): UpdateResponse!
 
+    updateDrayingDeliveryLocation(
+      drayingId: Int!
+      deliveryLocationId: Int!
+    ): UpdateResponse!
+
     setTripLost(
       tripId: Int!
       shipperCharges: Float
@@ -1531,6 +1536,8 @@ const typeDefs = gql`
       drayingId: Int!
       deliveryLocationId: Int!
     ): UpdateResponse!
+
+    updateTrip(trip: UpdateTripInput!): UpdateResponse!
   }
 
   type UpdateResponse {
@@ -1656,8 +1663,25 @@ const typeDefs = gql`
     tripActionLocationId: Int
     startLocationTypeId: Int
     endLocationTypeId: Int
-    # drayingCosts: []
-    # drayingTripLocations: []
+    routeId: Int
+    tripMessages: [TripMessageInput]
+  }
+
+  input UpdateTripInput {
+    tripId: Int!
+    drayingId: Int!
+    tripActionId: Int!
+    tripStatusId: Int!
+    """
+    delivery order ID
+    """
+    orderId: Int
+    driverId: Int!
+    tripActionLocationId: Int!
+    paidByClient: Boolean
+    startLocationTypeId: Int!
+    endLocationTypeId: Int
+    routeId: Int
     tripMessages: [TripMessageInput]
   }
 
