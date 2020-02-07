@@ -12,6 +12,7 @@ import QuoteApi from './datasources/quote'
 import LookUpApi from './datasources/lookUp'
 import ClientApi from './datasources/client'
 import DeliveryLocationApi from './datasources/deliveryLocation'
+import ExtraStopApi from './datasources/extraStop'
 
 require('dotenv').config()
 
@@ -25,6 +26,7 @@ const dataSources = () => ({
   lookUpApi: new LookUpApi(),
   clientApi: new ClientApi(),
   deliveryLocationApi: new DeliveryLocationApi(),
+  extraStopApi: new ExtraStopApi(),
 })
 
 const port = process.env.PORT || 4000

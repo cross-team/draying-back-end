@@ -366,6 +366,32 @@ class DrayingAPI extends RESTDataSource {
     }
   }
 
+  async updateDeliveryLocation({ drayingId, deliveryLocationId }) {
+    try {
+      const response = await this.put(
+        `DeliveryOrderDraying/${drayingId}/DeliveryLocation/`,
+        {
+          DeliveryOrderDrayingId: drayingId,
+          DeliveryLocationId: deliveryLocationId,
+        },
+      )
+      if (response.status) {
+        return {
+          success: true,
+          message: 'Success!',
+          updatedId: drayingId,
+        }
+      }
+      return {
+        success: false,
+        message: 'something went wrong',
+        updatedId: null,
+      }
+    } catch (error) {
+      return serverErrorUpdateResponse(error)
+    }
+  }
+
   async masterEdit({ draying }) {
     try {
       const response = await this.post(`DeliveryOrderDraying/MasterEdit/`, {

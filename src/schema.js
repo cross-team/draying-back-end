@@ -9,6 +9,7 @@ const typeDefs = gql`
     contactTypes: [ContactType]!
     phoneTypes: [PhoneType]!
     shippingLines: [ShippingLine]!
+    locationTypes: [LocationType]!
     client(clientId: Int!): Client
     """
     Retrieve a list of all drayings.
@@ -142,6 +143,50 @@ const typeDefs = gql`
       pending: Boolean
       orderBy: OrderBy
     ): [Route]!
+
+    drivers(
+      active: Boolean
+      """
+      Retrive the first n elements
+      """
+      first: Int
+      """
+      Retrieve teh last n elements
+      """
+      last: Int
+      """
+      Only return items before this cursor
+      """
+      before: String
+      """
+      Only return items after this cursor
+      """
+      after: String
+    ): DriverConnection!
+  }
+
+  type DriverConnection {
+    """
+    Information to aid in pagination.
+    """
+    pageInfo: PageInfo!
+    """
+    A list of Edges
+    """
+    edges: [DriverEdge]
+    """
+    A list of Nodes
+    """
+    nodes: [Driver]!
+    """
+    Identifies the total count of items in the connection.
+    """
+    totalCount: Int!
+  }
+
+  type DriverEdge {
+    node: Driver!
+    cursor: String!
   }
 
   enum OrderBy {
@@ -1076,7 +1121,7 @@ const typeDefs = gql`
     """
     (yard, cliente, etc...)
     """
-    endLocationTypeId: LocationType
+    endLocationType: LocationType
     """
     When trip starts, is the container loaded or not
     """
@@ -1469,6 +1514,11 @@ const typeDefs = gql`
       returnTerminalId: Int!
     ): UpdateResponse!
 
+    updateDrayingDeliveryLocation(
+      drayingId: Int!
+      deliveryLocationId: Int!
+    ): UpdateResponse!
+
     setTripLost(
       tripId: Int!
       shipperCharges: Float
@@ -1480,6 +1530,14 @@ const typeDefs = gql`
     addDeliveryLocation(
       deliveryLocation: DeliveryLocationInput
     ): UpdateResponse!
+
+    updateExtraStop(
+      extraStopId: Int!
+      drayingId: Int!
+      deliveryLocationId: Int!
+    ): UpdateResponse!
+
+    updateTrip(trip: UpdateTripInput!): UpdateResponse!
   }
 
   type UpdateResponse {
@@ -1605,8 +1663,25 @@ const typeDefs = gql`
     tripActionLocationId: Int
     startLocationTypeId: Int
     endLocationTypeId: Int
-    # drayingCosts: []
-    # drayingTripLocations: []
+    routeId: Int
+    tripMessages: [TripMessageInput]
+  }
+
+  input UpdateTripInput {
+    tripId: Int!
+    drayingId: Int!
+    tripActionId: Int!
+    tripStatusId: Int!
+    """
+    delivery order ID
+    """
+    orderId: Int
+    driverId: Int!
+    tripActionLocationId: Int!
+    paidByClient: Boolean
+    startLocationTypeId: Int!
+    endLocationTypeId: Int
+    routeId: Int
     tripMessages: [TripMessageInput]
   }
 

@@ -36,6 +36,10 @@ export default {
       const costTypes = await dataSources.lookUpApi.getActiveTerminalLocations()
       return costTypes
     },
+    locationTypes: async (_, __, { dataSources }) => {
+      const locationType = await dataSources.lookUpApi.getLocationTypes()
+      return locationType
+    },
     client: async (_, { clientId }, { dataSources }) => {
       const client = await dataSources.clientApi.getClient({
         clientId,
@@ -184,6 +188,23 @@ export default {
         orderBy,
       })
       return route
+    },
+    drivers: async (
+      _,
+      { active, before, after, first, last },
+      { dataSources },
+    ) => {
+      const allDrivers = await dataSources.driverApi.getAllDrivers({
+        active,
+      })
+      const drivers = paginateResults({
+        before,
+        after,
+        first,
+        last,
+        results: allDrivers,
+      })
+      return pageInfoReducer(drivers, allDrivers)
     },
     quoteExtraStopPrices: async (
       _,
@@ -346,6 +367,17 @@ export default {
       })
       return reponse
     },
+    updateDrayingDeliveryLocation: async (
+      _,
+      { drayingId, deliveryLocationId },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.drayingApi.updateDeliveryLocation({
+        drayingId,
+        deliveryLocationId,
+      })
+      return reponse
+    },
     setTripLost: async (
       _,
       { tripId, shipperCharges, driverPayment, companyCost },
@@ -359,12 +391,30 @@ export default {
       })
       return reponse
     },
+    updateTrip: async (_, { trip }, { dataSources }) => {
+      const reponse = await dataSources.routeApi.updateTrip({
+        trip,
+      })
+      return reponse
+    },
     addDeliveryLocation: async (_, { deliveryLocation }, { dataSources }) => {
       const reponse = await dataSources.deliveryLocationApi.addDeliveryLocation(
         {
           deliveryLocation,
         },
       )
+      return reponse
+    },
+    updateExtraStop: async (
+      _,
+      { extraStopId, drayingId, deliveryLocationId },
+      { dataSources },
+    ) => {
+      const reponse = await dataSources.extraStopApi.updateExtraStop({
+        extraStopId,
+        drayingId,
+        deliveryLocationId,
+      })
       return reponse
     },
   },

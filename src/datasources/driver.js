@@ -1,5 +1,10 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import { tripLocationReducer, idReducer, tripStatusReducer } from './reducers'
+import {
+  tripLocationReducer,
+  idReducer,
+  tripStatusReducer,
+  driverReducer,
+} from './reducers'
 class DriverAPI extends RESTDataSource {
   constructor() {
     super()
@@ -90,6 +95,23 @@ class DriverAPI extends RESTDataSource {
     return Array.isArray(drivers)
       ? drivers.map(driver => this.driversCapacityReducer(driver))
       : []
+  }
+
+  async getAllDrivers({ active }) {
+    let queryParams = {}
+    if (typeof active !== 'undefined') {
+      queryParams = {
+        ...queryParams,
+        Active: active ? 1 : 0,
+      }
+    }
+    const { data } = await this.get('driver', queryParams)
+
+    let drivers = []
+    if (data) {
+      drivers = data.drivers
+    }
+    return Array.isArray(drivers) ? drivers.map(driverReducer) : []
   }
 }
 export default DriverAPI

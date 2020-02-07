@@ -9,6 +9,7 @@ import {
   contactTypeReducer,
   phoneTypeReducer,
   shippingLineReducer,
+  locationTypeReducer,
 } from './reducers'
 
 class LookUpApi extends RESTDataSource {
@@ -134,6 +135,19 @@ class LookUpApi extends RESTDataSource {
       const response = await this.get(path)
       if (response.status) {
         return response.data.map(shippingLineReducer)
+      }
+      return []
+    } catch (error) {
+      return null
+    }
+  }
+
+  async getLocationTypes() {
+    const path = `locationtypes`
+    try {
+      const response = await this.get(path)
+      if (response.status) {
+        return response.data.map(locationTypeReducer)
       }
       return []
     } catch (error) {
