@@ -42,8 +42,12 @@ export const deliveryLocationMapper = deliveryLocation => ({
   NickName: deliveryLocation.nickName,
   IsDefault: deliveryLocation.isDefault,
   LocationTypeId: deliveryLocation.locationTypeId,
-  ReceivingHoursOpen: deliveryLocation.receivingHoursOpen,
-  ReceivingHoursClose: deliveryLocation.receivingHoursClose,
+  ...(deliveryLocation.receivingHoursOpen && {
+    ReceivingHoursOpen: deliveryLocation.receivingHoursOpen,
+  }),
+  ...(deliveryLocation.receivingHoursClose && {
+    ReceivingHoursClose: deliveryLocation.receivingHoursClose,
+  }),
   Location: locationMapper(deliveryLocation.location),
   DeliveryContacts: deliveryLocation.contacts.map(deliveryContactMapper),
 })

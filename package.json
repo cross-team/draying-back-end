@@ -8,7 +8,8 @@
     "test": "jest",
     "dev": "nodemon --exec yarn restart",
     "restart": "rimraf dist && yarn build && yarn start",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "push:schema": "yapollo service:push --endpoint=http://localhost:4000"
   },
   "repository": {
     "type": "git",
