@@ -1594,7 +1594,7 @@ const typeDefs = gql`
 
   input DeliveryContactInput {
     name: String!
-    description: String
+    description: String!
     contactTypeId: Int!
     active: Boolean!
     phones: [DeliveryContactPhoneInput!]!
