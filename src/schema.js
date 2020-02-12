@@ -1652,6 +1652,7 @@ const typeDefs = gql`
   Base trip input object
   """
   input DispatchDrayingInput {
+    tripId: Int
     drayingId: Int
     tripActionId: Int
     tripStatusId: Int
