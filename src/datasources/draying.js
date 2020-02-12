@@ -36,6 +36,7 @@ class DrayingAPI extends RESTDataSource {
     routeDate,
     sort,
     orderBy,
+    searchBookings,
   }) {
     const params = {
       ContainerStages: containerStages || [],
@@ -46,6 +47,7 @@ class DrayingAPI extends RESTDataSource {
       RouteDate: routeDate,
       Sort: sort,
       OrderBy: orderBy,
+      ...(searchBookings && { Global: searchBookings }),
     }
     const { data } = await this.get('Draying/Dispatching', params)
     let drayings = []

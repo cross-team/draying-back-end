@@ -28,6 +28,7 @@ const typeDefs = gql`
       routeDate: String # Only for route for a specific route and driver
       sort: Boolean
       orderBy: String
+      searchBookings: String
       """
       Retrieve the first n elements
       """
