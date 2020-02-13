@@ -57,6 +57,7 @@ export default {
         routeDate,
         sort,
         orderBy,
+        searchBookings,
         before,
         after,
         first,
@@ -78,6 +79,7 @@ export default {
         routeDate,
         sort,
         orderBy,
+        searchBookings,
       })
       const drayings = paginateResults({
         before,

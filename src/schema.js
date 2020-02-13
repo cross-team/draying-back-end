@@ -28,6 +28,7 @@ const typeDefs = gql`
       routeDate: String # Only for route for a specific route and driver
       sort: Boolean
       orderBy: String
+      searchBookings: String
       """
       Retrieve the first n elements
       """
@@ -1594,7 +1595,7 @@ const typeDefs = gql`
 
   input DeliveryContactInput {
     name: String!
-    description: String
+    description: String!
     contactTypeId: Int!
     active: Boolean!
     phones: [DeliveryContactPhoneInput!]!
@@ -1652,6 +1653,7 @@ const typeDefs = gql`
   Base trip input object
   """
   input DispatchDrayingInput {
+    tripId: Int
     drayingId: Int
     tripActionId: Int
     tripStatusId: Int
